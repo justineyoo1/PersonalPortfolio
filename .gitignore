@@ -52,4 +52,15 @@ node_modules/
 .github/
 
 # Next.js build output
+.next/# Build artifacts
 .next/
+out/
+# Dependencies
+node_modules/
+# Backups / generated
+public.backup/
+# Local misc
+.DS_Store
+*.log
+# Old folders not needed in repo
+inspiration-portfolio/
