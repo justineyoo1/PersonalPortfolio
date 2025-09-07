@@ -14,6 +14,7 @@ import {
   ExternalLink,
   ChevronRight,
   ChevronDown,
+  User,
   DivideSquare,
   Braces,
 } from "lucide-react";
@@ -583,11 +584,12 @@ export default function Home() {
           </motion.h1>
 
         
-          <div className="flex items-center justify-center text-2xl md:text-3xl font-light mb-8">
+          <div className="flex items-center justify-center text-2xl md:text-3xl font-light mb-6">
             <span className="font-mono">
               <TypewriterWords words={["print(\"Hello World!\")"]} color="#22c55e" />
             </span>
           </div>
+          
           <div className="flex gap-6 justify-center mt-4">
             <a href="https://github.com/justineyoo1" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
               <FontAwesomeIcon icon={faGithub} className="h-7 w-7 text-black hover:text-gray-700 transition-colors duration-450" />
@@ -599,9 +601,22 @@ export default function Home() {
               <FontAwesomeIcon icon={faEnvelope} className="h-7 w-7 text-black hover:text-gray-700 transition-colors duration-450" />
             </a>
           </div>
-          <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
+          {/* Single About Me CTA under secondary buttons */}
+          <div className="mt-4 flex justify-center">
+            <motion.a
+              href="/about"
+              whileHover={{ y: -2, scale: 1.01 }}
+              whileTap={{ scale: 0.99 }}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gray-900 text-white hover:bg-black transition-colors shadow-sm border border-black/10"
+              aria-label="About Me"
+            >
+              <User className="h-5 w-5" />
+              <span className="text-base md:text-lg font-medium">About Me</span>
+            </motion.a>
+          </div>
+          <div className="mt-2 flex flex-col sm:flex-row gap-3 justify-center">
             <a
-              href={`${basePath}/Justin_Y__Resume (9).pdf`}
+              href={`${basePath}/Justin_Y_Resume.pdf`}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-gray-800 text-white hover:bg-black transition-colors"
@@ -618,16 +633,6 @@ export default function Home() {
               Connect on LinkedIn
               <Linkedin className="h-4 w-4" />
             </a>
-          </div>
-          <div className="mt-4 flex justify-center">
-            <Link
-              href="/about"
-              className="group inline-flex items-center gap-2 text-[1.05rem] font-medium text-gray-700 hover:text-gray-900 transition-colors underline-offset-4 hover:underline"
-              aria-label="About Me!"
-            >
-              About Me!
-              <ChevronRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5" />
-            </Link>
           </div>
         </div>
         {/* Overlay for darkening background for readability */}
@@ -786,6 +791,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      
       
 
       {/* EXPERIENCE SECTION================================================ */}
@@ -892,99 +899,26 @@ export default function Home() {
         </div>
       </section>
 
+      {/* CTA to About page under Technical Skills */}
+      <div className="py-10 flex justify-center bg-transparent">
+        <a
+          href="/about"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-gray-900 border border-gray-300 hover:bg-gray-50 transition-colors shadow-sm"
+          aria-label="Go to About"
+        >
+          About Me
+        </a>
+      </div>
 
-      {/* ============================================CONTACT============================================ */}
-      <section id="contact" className="py-16 px-4 md:px-8 bg-white/60 dark:bg-black/30 backdrop-blur-[1px]">
-        <div className="container mx-auto max-w-6xl">
-          <div className="flex flex-col items-center mb-8">
-            <h2 className="text-3xl font-bold text-[#13294B] text-center">Contact</h2>
-            <div className="flex justify-center items-center w-3/4 max-w-[100px] mx-auto mt-2">
-              <div className="h-0.5 bg-gray-300 flex-grow"></div>
-              <div className="h-1 bg-[#98d6ff] w-1/3"></div>
-              <div className="h-0.5 bg-gray-300 flex-grow"></div>
-            </div>
-          </div>
-          <div className="flex flex-col md:flex-row gap-8 contact-container">
-            {/* Left: Contact Info */}
-            <div className="flex-1 contact-leftdiv space-y-6">
-              <p>
-                <FontAwesomeIcon icon={faLocationDot} className="mr-2 text-blue-400" />
-                <span className="font-bold">Location:</span> Chapel Hill, NC
-              </p>
-              <p>
-                <FontAwesomeIcon icon={faEnvelope} className="mr-2 text-blue-400" />
-                <span className="font-bold">Email:</span>{" "}
-                <a href="mailto:jeyoo@unc.edu" className="text-blue-600 underline" target="_blank" rel="noopener noreferrer">
-                  jeyoo@unc.edu
-                </a>
-              </p>
-              <p>
-                <FontAwesomeIcon icon={faPhone} className="mr-2 text-blue-400" />
-                <span className="font-bold">Phone:</span> (412) 628-4603
-              </p>
-            </div>
-            {/* Right: Contact Form */}
-            <div className="flex-1 contact-rightdiv flex flex-col gap-6">
-              <section className="contactform-content">
-                <div className="contact-left-title mb-2">
-                  <h2 className="text-xl font-bold text-blue-600">Get in touch</h2>
-                  <hr className="border-blue-400 w-24" />
-                </div>
-                <form
-                  id="contact-form"
-                  action="https://api.web3forms.com/submit"
-                  method="POST"
-                  className="space-y-4"
-                >
-                  <input type="hidden" name="access_key" value={process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY} />
-                  <input
-                    type="text"
-                    name="name"
-                    placeholder="Full Name"
-                    className="w-full rounded-full px-4 py-2 bg-gray-100"
-                    required
-                  />
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="your.email@example.com"
-                    className="w-full rounded-full px-4 py-2 bg-gray-100"
-                    required
-                  />
-                  <textarea
-                    name="message"
-                    placeholder="Your Message"
-                    className="w-full rounded-xl px-4 py-2 bg-gray-100"
-                    rows={5}
-                    required
-                  ></textarea>
-                  <button
-                    type="submit"
-                    className="w-full bg-blue-400 hover:bg-blue-600 text-white font-semibold rounded-full py-2 transition-colors flex items-center justify-center gap-2"
-                  >
-                    Send Message
-                    <span>
-                      <FontAwesomeIcon icon={faEnvelope} />
-                    </span>
-                  </button>
-                </form>
-              </section>
-            </div>
-          </div>
-        </div>
-      </section>
+
+      {/* Contact section removed */}
 
 
       {/* Footer */}
       <footer className="bg-blue-300 text-white py-8 px-4">
         <div className="container mx-auto max-w-6xl">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="mb-4 md:mb-0">
-              <p className="text-lg font-semibold">Justin Yoo</p>
-              <p className="text-sm opacity-75">
-                Computer Science & Statistics @ UNC Chapel Hill
-              </p>
-            </div>
+            <div className="mb-4 md:mb-0" />
             <div className="flex gap-4">
               <Button
                 asChild

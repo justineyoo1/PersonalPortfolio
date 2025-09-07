@@ -27,7 +27,6 @@ export default function Navbar({ className = "" }: NavbarProps) {
     { id: "about", label: "About Me" },
     { id: "experience", label: "Experience" },
     { id: "projects", label: "Projects" },
-    { id: "contact", label: "Contact" },
   ];
 
   // Handle scroll events to update navbar appearance
@@ -128,7 +127,7 @@ export default function Navbar({ className = "" }: NavbarProps) {
             <FontAwesomeIcon icon={faLinkedin} className="w-5 h-5" />
           </a>
           <a
-            href={`/Justin_Y__Resume (9).pdf`}
+            href={`/Justin_Y_Resume.pdf`}
             target="_blank"
             rel="noopener noreferrer"
             className="ml-4 flex items-center hover:text-blue-400 transition-colors"

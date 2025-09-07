@@ -109,23 +109,75 @@ export default function AboutPage() {
 
           {/* Synopsis */}
           <div className="mb-10 grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
-            <div className="md:col-span-2">
-              <p className="text-lg md:text-xl text-gray-800">
-                I’m a Computer Science + Statistics student at UNC Chapel Hill who loves turning ideas into useful tools. I started in high school building small web apps, and now I’m focused on AI/ML, data systems, and backend engineering that make a real-world impact.
-              </p>
-            </div>
-            <div className="flex justify-center md:justify-end">
+            <motion.div
+              className="md:col-span-2"
+              initial={{ opacity: 0, x: -40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: false, amount: 0.3 }}
+              transition={{ duration: 0.6 }}
+            >
+              <div className="text-lg md:text-xl text-gray-800 space-y-3">
+                <p>
+                  Hi, I’m Justin Yoo, a junior at <strong>University of North Carolina at Chapel Hill</strong> double majoring in <strong>Computer Science and Statistics</strong>.
+                </p>
+                <p>
+                  I’m passionate about <strong>software engineering</strong>, <strong>machine learning engineering</strong>, and <strong>data science</strong>. I’m currently looking for opportunities where I can keep growing and building impactful tools.
+                </p>
+                <p>
+                  Outside of tech, you’ll usually find me at the
+                  {" "}
+                  <span className="inline-flex items-center gap-1">
+                    gym
+                    <img src={`${basePath}/img/Hobbies/dumbbell-solid-full.svg`} alt="gym" className="inline h-4 w-4 align-[-2px]" />
+                  </span>
+                  , playing
+                  {" "}
+                  <span className="inline-flex items-center gap-1">
+                    chess
+                    <img src={`${basePath}/img/Hobbies/chess-solid-full.svg`} alt="chess" className="inline h-4 w-4 align-[-2px]" />
+                  </span>
+                  , and playing
+                  {" "}
+                  <span className="inline-flex items-center gap-1">
+                    soccer
+                    <img src={`${basePath}/img/Hobbies/futbol-solid-full.svg`} alt="soccer" className="inline h-4 w-4 align-[-2px]" />
+                  </span>
+                  !
+                </p>
+                <div className="pt-1">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const el = document.getElementById('my-story');
+                      if (el) el.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    className="group inline-flex items-center gap-2 text-base md:text-lg text-gray-700 hover:text-gray-900"
+                    aria-label="Scroll to My Story"
+                  >
+                    Scroll down if you want to see my journey
+                    <span className="inline-block transition-transform group-hover:translate-y-0.5">↓</span>
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+            <motion.div
+              className="flex justify-center md:justify-end"
+              initial={{ opacity: 0, x: 40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: false, amount: 0.3 }}
+              transition={{ duration: 0.6 }}
+            >
               <img
                 src={`${basePath}/img/Away%20From%20Keyboard/personalportfolio.jpeg.jpg`}
                 alt="Portrait"
                 className="h-44 w-44 md:h-56 md:w-56 rounded-full object-cover shadow-lg border-4 border-white"
               />
-            </div>
+            </motion.div>
           </div>
 
           {/* My Story Timeline */}
           <div>
-            <h2 className="text-2xl font-semibold text-[#13294B] mb-4">My Story</h2>
+            <h2 id="my-story" className="text-2xl font-semibold text-[#13294B] mb-4">My Story</h2>
             <div className="relative">
               <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gray-300"></div>
               <ul className="space-y-6">
@@ -231,6 +283,16 @@ export default function AboutPage() {
                 </div>
               ))}
             </div>
+          </div>
+          {/* Bottom CTA to Experience */}
+          <div className="mt-12 flex justify-center">
+            <a
+              href="/#experience"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gray-900 text-white hover:bg-black transition-colors shadow-sm border border-black/10"
+              aria-label="Go to Experience"
+            >
+              See Experience
+            </a>
           </div>
         </div>
       </section>
