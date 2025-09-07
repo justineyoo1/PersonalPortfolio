@@ -1,0 +1,263 @@
+.work-timeline-container {
+  max-height: 420px;
+  overflow-y: auto;
+  padding: 2rem 0;
+  position: relative;
+  scrollbar-width: thin;
+  scrollbar-color: #9ca3af #f3f4f6; /* gray-400 thumb on gray-100 track */
+}
+
+
+
+.work-timeline-container::-webkit-scrollbar {
+  width: 10px;
+}
+
+.work-timeline-container::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #9ca3af 0%, #6b7280 100%);
+  border-radius: 8px;
+}
+
+.work-timeline-container::-webkit-scrollbar-track {
+  background: #f3f4f6;
+  border-radius: 8px;
+}
+
+.vertical-timeline {
+  position: relative;
+  margin: 0 auto;
+  padding: 2rem 0;
+  width: 100%;
+  max-width: 900px;
+}
+
+.timeline-item {
+  position: relative;
+  width: 50%;
+  padding: 2rem 0;
+}
+
+.timeline-dot {
+  position: absolute;
+  top: 0.5rem;
+  left: 100%;
+  transform: translateX(0%);
+  width: 21px;
+  height: 21px;
+  background: #6b7280; /* gray-500 */
+  border: 3px solid #6b7280;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px rgba(107,114,128,0.25);
+  z-index: 2;
+}
+
+.timeline-content {
+  /* background: #fffdf7; */
+  background: #ffffff;
+  border: 1px solid #e5e7eb; /* gray-200 */
+  border-radius: 2rem;
+  padding: 1.5rem 2.5rem;
+  color: #111827; /* gray-900 text */
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  transition: transform 0.3s, box-shadow 0.3s;
+  position: relative;
+}
+
+.timeline-details {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px dashed rgba(156,163,175,0.5);
+}
+
+.timeline-details summary {
+  cursor: pointer;
+  color: #374151; /* gray-700 */
+  font-weight: 600;
+}
+
+.timeline-details ul {
+  margin-top: 0.25rem;
+  margin-left: 1.25rem;
+  list-style: disc;
+}
+
+.timeline-details li {
+  color: #4B5563; /* gray-600 */
+  margin-bottom: 0.25rem;
+  font-size: 0.9rem;
+}
+
+.timeline-content:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+.timeline-date {
+  color: #6b7280; /* gray-500 */
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  height: 2rem; /* match dot height for vertical centering */
+}
+
+.timeline-item:nth-child(odd) .timeline-date {
+  margin-right: 48px;
+}
+
+.timeline-item:nth-child(even) .timeline-date {
+  margin-left: 48px;
+}
+
+/* Center vertical line */
+.vertical-timeline::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  width: 3px;
+  height: 100%;
+  background: #d1d5db; /* gray-300 */
+  z-index: 1;
+  
+}
+
+/* Odd: left, Even: right */
+.timeline-item:nth-child(odd) {
+  
+  left: 0;
+  text-align: right;
+  justify-content: flex-end;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.timeline-item:nth-child(even) {
+  left: 50%;
+  text-align: left;
+  justify-content: flex-start;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.timeline-item:nth-child(odd) .timeline-content {
+  margin-right: 40px;
+  width: 100%;
+  max-width: none;
+}
+
+.timeline-item:nth-child(even) .timeline-content {
+  margin-left: 40px;
+  width: 100%;
+  max-width: 1000px;
+}
+
+.timeline-item:nth-child(odd) .timeline-dot {
+  right: -11px;
+  left: auto;
+}
+
+.timeline-item:nth-child(even) .timeline-dot {
+  left: -11px;
+  right: auto;
+}
+
+.timeline-content .timeline-institution {
+  color: #111827; /* gray-900 */
+  
+}
+
+.timeline-content .timeline-role {
+  color: #6b7280; /* gray-500 */
+  font-weight: 400;
+  font-style: italic
+}
+
+.timeline-content .timeline-description {
+  color: #4b5563; /* gray-600 */
+  max-width: 600px;
+}
+
+.timeline-item:nth-child(odd) .timeline-institution {
+  text-align: right;
+  width: 100%;
+}
+
+
+/* Add company logo box styles */
+.timeline-logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: #ffffff;
+  /* box-shadow: 0 2px 8px rgba(30,58,138,0.10); */
+  /* display: flex; */
+  object-fit: contain;
+  position: static;
+  margin: 0 1rem 0 0;
+  
+}
+
+.timeline-item:nth-child(even) .timeline-institution-row {
+  justify-content: space-between;
+}
+
+.timeline-item:nth-child(even) .timeline-logo {
+  margin-left: auto;
+  margin-right: 0;
+  align-self: flex-start;
+}
+
+.timeline-item:nth-child(odd) .timeline-institution-row {
+  justify-content: space-between;      
+}
+
+.timeline-item:nth-child(odd) .timeline-logo {
+  margin-right: auto;
+  margin-left: 0;
+  align-self: flex-end;
+}
+
+/* Flex row for institution and logo */
+.timeline-institution-row {
+  display: flex;
+  align-items: center;
+}
+
+.timeline-item:nth-child(odd) .timeline-institution-row {
+  flex-direction: row;
+  justify-content: flex-end;
+  text-align: right;
+  width: 100%;
+}
+
+.timeline-item:nth-child(odd) .timeline-description {
+  margin-left: auto;
+  margin-right: 0;
+  text-align: right;
+  max-width: 1000px;
+  width: 100%;
+}
+
+/* Ensure details align with side: left items keep details left-aligned */
+.timeline-item:nth-child(odd) .timeline-details {
+  text-align: left;
+}
+
+.timeline-item:nth-child(even) .timeline-details {
+  text-align: left;
+}
+
+.timeline-item:nth-child(even) .timeline-description {
+  max-width: 800px;
+}
+
+.timeline-institution-odd {
+  text-align: right;
+  flex: 1;
+} 
