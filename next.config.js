@@ -2,14 +2,12 @@
 
 const isGithubPages = process.env.NEXT_PUBLIC_GITHUB_PAGES === 'true';
 
-const repo = "personal-website2026";
-const assetPrefix = isGithubPages ? `/${repo}/` : '';
+const repo = "PersonalPortfolio";
 const basePath = isGithubPages ? `/${repo}` : '';
 
 const nextConfig = {
     output: 'export',
     basePath,
-    assetPrefix,
     images: {
         unoptimized: true,
     },

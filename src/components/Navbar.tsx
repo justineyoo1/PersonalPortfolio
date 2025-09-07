@@ -9,7 +9,7 @@ import { faFilePdf } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 
-const basePath = "/personal-website2026";
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
 interface NavbarProps {
   className?: string;
@@ -127,7 +127,7 @@ export default function Navbar({ className = "" }: NavbarProps) {
             <FontAwesomeIcon icon={faLinkedin} className="w-5 h-5" />
           </a>
           <a
-            href={`/Justin_Y_Resume.pdf`}
+            href={`${basePath}/Justin_Y_Resume.pdf`}
             target="_blank"
             rel="noopener noreferrer"
             className="ml-4 flex items-center hover:text-blue-400 transition-colors"

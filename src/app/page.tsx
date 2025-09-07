@@ -597,14 +597,14 @@ export default function Home() {
             <a href="https://www.linkedin.com/in/justineyoo/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
               <FontAwesomeIcon icon={faLinkedin} className="h-7 w-7 text-black hover:text-gray-700 transition-colors duration-450" />
             </a>
-            <a href="mailto:jeyoo@unc.edu" target="_blank" rel="noopener noreferrer" aria-label="Email">
+            <a href="mailto:justineyoo2005@gmail.com" target="_blank" rel="noopener noreferrer" aria-label="Email">
               <FontAwesomeIcon icon={faEnvelope} className="h-7 w-7 text-black hover:text-gray-700 transition-colors duration-450" />
             </a>
           </div>
           {/* Single About Me CTA under secondary buttons */}
           <div className="mt-4 flex justify-center">
             <motion.a
-              href="/about"
+              href={`${basePath}/about`}
               whileHover={{ y: -2, scale: 1.01 }}
               whileTap={{ scale: 0.99 }}
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gray-900 text-white hover:bg-black transition-colors shadow-sm border border-black/10"
@@ -902,7 +902,7 @@ export default function Home() {
       {/* CTA to About page under Technical Skills */}
       <div className="py-10 flex justify-center bg-transparent">
         <a
-          href="/about"
+          href={`${basePath}/about`}
           className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-gray-900 border border-gray-300 hover:bg-gray-50 transition-colors shadow-sm"
           aria-label="Go to About"
         >
@@ -954,7 +954,7 @@ export default function Home() {
                 size="icon"
                 className="text-white hover:bg-white/10 rounded-full"
               >
-                <Link href="mailto:jeyoo@unc.edu" target="_blank" aria-label="Email">
+                <Link href="mailto:justineyoo2005@gmail.com" target="_blank" aria-label="Email">
                   <FontAwesomeIcon icon={faEnvelope} className="h-5 w-5" />
                 </Link>
               </Button>
