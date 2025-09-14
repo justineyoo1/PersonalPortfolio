@@ -43,7 +43,7 @@ function TypewriterWords({ words, color = "#98d6ff", typingSpeed = 100, pause = 
 
 export default function MyStoryPage() {
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
-  const [openHobbyIdx, setOpenHobbyIdx] = useState<number | null>(null);
+  const [openHobbies, setOpenHobbies] = useState<Set<number>>(new Set());
 
   const timeline = [
     {
@@ -249,7 +249,7 @@ export default function MyStoryPage() {
           {/* Hobbies */}
           <div className="mt-10">
             <h2 className="text-2xl font-semibold text-[#13294B] mb-4">Hobbies</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 items-start">
               {[
                 {
                   name: 'Weightlifting',
@@ -289,14 +289,29 @@ export default function MyStoryPage() {
                     {'icon' in h ? <img src={(h as any).icon} alt="" className="h-10 w-10" /> : null}
                   </div>
                   <div className="text-sm font-semibold text-gray-800 dark:text-gray-200 text-center">{h.name}</div>
-                  <details open={openHobbyIdx === i} onToggle={(e) => setOpenHobbyIdx((e.currentTarget as HTMLDetailsElement).open ? i : null)} className="mt-3 w-full text-left">
-                    <summary className="cursor-pointer text-sm font-medium text-gray-700">Details</summary>
-                    <ul className="mt-2 list-disc pl-5 text-sm text-gray-600">
-                      {h.details.map((d) => (
-                        <li key={d}>{d}</li>
-                      ))}
-                    </ul>
-                  </details>
+                  <div className="mt-3 w-full text-left">
+                    <button
+                      type="button"
+                      onClick={() => setOpenHobbies((prev) => {
+                        const next = new Set(prev);
+                        if (next.has(i)) next.delete(i); else next.add(i);
+                        return next;
+                      })}
+                      aria-expanded={openHobbies.has(i)}
+                      aria-controls={`hobby-details-${i}`}
+                      className="cursor-pointer text-sm font-medium text-gray-700 inline-flex items-center gap-2"
+                    >
+                      <span className={`transition-transform ${openHobbies.has(i) ? '' : 'rotate-90'}`}>▸</span>
+                      Details
+                    </button>
+                    {openHobbies.has(i) && (
+                      <ul id={`hobby-details-${i}`} className="mt-2 list-disc pl-5 text-sm text-gray-600">
+                        {h.details.map((d) => (
+                          <li key={d}>{d}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
                 </div>
               );})}
             </div>
