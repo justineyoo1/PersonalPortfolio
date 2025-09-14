@@ -25,6 +25,7 @@ export default function Navbar({ className = "" }: NavbarProps) {
   const navItems = [
     { id: "hero", label: "Home" },
     { id: "about", label: "About Me" },
+    { id: "my-story", label: "My Story" },
     { id: "experience", label: "Experience" },
     { id: "projects", label: "Projects" },
   ];
@@ -78,12 +79,13 @@ export default function Navbar({ className = "" }: NavbarProps) {
         <div className="hidden md:flex flex-1 justify-start space-x-8">
           {navItems.map((item) => {
             const isAbout = item.id === "about";
+            const isMyStory = item.id === "my-story";
             return (
               <Link
                 key={item.id}
-                href={isAbout ? "/about" : `/#${item.id}`}
+                href={isMyStory ? `${basePath}/about` : isAbout ? `/#about` : `/#${item.id}`}
                 onClick={(e) => {
-                  if (!isAbout && pathname === "/") {
+                  if (!isAbout && !isMyStory && pathname === "/") {
                     e.preventDefault();
                     scrollToSection(item.id);
                   } else {
@@ -153,12 +155,13 @@ export default function Navbar({ className = "" }: NavbarProps) {
           <div className="flex flex-col space-y-4">
             {navItems.map((item) => {
               const isAbout = item.id === "about";
+              const isMyStory = item.id === "my-story";
               return (
                 <Link
                   key={item.id}
-                  href={isAbout ? "/about" : `/#${item.id}`}
+                  href={isMyStory ? `${basePath}/about` : isAbout ? `/#about` : `/#${item.id}`}
                   onClick={(e) => {
-                    if (!isAbout && pathname === "/") {
+                    if (!isAbout && !isMyStory && pathname === "/") {
                       e.preventDefault();
                       scrollToSection(item.id);
                     }

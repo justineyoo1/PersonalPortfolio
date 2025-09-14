@@ -41,7 +41,7 @@ function TypewriterWords({ words, color = "#98d6ff", typingSpeed = 100, pause = 
   );
 }
 
-export default function AboutPage() {
+export default function MyStoryPage() {
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
   const timeline = [
@@ -49,7 +49,7 @@ export default function AboutPage() {
       year: "2014",
       title: "Built My First PC",
       body:
-        "Put together my first custom computer in 7th grade, which sparked a curiosity for how technology works under the hood.",
+        "I built my first PC in 7th grade, which sparked a curiosity for how technology works under the hood.",
       side: "left",
       logo: undefined as string | undefined,
     },
@@ -57,7 +57,7 @@ export default function AboutPage() {
       year: "2019",
       title: "Python & Self-Learning",
       body:
-        "Took “Introduction to Python Programming” in my junior year of high school, then accelerated with YouTube tutorials and small projects like tic-tac-toe and a full-stack URL shortener.",
+        "Took “Introduction to Python Programming” in my junior year of high school, had a lot of fun but class moved a lot slower than I would've liked. Accelerated with YouTube tutorials and small projects like tic-tac-toe and a full-stack URL shortener for fun!",
       side: "right",
       logo: `${basePath}/tech-stack-imgs/python.png`,
     },
@@ -65,7 +65,7 @@ export default function AboutPage() {
       year: "2023",
       title: "Starting UNC (CS + Stats)",
       body:
-        "Began at UNC Chapel Hill, dove into coursework and joined UNC CS + Social Good to build projects with impact.",
+        "Began at UNC Chapel Hill, dove into coursework and joined CS clubs to build projects with impact.",
       side: "left",
       logo: `${basePath}/img/unc.png`,
     },
@@ -73,7 +73,7 @@ export default function AboutPage() {
       year: "2024",
       title: "Admitted to the CS Program",
       body:
-        "Went deeper into full-stack and ML work, including a RAG assistant and an ML recommender system.",
+        "Went deeper into full-stack and ML work, and started building more on my own.",
       side: "right",
       logo: undefined as string | undefined,
     },
@@ -81,7 +81,7 @@ export default function AboutPage() {
       year: "2025",
       title: "Research & Red Hat Internship",
       body:
-        "Began ML research on interpretability and started as a Data Science Intern at Red Hat, building data automation and scalable systems.",
+        "Began ML research @ AIMING LAB and started an insternship at Red Hat as a Data Science Intern! Absolutely loving it so far!",
       side: "left",
       logo: `${basePath}/img/RedHatLogo.jpg`,
     },
@@ -99,7 +99,7 @@ export default function AboutPage() {
       <section className="relative py-16 px-4 md:px-8 bg-white/60 dark:bg-black/30 backdrop-blur-[1px] min-h-[80vh]">
         <div className="container mx-auto max-w-5xl">
           <div className="flex flex-col items-center mb-8">
-            <h1 className="text-3xl font-bold text-[#13294B] text-center">About Me</h1>
+            <h1 className="text-3xl font-bold text-[#13294B] text-center">My Story</h1>
             <div className="flex justify-center items-center w-3/4 max-w-[120px] mx-auto mt-2">
               <div className="h-0.5 bg-gray-300 flex-grow"></div>
               <div className="h-1 bg-[#98d6ff] w-1/3"></div>
@@ -128,19 +128,16 @@ export default function AboutPage() {
                   {" "}
                   <span className="inline-flex items-center gap-1">
                     gym
-                    <img src={`${basePath}/img/Hobbies/dumbbell-solid-full.svg`} alt="gym" className="inline h-4 w-4 align-[-2px]" />
                   </span>
                   , playing
                   {" "}
                   <span className="inline-flex items-center gap-1">
                     chess
-                    <img src={`${basePath}/img/Hobbies/chess-solid-full.svg`} alt="chess" className="inline h-4 w-4 align-[-2px]" />
                   </span>
                   , and playing
                   {" "}
                   <span className="inline-flex items-center gap-1">
                     soccer
-                    <img src={`${basePath}/img/Hobbies/futbol-solid-full.svg`} alt="soccer" className="inline h-4 w-4 align-[-2px]" />
                   </span>
                   !
                 </p>
@@ -154,8 +151,6 @@ export default function AboutPage() {
                     className="group inline-flex items-center gap-2 text-base md:text-lg text-gray-700 hover:text-gray-900"
                     aria-label="Scroll to My Story"
                   >
-                    Scroll down if you want to see my journey
-                    <span className="inline-block transition-transform group-hover:translate-y-0.5">↓</span>
                   </button>
                 </div>
               </div>
@@ -181,7 +176,12 @@ export default function AboutPage() {
             <div className="relative">
               <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gray-300"></div>
               <ul className="space-y-6">
-                {timeline.map((item, idx) => (
+                {timeline.map((item, idx) => {
+                  const pastelColors = [
+                    '#92A8D1', '#B5A8D1', '#B5EAD7', '#FFDAC1', '#E2F0CB', '#F7CAC9', '#FFB7B2', '#C7CEEA', '#FFFACD'
+                  ];
+                  const accent = pastelColors[idx % pastelColors.length];
+                  return (
                   <li key={item.year} className="relative">
                     <span className="absolute left-1/2 -ml-2 top-3 h-4 w-4 rounded-full bg-gray-400 border-2 border-white z-10"></span>
                     <div className={`w-full flex ${item.side === 'left' ? 'justify-start' : 'justify-end'}`}>
@@ -192,7 +192,14 @@ export default function AboutPage() {
                         transition={{ duration: 0.6 }}
                         className="w-full md:w-1/2 px-4"
                       >
-                        <div className="relative rounded-xl border border-gray-200 bg-white/70 dark:bg-black/40 backdrop-blur-sm shadow-sm p-4">
+                        <div
+                          className="relative rounded-xl bg-white shadow-sm p-4"
+                          style={{
+                            borderWidth: 3,
+                            borderStyle: 'solid',
+                            borderImage: `linear-gradient(90deg, ${accent}, rgba(0,0,0,0)) 1`,
+                          }}
+                        >
                           {item.logo && (
                             <img src={item.logo} alt="logo" className="absolute -top-3 -right-3 h-6 w-6 rounded-md bg-white p-0.5 shadow" />
                           )}
@@ -205,7 +212,7 @@ export default function AboutPage() {
                       </motion.div>
                     </div>
                   </li>
-                ))}
+                );})}
               </ul>
             </div>
           </div>
@@ -214,11 +221,18 @@ export default function AboutPage() {
           <div className="mt-12">
             <h2 className="text-2xl font-semibold text-[#13294B] mb-4">Away from the Keyboard</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-              {photos.map((p, i) => (
+              {photos.map((p, i) => {
+                const pastel = ['#92A8D1','#B5A8D1','#B5EAD7','#FFDAC1','#E2F0CB','#F7CAC9','#FFB7B2','#C7CEEA','#FFFACD'][i % 9];
+                return (
                 <div
                   key={i}
-                  className="relative overflow-hidden rounded-xl border border-gray-200 bg-white/70 dark:bg-black/40 shadow-sm flex items-center justify-center"
-                  style={{ height: '18rem' }}
+                  className="relative overflow-hidden rounded-xl bg-white shadow-sm flex items-center justify-center"
+                  style={{
+                    height: '18rem',
+                    borderWidth: 3,
+                    borderStyle: 'solid',
+                    borderImage: `linear-gradient(90deg, ${pastel}, rgba(0,0,0,0)) 1`,
+                  }}
                 >
                   <img src={p.src} alt={p.caption || `photo-${i+1}`} className="max-h-full max-w-full object-contain" />
                   {p.caption && (
@@ -227,7 +241,7 @@ export default function AboutPage() {
                     </div>
                   )}
                 </div>
-              ))}
+              );})}
             </div>
           </div>
 
@@ -266,8 +280,10 @@ export default function AboutPage() {
                     'Played tennis in high school, but the first time I played pickleball I immediately enjoyed it more lol',
                   ],
                 },
-              ].map((h) => (
-                <div key={h.name} className="flex flex-col items-center justify-start rounded-xl border border-gray-200 bg-white/70 dark:bg-black/40 shadow-sm p-6">
+              ].map((h, i) => {
+                const pastel = ['#92A8D1','#B5A8D1','#B5EAD7','#FFDAC1','#E2F0CB','#F7CAC9','#FFB7B2','#C7CEEA','#FFFACD'][i % 9];
+                return (
+                <div key={h.name} className="flex flex-col items-center justify-start rounded-xl bg-white shadow-sm p-6" style={{ borderWidth: 3, borderStyle: 'solid', borderImage: `linear-gradient(90deg, ${pastel}, rgba(0,0,0,0)) 1` }}>
                   <div className="mb-3" aria-hidden>
                     {'icon' in h ? <img src={(h as any).icon} alt="" className="h-10 w-10" /> : null}
                   </div>
@@ -281,7 +297,7 @@ export default function AboutPage() {
                     </ul>
                   </details>
                 </div>
-              ))}
+              );})}
             </div>
           </div>
           {/* Bottom CTA to Experience */}

@@ -443,6 +443,49 @@ export default function Home() {
     ),
   ];
 
+  // Brand colors for timeline (dot + border gradient)
+  function getExperienceBrandColors(institution: string) {
+    const name = institution.toLowerCase();
+    // Red Hat
+    if (name.includes('red hat')) {
+      return {
+        dot: '#f87171', // red-400 (softer)
+        ring: '#ef4444', // red-500
+        halo: 'rgba(239,68,68,0.20)',
+        borderFrom: '#fee2e2', // red-100
+        borderTo: '#fca5a5', // red-300
+      } as const;
+    }
+    // UNC CS + Social Good → teal
+    if (name.includes('social good')) {
+      return {
+        dot: '#5eead4', // teal-300
+        ring: '#14b8a6', // teal-500
+        halo: 'rgba(20,184,166,0.20)',
+        borderFrom: '#ccfbf1', // teal-100
+        borderTo: '#5eead4', // teal-300
+      } as const;
+    }
+    // UNC (university departments) → light blue
+    if (name.includes('unc') || name.includes('carolina') || name.includes('university of north carolina')) {
+      return {
+        dot: '#93c5fd', // blue-300
+        ring: '#60a5fa', // blue-400
+        halo: 'rgba(96,165,250,0.20)',
+        borderFrom: '#dbeafe', // blue-100
+        borderTo: '#93c5fd', // blue-300
+      } as const;
+    }
+    // Default neutral blue-gray
+    return {
+      dot: '#cbd5e1', // slate-300
+      ring: '#94a3b8', // slate-400
+      halo: 'rgba(148,163,184,0.20)',
+      borderFrom: '#f1f5f9', // slate-100
+      borderTo: '#cbd5e1', // slate-300
+    } as const;
+  }
+
   // =========================================
   // ==================CLUBS==================
 
@@ -640,17 +683,146 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-b from-white/50 to-white/0 dark:from-black/30 dark:to-transparent -z-10" />
         {/* Scroll hint */}
         <div className="absolute bottom-6 left-0 right-0 flex justify-center">
-          <button
+          <img
+            src={`${basePath}/img/Gif/Scroll%20down.gif`}
+            alt="Scroll down"
+            className="h-14 w-auto cursor-pointer select-none"
             onClick={() => {
-              const el = document.getElementById('experience');
+              const el = document.getElementById('about');
               if (el) el.scrollIntoView({ behavior: 'smooth' });
             }}
-            className="group inline-flex items-center gap-2 text-[1.05rem] font-medium text-gray-700 hover:text-gray-900"
-            aria-label="Scroll to professional experience"
-          >
-            See my experience
-            <ChevronDown className="h-4 w-4 transition-transform group-hover:translate-y-0.5" />
-          </button>
+          />
+        </div>
+      </section>
+
+      {/* ABOUT PREVIEW SECTION (Home) ========================================= */}
+      <section id="about" className="py-16 px-4 md:px-8 bg-white">
+        <div className="container mx-auto max-w-6xl">
+          <div className="mb-4">
+            <div className="flex flex-col items-center mt-1">
+              <h3 className="text-3xl font-bold text-[#13294B] text-center">About Me</h3>
+              <div className="flex justify-center items-center w-3/4 max-w-[120px] mx-auto mt-2">
+                <div className="h-0.5 bg-gray-300 flex-grow"></div>
+                <div className="h-1 bg-[#98d6ff] w-1/3"></div>
+                <div className="h-0.5 bg-gray-300 flex-grow"></div>
+              </div>
+            </div>
+            <p className="text-sm tracking-widest text-gray-500 uppercase mt-2">Introduction</p>
+            <h2 className="text-4xl md:text-5xl font-extrabold mt-2">About Me<span className="inline-block">.</span></h2>
+          </div>
+          <div className="mt-1 grid grid-cols-1 md:grid-cols-7 gap-8 items-start">
+            <div className="text-gray-700 text-base md:text-lg leading-relaxed md:col-span-3">
+              <p>
+                I’m a Computer Science and Statistics student at the University of North Carolina at Chapel Hill who loves turning ideas into useful tools.
+                My expertise ranges from software development to data science with proficiency in machine learning.
+              </p>
+              <div className="mt-6">
+                <a
+                  href={`${basePath}/about`}
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gray-900 text-white hover:bg-black transition-colors shadow-sm border border-black/10"
+                  aria-label="My Story."
+                >
+                  My Story &gt;&gt;
+                </a>
+              </div>
+            </div>
+            <motion.div
+              initial={{ x: 100, opacity: 0 }}
+              whileInView={{ x: 0, opacity: 1 }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ duration: 0.8 }}
+              className="w-full md:col-span-4"
+            >
+              <div className="rounded-xl shadow-lg border border-gray-200 overflow-hidden bg-[#0f172a] text-white">
+                {/* Window header */}
+                <div className="flex items-center justify-between px-4 py-2 bg-[#0b1220] border-b border-white/5">
+                  <div className="flex items-center gap-2">
+                    <span className="w-3 h-3 rounded-full bg-[#ff5f56]" aria-hidden></span>
+                    <span className="w-3 h-3 rounded-full bg-[#ffbd2e]" aria-hidden></span>
+                    <span className="w-3 h-3 rounded-full bg-[#27c93f]" aria-hidden></span>
+                  </div>
+                  <div className="text-xs text-gray-400">about.md</div>
+                </div>
+                <div className="flex">
+                  {/* Sidebar */}
+                  <div className="w-56 bg-[#0b1220] border-r border-white/5 py-3">
+                    <div className="px-3 text-gray-400 uppercase text-[0.65rem] tracking-widest mb-2">EXPLORER</div>
+                    <div className="px-3 text-[0.7rem] text-gray-500 mb-2">PORTFOLIO</div>
+                    <div className="px-3 flex items-center gap-1 text-sm text-gray-200 mb-1 select-none">
+                      <span className="text-gray-400">▾</span>
+                      <span>portfolio</span>
+                    </div>
+                    <ul className="mt-1 text-xs">
+                      <li className="flex items-center gap-2 px-3 py-1 bg-white/5 text-blue-300">
+                        <span className="inline-block w-1.5 h-1.5 rounded-[2px] bg-blue-400" aria-hidden></span>
+                        about.md
+                      </li>
+                      <li className="flex items-center gap-2 px-3 py-1 text-gray-300 hover:bg-white/5">
+                        <span className="inline-block w-1.5 h-1.5 rounded-[2px] bg-emerald-400" aria-hidden></span>
+                        experience.js
+                      </li>
+                      <li className="flex items-center gap-2 px-3 py-1 text-gray-300 hover:bg-white/5">
+                        <span className="inline-block w-1.5 h-1.5 rounded-[2px] bg-pink-400" aria-hidden></span>
+                        projects.js
+                      </li>
+                    </ul>
+                  </div>
+                  {/* Editor */}
+                  <div className="flex-1 p-4">
+                    <div className="text-xs text-gray-400 mb-2">about.md</div>
+                    <div className="flex items-start gap-4">
+                      <div className="select-none text-[0.7rem] text-gray-500 leading-7 pr-2 text-right">
+                        <div>1</div>
+                        <div>2</div>
+                        <div>3</div>
+                        <div>4</div>
+                        <div>5</div>
+                        <div>6</div>
+                        <div>7</div>
+                        <div>8</div>
+                        <div>9</div>
+                        <div>10</div>
+                        <div>11</div>
+                        <div>12</div>
+                        <div>13</div>
+                        <div>14</div>
+                        <div>15</div>
+                        <div>16</div>
+                        <div>17</div>
+                        <div>18</div>
+                        <div>19</div>
+                        <div>20</div>
+                        <div>21</div>
+                        <div>22</div>
+                      </div>
+                      <pre className="m-0 p-0 font-mono text-sm leading-7 whitespace-pre overflow-x-auto">
+<code>
+<span className="text-sky-400">class</span> <span className="text-emerald-300">AboutMe</span>:
+{"\n"}    <span className="text-sky-400">def</span> <span className="text-amber-300">__init__</span>(self):
+{"\n"}        self.name = <span className="text-rose-300">"Justin Yoo"</span>
+{"\n"}        self.education = <span className="text-rose-300">"CS and Stats @ UNC"</span>
+{"\n"}        self.skills = [
+{"\n"}            <span className="text-rose-300">"Python"</span>, <span className="text-rose-300">"SQL"</span>, <span className="text-rose-300">"pandas"</span> <span className="text-rose-300">"Git"</span>
+{"\n"}        ]
+{"\n"}        self.projects = [
+{"\n"}            <span className="text-rose-300">"Syllabus Sync"</span>,
+{"\n"}            <span className="text-rose-300">"Premier League Match Predictor"</span>,
+{"\n"}            <span className="text-rose-300">"Movie Recommender System"</span>
+{"\n"}        ]
+{"\n"}
+{"\n"}    <span className="text-sky-400">def</span> <span className="text-amber-300">current_focus</span>(self):
+{"\n"}        <span className="text-sky-400">return</span> <span className="text-rose-300">"Software Engineering | Data Science"</span>
+{"\n"}
+{"\n"}    <span className="text-sky-400">def</span> <span className="text-amber-300">goal</span>(self):
+{"\n"}        <span className="text-sky-400">return</span> <span className="text-rose-300">"Contribute to impactful projects"</span>
+</code>
+                      </pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
@@ -673,15 +845,32 @@ export default function Home() {
           {/* Work Timeline */}
           <div>
             <div className={workTimelineStyles['vertical-timeline']}>
-              {workExperiencesOrdered.map((exp, idx) => (
-                <div key={idx} className={workTimelineStyles['timeline-item']}>
+              {workExperiencesOrdered.slice().reverse().map((exp, idx) => {
+                const brand = getExperienceBrandColors(exp.institution);
+                return (
+                <motion.div
+                  key={idx}
+                  className={workTimelineStyles['timeline-item']}
+                  initial={{ opacity: 0, x: idx % 2 === 0 ? -40 : 40, y: 10 }}
+                  whileInView={{ opacity: 1, x: 0, y: 0 }}
+                  viewport={{ once: true, amount: 0.25 }}
+                  transition={{ duration: 0.6 }}
+                >
                   <div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
-                    <div className={workTimelineStyles['timeline-dot']}></div>
+                    <div className={workTimelineStyles['timeline-dot']} style={{
+                      background: brand.dot,
+                      borderColor: brand.ring,
+                      boxShadow: `0 0 0 2px ${brand.halo}`,
+                    }}></div>
                     <div className={workTimelineStyles['timeline-date']} style={{ marginLeft: 48 }}>
                       {exp.period}
                     </div>
                   </div>
-                  <div className={workTimelineStyles['timeline-content']}>
+                  <div className={workTimelineStyles['timeline-content']} style={{
+                    borderImage: `linear-gradient(90deg, ${brand.borderFrom}, ${brand.borderTo}) 1`,
+                    borderWidth: '1px',
+                    borderStyle: 'solid'
+                  }}>
                     <div className={workTimelineStyles['timeline-institution-row']}>
                       {idx % 2 === 0 && exp.logo && (
                         <img src={exp.logo} alt={exp.institution + ' logo'} className={workTimelineStyles['timeline-logo']} />
@@ -708,8 +897,8 @@ export default function Home() {
                       </details>
                     )}
                   </div>
-               </div>
-              ))}
+               </motion.div>
+              );})}
              </div>
            </div>
          </div>
@@ -733,12 +922,29 @@ export default function Home() {
           </div>
           <div className="mb-12">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 px-4">
-              {clubs.map((club) => {
+              {clubs.map((club, idx) => {
                 const roleColor = "text-[#a855f7]";
+                const pastelColors = [
+                  '#92A8D1', // pastel blue
+                  '#B5A8D1', // muted purple
+                  '#B5EAD7', // pastel green
+                  '#FFDAC1', // pastel peach
+                  '#E2F0CB', // pastel light green
+                  '#F7CAC9', // pastel pink
+                  '#FFB7B2', // soft coral
+                  '#C7CEEA', // lavender
+                  '#FFFACD', // lemon chiffon
+                ];
+                const accent = pastelColors[idx % pastelColors.length];
                 const cardContent = (
                   <Card
                     key={club.name}
-                    className="relative w-full h-64 overflow-hidden hover:shadow-lg transition-shadow flex flex-col items-center justify-start px-6 py-4 rounded-1xl group"
+                    className="relative w-full h-64 overflow-hidden hover:shadow-lg transition-shadow flex flex-col items-center justify-start px-6 py-4 rounded-1xl group bg-white"
+                    style={{
+                      borderWidth: 3,
+                      borderStyle: 'solid',
+                      borderImage: `linear-gradient(90deg, ${accent}, rgba(0,0,0,0)) 1`,
+                    }}
                   >
                     {/* Hover overlay */}
                     {club.link && (
@@ -815,8 +1021,22 @@ export default function Home() {
               <div className="h-0.5 bg-gray-300 flex-grow"></div>
             </div>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            
+          {/* Horizontal Timeline of Projects (Most recent → Older) */}
+          <div className="mb-4 flex items-center text-sm">
+            <span className="font-semibold text-blue-600">← Most Recent</span>
+            <div className="relative flex-1 mx-3 h-px bg-gray-300 overflow-hidden">
+              <motion.div
+                className="absolute inset-y-0 w-1/3 bg-gradient-to-r from-transparent via-blue-300 to-transparent"
+                initial={{ x: '-33%' }}
+                animate={{ x: '133%' }}
+                transition={{ duration: 2.8, repeat: Infinity, ease: 'linear' }}
+              />
+            </div>
+            <span className="text-gray-400">Older →</span>
+          </div>
+          <div className="relative overflow-x-auto pb-10">
+            <div className="absolute top-4 left-0 right-0 h-[2px] bg-gray-200" />
+            <ul className="relative flex gap-8 min-w-max px-1">
             {(() => {
               const cardColors = [
                 '#92A8D1', // pastel blue
@@ -831,8 +1051,14 @@ export default function Home() {
                 '#FFFACD', // lemon chiffon
               ];
               return projects.map((project, idx) => (
+                  <li key={project.id} className="relative pt-6">
+                    <div
+                      className="absolute top-2 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full border border-white shadow"
+                      style={{ backgroundColor: cardColors[idx % cardColors.length] }}
+                      aria-hidden
+                    />
+                    <div className="w-[360px] max-w-[90vw]">
                 <ProjectCard
-                  key={project.id}
                   id={project.id}
                   title={project.title}
                   description={project.description}
@@ -840,9 +1066,13 @@ export default function Home() {
                   imageUrl={project.imageUrl}
                   technologies={project.technologies}
                   cardColor={cardColors[idx % cardColors.length]}
+                        fixed
                 />
+                    </div>
+                  </li>
               ));
             })()}
+            </ul>
           </div>
         </div>
       </section>
@@ -871,8 +1101,12 @@ export default function Home() {
             ];
             return (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {skillCategories.map((cat) => (
-                  <Card key={cat.title} className="transition-transform hover:-translate-y-1 hover:shadow-lg bg-white/70 dark:bg-black/40 backdrop-blur-sm">
+                {skillCategories.map((cat, i) => {
+                  const accents = ['#92A8D1','#B5A8D1','#B5EAD7','#FFDAC1','#E2F0CB','#F7CAC9'];
+                  const accent = accents[i % accents.length];
+                  return (
+                  <Card key={cat.title} className="transition-transform hover:-translate-y-1 hover:shadow-lg bg-white backdrop-blur-sm"
+                    style={{ borderWidth: 3, borderStyle: 'solid', borderImage: `linear-gradient(90deg, ${accent}, rgba(0,0,0,0)) 1` }}>
                     <CardContent className="p-5">
                       <div className="flex items-center gap-2 mb-3">
                         <span>{cat.icon}</span>
@@ -892,78 +1126,60 @@ export default function Home() {
                       </div>
                     </CardContent>
                   </Card>
-              ))}
+              );})}
             </div>
             );
           })()}
         </div>
       </section>
 
-      {/* CTA to About page under Technical Skills */}
+      {/* CTA to About/My Story page under Technical Skills */}
       <div className="py-10 flex justify-center bg-transparent">
         <a
           href={`${basePath}/about`}
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-gray-900 border border-gray-300 hover:bg-gray-50 transition-colors shadow-sm"
-          aria-label="Go to About"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gray-900 text-white hover:bg-black transition-colors shadow-sm border border-black/10"
+          aria-label="Go to My Story"
         >
-          About Me
+          My Story &gt;&gt;
         </a>
-      </div>
+            </div>
 
 
       {/* Contact section removed */}
 
 
       {/* Footer */}
-      <footer className="bg-blue-300 text-white py-8 px-4">
+      <footer className="bg-blue-300 text-white py-14 px-4">
         <div className="container mx-auto max-w-6xl">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="mb-4 md:mb-0" />
-            <div className="flex gap-4">
-              <Button
-                asChild
-                variant="ghost"
-                size="icon"
-                className="text-white hover:bg-white/10 rounded-full"
-              >
-                <Link
-                  href="https://github.com/justineyoo1"
-                  target="_blank"
-                  aria-label="GitHub"
-                >
-                  <FontAwesomeIcon icon={faGithub} className="h-5 w-5" />
-                </Link>
-              </Button>
-              <Button
-                asChild
-                variant="ghost"
-                size="icon"
-                className="text-white hover:bg-white/10 rounded-full"
-              >
-                <Link
-                  href="https://www.linkedin.com/in/justineyoo/"
-                  target="_blank"
-                  aria-label="LinkedIn"
-                >
-                  <FontAwesomeIcon icon={faLinkedin} className="h-5 w-5" />
-                </Link>
-              </Button>
-              <Button
-                asChild
-                variant="ghost"
-                size="icon"
-                className="text-white hover:bg-white/10 rounded-full"
-              >
-                <Link href="mailto:justineyoo2005@gmail.com" target="_blank" aria-label="Email">
-                  <FontAwesomeIcon icon={faEnvelope} className="h-5 w-5" />
-                </Link>
-              </Button>
+          <div className="grid grid-cols-1 gap-8 items-start">
+            <div className="col-span-1">
+              <div className="mb-6">
+                <p className="uppercase tracking-widest text-white/80 text-sm">Get in touch</p>
+                <h2 className="text-5xl md:text-6xl font-extrabold mt-2">Contact<span className="inline-block">.</span></h2>
             </div>
+              <ul className="space-y-4 text-lg md:text-xl">
+                <li>
+                  <a href="mailto:justineyoo2005@gmail.com" className="inline-flex items-center gap-3 hover:underline" aria-label="Email">
+                    <FontAwesomeIcon icon={faEnvelope} className="h-6 w-6" />
+                    <span>Mail</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://www.linkedin.com/in/justineyoo/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 hover:underline" aria-label="LinkedIn">
+                    <FontAwesomeIcon icon={faLinkedin} className="h-6 w-6" />
+                    <span>LinkedIn</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://github.com/justineyoo1" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 hover:underline" aria-label="GitHub">
+                    <FontAwesomeIcon icon={faGithub} className="h-6 w-6" />
+                    <span>GitHub</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            
           </div>
-          <Separator className="my-6 bg-white/20" />
-          <p className="text-center text-sm opacity-75">
-            © {new Date().getFullYear()} Justin Yoo. All rights reserved.
-          </p>
         </div>
       </footer>
     </div>
