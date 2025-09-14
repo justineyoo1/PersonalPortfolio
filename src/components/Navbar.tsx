@@ -83,7 +83,7 @@ export default function Navbar({ className = "" }: NavbarProps) {
             return (
               <Link
                 key={item.id}
-                href={isMyStory ? `${basePath}/about` : isAbout ? `/#about` : `/#${item.id}`}
+                href={isMyStory ? `/about` : isAbout ? `/#about` : `/#${item.id}`}
                 onClick={(e) => {
                   if (!isAbout && !isMyStory && pathname === "/") {
                     e.preventDefault();
@@ -159,7 +159,7 @@ export default function Navbar({ className = "" }: NavbarProps) {
               return (
                 <Link
                   key={item.id}
-                  href={isMyStory ? `${basePath}/about` : isAbout ? `/#about` : `/#${item.id}`}
+                  href={isMyStory ? `/about` : isAbout ? `/#about` : `/#${item.id}`}
                   onClick={(e) => {
                     if (!isAbout && !isMyStory && pathname === "/") {
                       e.preventDefault();
