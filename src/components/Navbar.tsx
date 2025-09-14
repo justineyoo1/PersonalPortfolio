@@ -80,10 +80,11 @@ export default function Navbar({ className = "" }: NavbarProps) {
           {navItems.map((item) => {
             const isAbout = item.id === "about";
             const isMyStory = item.id === "my-story";
+            const aboutHref = pathname === "/" ? "#about" : `${basePath}/#about`;
             return (
               <Link
                 key={item.id}
-                href={isMyStory ? `/about` : isAbout ? `/#about` : `/#${item.id}`}
+                href={isMyStory ? `/about` : isAbout ? aboutHref : `/#${item.id}`}
                 onClick={(e) => {
                   if (!isAbout && !isMyStory && pathname === "/") {
                     e.preventDefault();
@@ -156,10 +157,11 @@ export default function Navbar({ className = "" }: NavbarProps) {
             {navItems.map((item) => {
               const isAbout = item.id === "about";
               const isMyStory = item.id === "my-story";
+              const aboutHref = pathname === "/" ? "#about" : `${basePath}/#about`;
               return (
                 <Link
                   key={item.id}
-                  href={isMyStory ? `/about` : isAbout ? `/#about` : `/#${item.id}`}
+                  href={isMyStory ? `/about` : isAbout ? aboutHref : `/#${item.id}`}
                   onClick={(e) => {
                     if (!isAbout && !isMyStory && pathname === "/") {
                       e.preventDefault();
