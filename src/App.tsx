@@ -883,7 +883,7 @@ const App = () => {
   }, [isTimerOpen, selectedWindow]);
 
   useEffect(() => {
-    let interval: number;
+    let interval: ReturnType<typeof setInterval> | undefined;
 
     if (isTimerRunning && (timerMinutes > 0 || timerSeconds > 0)) {
       interval = setInterval(() => {
@@ -901,7 +901,9 @@ const App = () => {
       handleTimerComplete();
     }
 
-    return () => clearInterval(interval);
+    return () => {
+      if (interval) clearInterval(interval);
+    };
   }, [isTimerRunning, timerMinutes, timerSeconds]);
 
   // Add timer helper functions

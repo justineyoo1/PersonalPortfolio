@@ -7,6 +7,8 @@ export const personalInfo = {
   email: "jeyoo@unc.edu",
   title: "Software Engineer @ Wells Fargo",
   education: "CS + Stats @ UNC Chapel Hill",
+  graduationYear: "Dec 2027",
+  location: "Chapel Hill, NC",
 
   // Resume filename (must be in /public folder)
   resumeFileName: "Justin_Y_Resume.pdf",
