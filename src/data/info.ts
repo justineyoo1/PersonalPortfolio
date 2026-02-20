@@ -26,76 +26,96 @@ export const personalInfo = {
 
   // About Me - Each string is a paragraph
   aboutMe: [
-    "Hey, I&apos;m Justin. I&apos;m studying Computer Science and Statistics at UNC Chapel Hill, graduating in December 2027.",
-    "I like building backend-heavy products that are practical and measurable, especially automation workflows and data-driven systems.",
-    "Most recently, I worked on LLM triage tooling and internal data platforms during internships at Wells Fargo and Red Hat.",
-    "I also enjoy building full-stack side projects like Portfolio Pulse and SyllabusSync using FastAPI, Postgres, Redis, Celery, and Docker.",
-    'You can find my work on <a href="https://github.com/justineyoo1" class="text-blue-300 underline" target="_blank" rel="noopener noreferrer">GitHub</a> and connect with me on <a href="https://www.linkedin.com/in/justineyoo" class="text-blue-300 underline" target="_blank" rel="noopener noreferrer">LinkedIn</a>.',
+    "Hi, I'm Justin Yoo, a junior at University of North Carolina at Chapel Hill double majoring in Computer Science and Statistics.",
+    "I'm passionate about software engineering, machine learning engineering, and data science. I'm currently looking for opportunities where I can keep growing and building impactful tools.",
+    "Outside of tech, you'll usually find me at the gym, playing chess, and playing soccer!",
   ],
 };
 
 export const experiencesData = [
   {
     title: "Software Engineer Intern @ Wells Fargo",
+    compactTitle: "SWE Intern @ Wells Fargo",
     window: "Wells Fargo",
     category: "work",
     date: "May 2026 - Aug 2026",
     description:
       "Built an agentic LLM triage workflow with REST APIs to help analysts resolve high-priority breaks. Shipped a GUI for dataset upload, sampling, and prompt iteration, reducing tuning cycles from about an hour to under five minutes. Implemented A/B prompt evaluation with schema and quality checks, cutting manual review time by roughly 80-90%.",
-    image: "/image.jpg",
+    image: "/img/Logos/WellsFargo.svg",
     links: [{ name: "Wells Fargo", url: "https://www.wellsfargo.com/" }],
   },
   {
     title: "Data Science Intern @ Red Hat",
+    compactTitle: "Data Sci Intern @ Red Hat",
     window: "Red Hat",
     category: "work",
     date: "May 2025 - Dec 2025",
     description:
       "Developed a Streamlit and FastAPI automation app that cut reporting work by 90% and automated $50M+ in allocations. Deployed a PDF data-extraction tool for complex finance documents, saving stakeholders 20+ hours per week. Migrated Redshift pipelines to Snowflake and built dbt models to modernize legacy ETL into SQL workflows.",
-    image: "/image.jpg",
+    image: "/img/Logos/RedHatLogo.jpg",
     links: [{ name: "Red Hat", url: "https://www.redhat.com/" }],
   },
   {
     title: "Undergraduate Research Assistant @ AIMING Lab",
+    compactTitle: "Research Asst @ AIMING Lab",
     window: "AIMING Lab",
     category: "research",
     date: "Aug 2025 - Dec 2025",
     description:
       "Built PyTorch evaluation pipelines for cross-lingual NLU tasks, including calibration metrics and model cascade benchmarks. Implemented confidence-based routing to selectively use larger models, reducing inference cost while preserving accuracy.",
-    image: "/image.jpg",
+    image: "/img/Logos/UNCCSD.png",
     links: [{ name: "UNC Computer Science", url: "https://cs.unc.edu/" }],
   },
   {
     title: "Backend @ App Team Carolina",
+    compactTitle: "Backend @ App Team Carolina",
     window: "App Team Carolina",
     category: "clubs",
     date: "Aug 2026 - Present",
     description:
       "Built backend services for Luminary, an app that helps users navigate UNC by reporting accessibility issues. Implemented REST APIs for report creation and feed retrieval with filtering, pagination, and indexing to keep performance stable at scale.",
-    image: "/image.jpg",
+    image: "/img/Logos/AppTeamCarolina.svg",
     links: [{ name: "App Team Carolina", url: "https://appteamcarolina.com/" }],
   },
   {
     title: "Backend @ UNC CS+Social Good",
+    compactTitle: "Backend @ UNC CS+Social Good",
     window: "UNC CS + Social Good",
     category: "clubs",
     date: "Aug 2024 - May 2025",
     description:
       "Built backend features for a Tinder-style animal adoption app for a local sanctuary. Added data scraping, database ingestion, and paginated REST endpoints, reducing feed load time by about 30%.",
-    image: "/image.jpg",
+    image: "/img/Logos/CSSG.svg",
     links: [{ name: "UNC CS + Social Good", url: "https://cssgunc.org/" }],
   },
 ];
 
 export const projectsData = [
   {
+    title: "Personal Website",
+    compactTitle: "Personal Website",
+    window: "PersonalWebsite",
+    category: "swe",
+    date: "2026",
+    description:
+      "Built a terminal-inspired personal portfolio with interactive window navigation, CLI-style chatbot commands, and responsive layouts. Designed modular React components for experience, projects, toolbox, and LeetCode views with keyboard-friendly interactions and polished fullscreen states.",
+    image: "/Projects/personal-website.jpg",
+    links: [
+      {
+        name: "GitHub",
+        url: "https://github.com/justineyoo1/PersonalPortfolio",
+      },
+    ],
+  },
+  {
     title: "Portfolio Pulse",
+    compactTitle: "Portfolio Pulse",
     window: "PortfolioPulse",
     category: "swe",
     date: "2025",
     description:
       "Built an automated portfolio tracker with live prices, allocation analytics, and daily SMS summaries. Implemented Celery + Redis scheduling for ingestion and digest delivery with retries, backoff, and job tracking. Designed the Postgres schema for holdings, transactions, and time-series snapshots, then added caching and rate limiting to reduce API calls and improve p95 latency.",
-    image: "/project-portfolio-pulse.png",
+    image: "/Projects/portfolio-pulse.png",
     links: [
       {
         name: "GitHub",
@@ -105,12 +125,13 @@ export const projectsData = [
   },
   {
     title: "SyllabusSync",
+    compactTitle: "SyllabusSync",
     window: "SyllabusSync",
     category: "swe",
     date: "2025",
     description:
       "Built a multi-course syllabus Q&A app that returns cited answers from uploaded PDFs by class. Implemented async ingestion pipelines (extract, chunk, embed) with Celery workers and job tracking. Added pgvector retrieval with metadata filters to improve relevance for policy, date, and grading questions, then containerized the stack with Docker and structured logging.",
-    image: "/project-syllabus-sync.png",
+    image: "/Projects/syllabus-sync.png",
     links: [
       {
         name: "GitHub",
@@ -120,12 +141,13 @@ export const projectsData = [
   },
   {
     title: "Premier League Match Predictor",
+    compactTitle: "PL Match Predictor",
     window: "PLPredictor",
     category: "ml/data",
     date: "2025",
     description:
       "Built a production-style ML workflow to predict Premier League match outcomes (home win, draw, away win). Structured the project into modular ingest, feature, model, and serving layers with FastAPI endpoints, configuration-driven training, and test coverage for repeatable experimentation.",
-    image: "/project-pl-predictor.png",
+    image: "/Projects/pl-match-predictor.png",
     links: [
       {
         name: "GitHub",
@@ -135,12 +157,13 @@ export const projectsData = [
   },
   {
     title: "ML Movie Recommender",
+    compactTitle: "ML Movie Recommender",
     window: "MovieRecommender",
     category: "ml/data",
     date: "2025",
     description:
       "Created a hybrid movie recommendation app combining collaborative filtering, SVD matrix factorization, and content-based ranking. Built a Flask backend and web UI with TMDB integration for posters, summaries, and clickable details, then packaged it with a one-command local startup flow.",
-    image: "/project-ml-movie-recommender.png",
+    image: "/Projects/ml-movie-recommender.png",
     links: [
       {
         name: "GitHub",
@@ -150,12 +173,13 @@ export const projectsData = [
   },
   {
     title: "AI Chess Engine",
+    compactTitle: "AI Chess Engine",
     window: "AIChess",
     category: "swe",
     date: "2025",
     description:
       "Developed a Python + Pygame chess game with a minimax + alpha-beta AI opponent. Implemented core chess mechanics (check/checkmate, stalemate, castling, promotion) and improved move quality using piece-square tables and transposition table caching.",
-    image: "/project-ai-chess-engine.png",
+    image: "/Projects/ai-chess-engine.png",
     links: [
       {
         name: "GitHub",
@@ -168,28 +192,37 @@ export const projectsData = [
 export const skillsCoursesCerts = {
   skills: [
     {
-      group: "Languages",
+      group: "Core Languages",
       items: ["Python", "Java", "SQL", "JavaScript", "TypeScript"],
     },
     {
-      group: "Data",
-      items: ["PostgreSQL", "MySQL", "Jupyter", "Snowflake", "dbt"],
+      group: "Backend + Data",
+      items: [
+        "Node.js",
+        "Spring Boot",
+        "REST APIs",
+        "PostgreSQL",
+        "MySQL",
+        "Snowflake",
+        "dbt",
+      ],
     },
     {
-      group: "Frontend",
-      items: ["HTML", "CSS", "Flask", "Tailwind CSS", "React.js"],
+      group: "Frontend + App",
+      items: ["React.js", "Tailwind CSS", "HTML", "CSS", "Flask", "Streamlit"],
     },
     {
-      group: "Testing & Devops",
-      items: ["Docker", "Kubernetes", "Linux", "CI/CD"],
-    },
-    {
-      group: "Backend & APIs",
-      items: ["Spring Boot", "REST APIs", "Node.js"],
-    },
-    {
-      group: "Libraries",
-      items: ["Matplotlib", "Pandas", "Scikit-learn"],
+      group: "Infra + ML",
+      items: [
+        "Docker",
+        "Kubernetes",
+        "Linux",
+        "CI/CD",
+        "Pandas",
+        "Scikit-learn",
+        "Matplotlib",
+        "Jupyter",
+      ],
     },
   ],
   courses: [
@@ -280,6 +313,9 @@ export const commandResponses = {
   contact:
     "you can reach me here:\n\n• email: jeyoo@unc.edu\n• linkedin: https://www.linkedin.com/in/justineyoo\n• github: https://github.com/justineyoo1",
 
+  story:
+    "my story:\n\n2014\n• built my first pc in 7th grade, which sparked my curiosity for how systems work under the hood.\n\n2019\n• took intro to python in high school and started self-learning through youtube and small projects.\n• built early projects like tic-tac-toe and a full-stack url shortener for fun.\n\n2023\n• started at unc chapel hill as a cs + statistics student.\n• joined clubs and team projects to build practical software.\n\n2024\n• admitted to the unc computer science program.\n• went deeper into full-stack engineering and ml/data work.\n\n2025\n• joined [window:experience:Data Science Intern @ Red Hat]\n• joined [window:experience:Undergraduate Research Assistant @ AIMING Lab]\n• shipped production-style data tooling, automation workflows, and ml evaluation pipelines.\n\n2026\n• joined [window:experience:Software Engineer Intern @ Wells Fargo]\n• focused on backend llm workflows and internal tools that reduced manual review time.\n\nfor related builds, check:\n• [window:projects:Portfolio Pulse]\n• [window:projects:SyllabusSync]",
+
   commands:
-    "available commands:\n- about\n- experience\n- projects\n- skills\n- goals\n- funfact\n- contact",
+    "available commands:\n- about\n- story\n- experience\n- projects\n- skills\n- goals\n- funfact\n- contact",
 };

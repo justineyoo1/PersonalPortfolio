@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
-import { Ubuntu } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import ParticleBackground from "@/components/ParticleBackground";
-
-const ubuntu = Ubuntu({ subsets: ["latin"], weight: ["300", "400", "500", "700"] });
 
 export const metadata: Metadata = {
   title: "Justin Yoo Portfolio",
@@ -20,10 +17,6 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* favicon removed */}
-
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
-
         <Script id="global-error-handler" strategy="beforeInteractive">
           {`
             window.addEventListener('error', event => {
@@ -40,8 +33,8 @@ export default function RootLayout({
         </Script>
       </head>
 
-      <body className={ubuntu.className}>
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
+      <body className="font-mono">
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
           <ParticleBackground />
           {children}
         </ThemeProvider>

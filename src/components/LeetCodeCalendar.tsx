@@ -1,44 +1,188 @@
-interface LeetCodeCalendarProps {
-  submissionCalendar: Record<string, number>;
+import React from "react";
+import Tooltip from "./Tooltip";
+
+interface SubmissionCalendarProps {
+  submissionCalendar: {
+    [timestamp: string]: number;
+  };
+  viewMode?: "week" | "month";
   isDark?: boolean;
-  viewMode?: "year" | "month";
+  size?: "compact" | "expanded";
 }
 
-const LeetCodeCalendar = ({
+const LeetCodeCalendar: React.FC<SubmissionCalendarProps> = ({
   submissionCalendar,
+  viewMode = "week",
   isDark = true,
-  viewMode = "year",
-}: LeetCodeCalendarProps) => {
-  const now = Date.now();
-  const days = viewMode === "month" ? 30 : 120;
-  const msPerDay = 24 * 60 * 60 * 1000;
+  size = "compact",
+}) => {
+  const today = new Date();
 
-  const points = Array.from({ length: days }, (_, i) => {
-    const dayTs = now - (days - 1 - i) * msPerDay;
-    const key = String(Math.floor(dayTs / 1000));
-    return submissionCalendar[key] ?? 0;
-  });
+  const getSubmissionCount = (date: Date) => {
+    // Create a normalized date string for the calendar date (YYYY-MM-DD in local timezone)
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const calendarDateString = `${year}-${month}-${day}`;
 
-  const maxCount = Math.max(1, ...points);
+    const matchingTimestamp = Object.keys(submissionCalendar).find((ts) => {
+      const submissionDate = new Date(parseInt(ts) * 1000);
+      // LeetCode timestamps represent UTC dates, so use UTC methods to get the correct date
+      const subYear = submissionDate.getUTCFullYear();
+      const subMonth = String(submissionDate.getUTCMonth() + 1).padStart(
+        2,
+        "0"
+      );
+      const subDay = String(submissionDate.getUTCDate()).padStart(2, "0");
+      const submissionDateString = `${subYear}-${subMonth}-${subDay}`;
 
-  const getCellClass = (count: number) => {
-    if (count === 0) return isDark ? "bg-gray-800" : "bg-gray-200";
-    const ratio = count / maxCount;
-    if (ratio < 0.34) return "bg-emerald-300/50";
-    if (ratio < 0.67) return "bg-emerald-400/70";
-    return "bg-emerald-500";
+      return submissionDateString === calendarDateString;
+    });
+    return matchingTimestamp ? submissionCalendar[matchingTimestamp] : 0;
   };
 
+  const getColor = (count: number) => {
+    if (count === 0) return "bg-slate-600";
+    if (count <= 2) return "bg-green-800";
+    if (count <= 5) return "bg-green-700";
+    if (count <= 10) return "bg-green-600";
+    return "bg-green-500";
+  };
+
+  const daysOfWeek = ["S", "M", "T", "W", "T", "F", "S"];
+
+  if (viewMode === "month") {
+    const year = today.getFullYear();
+    const month = today.getMonth();
+
+    const startDate = new Date(year, month, 1);
+    const endDate = new Date(year, month + 1, 0);
+
+    const daysInMonth = [];
+    let currentDate = new Date(startDate);
+    while (currentDate <= endDate) {
+      daysInMonth.push(new Date(currentDate));
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+    const firstDayOfMonth = startDate.getDay();
+    const monthName = today.toLocaleString("default", { month: "long" });
+
+    return (
+      <div className={`flex flex-col items-center mt-4 w-full ${size === "expanded" ? "px-0" : "px-4"}`}>
+        <p
+          className={`${size === "expanded" ? "text-[2.5rem] mb-2" : "text-sm mb-2"} self-center ${
+            isDark ? "text-gray-200" : "text-gray-800"
+          }`}
+        >
+          {monthName.toLowerCase()} {year}
+        </p>
+        <div
+          className={`${
+            size === "expanded"
+              ? "inline-grid grid-cols-7 gap-2 text-sm mb-1 text-center text-gray-400"
+              : "grid grid-cols-7 gap-1 w-full text-center text-xs text-gray-400"
+          }`}
+        >
+          {daysOfWeek.map((day, i) => (
+            <div key={i} className={size === "expanded" ? "w-16" : ""}>
+              {day}
+            </div>
+          ))}
+        </div>
+        <div
+          className={`${
+            size === "expanded"
+              ? "inline-grid grid-cols-7 gap-2 mt-1"
+              : "grid grid-cols-7 gap-1 mt-1 w-full"
+          }`}
+        >
+          {Array.from({ length: firstDayOfMonth }).map((_, index) => (
+            <div key={`empty-${index}`} className={size === "expanded" ? "w-16 h-16" : ""} />
+          ))}
+          {daysInMonth.map((day, index) => {
+            const count = getSubmissionCount(day);
+            const color = getColor(count);
+            return (
+              <Tooltip
+                key={index}
+                text={`${count} submissions on ${day.toDateString()}`}
+              >
+                <div
+                  className={`flex items-center justify-center rounded-lg ${color} ${
+                    size === "expanded" ? "w-16 h-16" : "w-full aspect-square"
+                  }`}
+                >
+                  <span
+                    className={`text-white ${
+                      size === "expanded" ? "text-[2rem] leading-none" : "text-xs"
+                    }`}
+                  >
+                    {day.getDate()}
+                  </span>
+                </div>
+              </Tooltip>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
+
+  // Default to weekly view
+  const currentDayOfWeek = today.getDay(); // 0=Sunday, 6=Saturday
+  const startDate = new Date(today);
+  startDate.setDate(today.getDate() - currentDayOfWeek); // Start of the week (Sunday)
+  startDate.setHours(0, 0, 0, 0);
+
+  const daysInWeek = [];
+  for (let i = 0; i < 7; i++) {
+    const day = new Date(startDate);
+    day.setDate(startDate.getDate() + i);
+    daysInWeek.push(day);
+  }
+
   return (
-    <div className="mt-3 w-full px-4">
-      <div className="grid grid-cols-30 gap-1">
-        {points.map((count, index) => (
-          <div
-            key={`lc-cell-${index}`}
-            className={`h-2 w-2 rounded-sm ${getCellClass(count)}`}
-            title={`${count} submissions`}
-          />
-        ))}
+    <div className="flex flex-col items-center mt-4 w-full px-4">
+      <p
+        className={` text-sm mb-2 self-center ${
+          isDark ? "text-gray-200" : "text-gray-800"
+        }`}
+      >
+        week's submissions
+      </p>
+      <div className="grid grid-cols-7 gap-2 w-full text-center">
+        {daysInWeek.map((day, index) => {
+          const count = getSubmissionCount(day);
+          const color = getColor(count);
+          return (
+            <Tooltip
+              key={index}
+              text={`${count} submissions on ${day.toLocaleDateString()}`}
+            >
+              <div className="flex flex-col items-center gap-1">
+                <span
+                  className={`text-xs text-gray-400 ${
+                    isDark ? "text-gray-200" : "text-gray-800"
+                  }`}
+                >
+                  {daysOfWeek[index]}
+                </span>
+                <div
+                  className={`w-8 h-8 flex items-center justify-center rounded-sm ${color}`}
+                >
+                  <span
+                    className={`text-white text-xs ${
+                      isDark ? "text-gray-200" : "text-gray-800"
+                    }`}
+                  >
+                    {day.getDate()}
+                  </span>
+                </div>
+              </div>
+            </Tooltip>
+          );
+        })}
       </div>
     </div>
   );
