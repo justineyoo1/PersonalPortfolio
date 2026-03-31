@@ -252,6 +252,27 @@ export function AppsPageClient() {
 
       </div>
 
+      {/* Footer links */}
+      <div className="w-full max-w-2xl mt-8 flex justify-center gap-4">
+        <a
+          href="/app/privacy"
+          className={`text-xs transition-colors ${
+            isDark ? "font-mono text-gray-500 hover:text-[#60A5FA]" : "text-[#86868B] hover:text-[#007AFF]"
+          }`}
+        >
+          Privacy Policy
+        </a>
+        <span className={`text-xs ${isDark ? "text-gray-700" : "text-[#D1D1D6]"}`}>|</span>
+        <a
+          href="/app/terms"
+          className={`text-xs transition-colors ${
+            isDark ? "font-mono text-gray-500 hover:text-[#60A5FA]" : "text-[#86868B] hover:text-[#007AFF]"
+          }`}
+        >
+          Terms of Service
+        </a>
+      </div>
+
       {/* Bottom navbar */}
       <div
           className={`fixed bottom-3 z-50 flex items-center gap-2 px-3 py-2 rounded-[20px] ${

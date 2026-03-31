@@ -6,7 +6,7 @@ import type { Engine, Container } from "@tsparticles/engine";
 import { loadSlim } from "@tsparticles/slim";
 
 export default function ParticleBackground() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
   const [particlesReady, setParticlesReady] = useState(false);
   const containerRef = useRef<Container | null>(null);
 
