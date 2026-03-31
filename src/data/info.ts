@@ -5,8 +5,8 @@ export const personalInfo = {
   username: "justin", // Used in terminal display (username@computer)
   computerName: "MacbookPro", // Used in terminal display (username@computer)
   email: "jeyoo@unc.edu",
-  title: "Software Engineer @ Wells Fargo",
-  education: "CS + Stats @ UNC Chapel Hill",
+  title: "Software Engineer | Data Scientist",
+  education: "CS + Stats @ UNC",
   graduationYear: "Dec 2027",
   location: "Chapel Hill, NC",
 
@@ -26,9 +26,11 @@ export const personalInfo = {
 
   // About Me - Each string is a paragraph
   aboutMe: [
-    "Hi, I'm Justin Yoo, a junior at University of North Carolina at Chapel Hill double majoring in Computer Science and Statistics.",
-    "I'm passionate about software engineering, machine learning engineering, and data science. I'm currently looking for opportunities where I can keep growing and building impactful tools.",
-    "Outside of tech, you'll usually find me at the gym, playing chess, and playing soccer!",
+    "Hey, I&apos;m Justin. I&apos;m studying Computer Science and Statistics at UNC Chapel Hill, graduating in December 2027.",
+    "I like building backend-heavy products that are practical and measurable, especially automation workflows and data-driven systems.",
+    "Most recently, I worked on LLM triage tooling and internal data platforms during internships at Wells Fargo and Red Hat.",
+    "I also enjoy building full-stack side projects like Portfolio Pulse and SyllabusSync using FastAPI, Postgres, Redis, Celery, and Docker.",
+    'You can find my work on <a href="https://github.com/justineyoo1" class="text-blue-300 underline" target="_blank" rel="noopener noreferrer">GitHub</a> and connect with me on <a href="https://www.linkedin.com/in/justineyoo" class="text-blue-300 underline" target="_blank" rel="noopener noreferrer">LinkedIn</a>.',
   ],
 };
 
@@ -91,22 +93,6 @@ export const experiencesData = [
 ];
 
 export const projectsData = [
-  {
-    title: "Personal Website",
-    compactTitle: "Personal Website",
-    window: "PersonalWebsite",
-    category: "swe",
-    date: "2026",
-    description:
-      "Built a terminal-inspired personal portfolio with interactive window navigation, CLI-style chatbot commands, and responsive layouts. Designed modular React components for experience, projects, toolbox, and LeetCode views with keyboard-friendly interactions and polished fullscreen states.",
-    image: "/Projects/personal-website.jpg",
-    links: [
-      {
-        name: "GitHub",
-        url: "https://github.com/justineyoo1/PersonalPortfolio",
-      },
-    ],
-  },
   {
     title: "Portfolio Pulse",
     compactTitle: "Portfolio Pulse",
@@ -192,37 +178,24 @@ export const projectsData = [
 export const skillsCoursesCerts = {
   skills: [
     {
-      group: "Core Languages",
+      group: "Languages",
       items: ["Python", "Java", "SQL", "JavaScript", "TypeScript"],
     },
     {
-      group: "Backend + Data",
-      items: [
-        "Node.js",
-        "Spring Boot",
-        "REST APIs",
-        "PostgreSQL",
-        "MySQL",
-        "Snowflake",
-        "dbt",
-      ],
+      group: "Data",
+      items: ["PostgreSQL", "MySQL", "Jupyter", "Snowflake", "dbt", "Pandas", "Scikit-learn", "Matplotlib"],
     },
     {
-      group: "Frontend + App",
-      items: ["React.js", "Tailwind CSS", "HTML", "CSS", "Flask", "Streamlit"],
+      group: "Frontend",
+      items: ["HTML", "CSS", "Flask", "Tailwind CSS", "React.js"],
     },
     {
-      group: "Infra + ML",
-      items: [
-        "Docker",
-        "Kubernetes",
-        "Linux",
-        "CI/CD",
-        "Pandas",
-        "Scikit-learn",
-        "Matplotlib",
-        "Jupyter",
-      ],
+      group: "Testing & Devops",
+      items: ["Docker", "Kubernetes", "Linux", "CI/CD"],
+    },
+    {
+      group: "Backend & APIs",
+      items: ["Spring Boot", "REST APIs", "Node.js"],
     },
   ],
   courses: [
@@ -254,6 +227,37 @@ export const skillsCoursesCerts = {
     },
   ],
 };
+
+export const techStackData = [
+  {
+    category: "languages",
+    items: [
+      { name: "Python", icon: "/tech-stack-imgs/python.png" },
+      { name: "Java", icon: "/tech-stack-imgs/java.png" },
+      { name: "C", icon: "/tech-stack-imgs/c.png" },
+      { name: "SQL", icon: "/tech-stack-imgs/sql.png" },
+    ],
+  },
+  {
+    category: "data/ml",
+    items: [
+      { name: "Jupyter", icon: "/tech-stack-imgs/jupyter.png" },
+      { name: "TensorFlow", icon: "/tech-stack-imgs/tensorflow.png" },
+      { name: "Matplotlib", icon: "/tech-stack-imgs/Matplotlib.png" },
+      { name: "dbt", icon: "/tech-stack-imgs/dbt.png" },
+      { name: "Snowflake", icon: "/tech-stack-imgs/snowflake.png" },
+    ],
+  },
+  {
+    category: "tools",
+    items: [
+      { name: "Linux", icon: "/tech-stack-imgs/linux.png" },
+      { name: "Flask", icon: "/tech-stack-imgs/flask.png" },
+      { name: "Streamlit", icon: "/tech-stack-imgs/streamlit.png" },
+      { name: "Tableau", icon: "/tech-stack-imgs/tableau.png" },
+    ],
+  },
+];
 
 export const asciiList = [
   `
@@ -314,8 +318,8 @@ export const commandResponses = {
     "you can reach me here:\n\n• email: jeyoo@unc.edu\n• linkedin: https://www.linkedin.com/in/justineyoo\n• github: https://github.com/justineyoo1",
 
   story:
-    "my story:\n\n2014\n• built my first pc in 7th grade, which sparked my curiosity for how systems work under the hood.\n\n2019\n• took intro to python in high school and started self-learning through youtube and small projects.\n• built early projects like tic-tac-toe and a full-stack url shortener for fun.\n\n2023\n• started at unc chapel hill as a cs + statistics student.\n• joined clubs and team projects to build practical software.\n\n2024\n• admitted to the unc computer science program.\n• went deeper into full-stack engineering and ml/data work.\n\n2025\n• joined [window:experience:Data Science Intern @ Red Hat]\n• joined [window:experience:Undergraduate Research Assistant @ AIMING Lab]\n• shipped production-style data tooling, automation workflows, and ml evaluation pipelines.\n\n2026\n• joined [window:experience:Software Engineer Intern @ Wells Fargo]\n• focused on backend llm workflows and internal tools that reduced manual review time.\n\nfor related builds, check:\n• [window:projects:Portfolio Pulse]\n• [window:projects:SyllabusSync]",
+    "i started coding in high school tinkering with small automation scripts, and that itch to make things more efficient never went away.\n\nin college i dove into cs + stats at unc chapel hill. sophomore year i joined unc cs+social good as a backend dev, which led to app team carolina the next semester.\n\nsummer 2025 i interned at red hat on the data science team, building etl pipelines and dashboards with snowflake and dbt. that same fall i joined the aiming lab doing nlp research.\n\nsummer 2026 i interned at wells fargo as a software engineer, working on llm-powered triage tools and internal platform services.\n\nnow i'm focused on backend systems, data infrastructure, and shipping tools that save real time for people. graduating december 2027.",
 
   commands:
-    "available commands:\n- about\n- story\n- experience\n- projects\n- skills\n- goals\n- funfact\n- contact",
+    "available commands:\n- about\n- story (aliases: timeline, journey, mystory)\n- experience\n- projects\n- skills\n- goals\n- funfact\n- contact\n\nor just type a question and i'll answer it.",
 };

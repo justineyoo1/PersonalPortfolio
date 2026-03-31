@@ -17,6 +17,10 @@ const config = {
         "2xl": "1400px",
       },
     },
+    fontFamily: {
+      sans: ["var(--font-inter)", "system-ui", "-apple-system", "sans-serif"],
+      mono: ['"JetBrains Mono"', '"IBM Plex Mono"', '"SF Mono"', '"Cascadia Mono"', '"Menlo"', '"Consolas"', "monospace"],
+    },
     extend: {
       colors: {
         border: "hsl(var(--border))",
@@ -51,6 +55,17 @@ const config = {
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
+        },
+        apple: {
+          blue: "#007AFF",
+          "blue-hover": "#0066D6",
+          bg: "#F5F5F7",
+          "bg-secondary": "#F2F2F7",
+          separator: "#E5E5EA",
+          "text-primary": "#1D1D1F",
+          "text-secondary": "#86868B",
+          "text-tertiary": "#515154",
+          "gray-bubble": "#E9E9EB",
         },
       },
       borderRadius: {

@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 
 type ChatItem = { role: "user" | "assistant"; content: string };
 
+export type DisplayItem = { command: string; response: string };
+
 type ProjectOrExperience = {
   title: string;
   date: string;
@@ -9,6 +11,7 @@ type ProjectOrExperience = {
 };
 
 type UseCliArgs = {
+  isDark: boolean;
   selectedWindow: string;
   accentTextClass: string;
   commandResponses: Record<string, string>;
@@ -20,7 +23,10 @@ type UseCliArgs = {
   setSelectExperience: (value: string) => void;
 };
 
+const MAX_CONTEXT_MESSAGES = 10;
+
 export const useCli = ({
+  isDark,
   selectedWindow,
   accentTextClass,
   commandResponses,
@@ -34,7 +40,9 @@ export const useCli = ({
   const [command, setCommand] = useState("");
   const [lastCommand, setLastCommand] = useState("");
   const [response, setResponse] = useState("");
+  const [isResponding, setIsResponding] = useState(false);
   const [chatHistory, setChatHistory] = useState<ChatItem[]>([]);
+  const [displayHistory, setDisplayHistory] = useState<DisplayItem[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const focusInput = () => {
@@ -65,7 +73,7 @@ export const useCli = ({
       ...Array.from(text.matchAll(urlRegex)).map((m) => ({
         index: m.index!,
         length: m[0].length,
-        content: m[0],
+        content: m[0].replace(/[.,;:!?)'"]+$/, ""),
         type: "link" as const,
         window: undefined as string | undefined,
       })),
@@ -87,26 +95,14 @@ export const useCli = ({
 
     matches.forEach((match) => {
       if (match.index > lastIndex) {
-        parts.push({
-          type: "text",
-          content: text.slice(lastIndex, match.index),
-        });
+        parts.push({ type: "text", content: text.slice(lastIndex, match.index) });
       }
-
-      parts.push({
-        type: match.type,
-        content: match.content,
-        window: match.window,
-      });
-
+      parts.push({ type: match.type, content: match.content, window: match.window });
       lastIndex = match.index + match.length;
     });
 
     if (lastIndex < text.length) {
-      parts.push({
-        type: "text",
-        content: text.slice(lastIndex),
-      });
+      parts.push({ type: "text", content: text.slice(lastIndex) });
     }
 
     return (
@@ -119,7 +115,7 @@ export const useCli = ({
                 href={part.content}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-emerald-400 underline-offset-2 transition-colors hover:text-emerald-300 hover:underline focus:outline-none focus-visible:underline"
+                className={isDark ? "text-emerald-400 underline-offset-2 transition-colors hover:text-emerald-300 hover:underline focus:outline-none focus-visible:underline" : "text-[#007AFF] underline-offset-2 transition-colors hover:text-[#0066D6] hover:underline focus:outline-none focus-visible:underline"}
               >
                 {part.content}
               </a>
@@ -131,7 +127,7 @@ export const useCli = ({
               <a
                 key={index}
                 href={`mailto:${part.content}`}
-                className="text-emerald-400 underline-offset-2 transition-colors hover:text-emerald-300 hover:underline focus:outline-none focus-visible:underline"
+                className={isDark ? "text-emerald-400 underline-offset-2 transition-colors hover:text-emerald-300 hover:underline focus:outline-none focus-visible:underline" : "text-[#007AFF] underline-offset-2 transition-colors hover:text-[#0066D6] hover:underline focus:outline-none focus-visible:underline"}
               >
                 {part.content}
               </a>
@@ -152,7 +148,7 @@ export const useCli = ({
                     setSelectExperience(part.content);
                   }
                 }}
-                className="inline p-0 m-0 align-baseline text-left text-emerald-400 underline-offset-2 transition-colors hover:text-emerald-300 hover:underline cursor-pointer bg-transparent border-none font-mono whitespace-normal break-words"
+                className={`inline p-0 m-0 align-baseline text-left underline-offset-2 transition-colors hover:underline cursor-pointer bg-transparent border-none whitespace-normal break-words ${isDark ? "text-emerald-400 hover:text-emerald-300 font-mono" : "text-[#007AFF] hover:text-[#0066D6]"}`}
               >
                 {part.content}
               </button>
@@ -165,15 +161,11 @@ export const useCli = ({
     );
   };
 
-  async function streamStaticResponse(
-    text: string,
-    onChunk: (chunk: string) => void,
-  ) {
+  async function streamWords(text: string, onChunk: (chunk: string) => void) {
     const words = text.split(" ");
     for (let i = 0; i < words.length; i++) {
       const word = words[i];
-      const chunk = (i === 0 ? "" : " ") + word;
-      onChunk(chunk);
+      onChunk((i === 0 ? "" : " ") + word);
 
       let delay = 25 + Math.random() * 25;
       if (word.includes(".") || word.includes("!") || word.includes("?")) {
@@ -190,7 +182,8 @@ export const useCli = ({
   }
 
   async function askQuestion(q: string, onChunk: (chunk: string) => void) {
-    const messages = [...chatHistory, { role: "user" as const, content: q }];
+    const contextMessages = chatHistory.slice(-MAX_CONTEXT_MESSAGES);
+    const messages = [...contextMessages, { role: "user" as const, content: q }];
 
     const res = await fetch("/api/ask", {
       method: "POST",
@@ -198,25 +191,24 @@ export const useCli = ({
       body: JSON.stringify({ messages }),
     });
 
-    const data = await res.json();
-    const fullResponse = data.answer;
-    const words = fullResponse.split(" ");
+    if (!res.ok || !res.body) {
+      throw new Error("request failed");
+    }
 
-    for (let i = 0; i < words.length; i++) {
-      const word = words[i];
-      const chunk = (i === 0 ? "" : " ") + word;
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let fullResponse = "";
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      const chunk = decoder.decode(value, { stream: true });
+      fullResponse += chunk;
       onChunk(chunk);
+    }
 
-      let delay = 25 + Math.random() * 25;
-      if (word.includes(".") || word.includes("!") || word.includes("?")) {
-        delay += 200 + Math.random() * 100;
-      } else if (word.includes(",") || word.includes(";")) {
-        delay += 100 + Math.random() * 50;
-      }
-      if (word.length <= 2) {
-        delay *= 0.7;
-      }
-      await new Promise((resolve) => setTimeout(resolve, delay));
+    if (!fullResponse) {
+      throw new Error("empty response");
     }
 
     setChatHistory((prev) => [
@@ -227,16 +219,32 @@ export const useCli = ({
   }
 
   const handleCommand = async (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key !== "Enter" || !command) return;
+    if (e.key !== "Enter" || !command || isResponding) return;
 
     const rawCommand = command;
     const trimmedCommand = rawCommand.trim().toLowerCase();
-    setLastCommand(rawCommand);
-    setResponse("");
     setCommand("");
 
+    // Handle clear before anything else
+    if (trimmedCommand === "clear") {
+      setDisplayHistory([]);
+      setChatHistory([]);
+      setLastCommand("");
+      setResponse("");
+      return;
+    }
+
+    // Archive the previous exchange into display history
+    if (lastCommand) {
+      setDisplayHistory((prev) => [...prev, { command: lastCommand, response }]);
+    }
+
+    setLastCommand(rawCommand);
+    setResponse("");
+    setIsResponding(true);
+
     const emitStatic = async (text: string) => {
-      await streamStaticResponse(text, (chunk: string) => {
+      await streamWords(text, (chunk: string) => {
         setResponse((prev) => prev + chunk);
       });
       setChatHistory((prev) => [
@@ -246,77 +254,65 @@ export const useCli = ({
       ]);
     };
 
-    if (trimmedCommand === "about") return emitStatic(commandResponses.about);
-
-    if (
-      trimmedCommand === "story" ||
-      trimmedCommand === "timeline" ||
-      trimmedCommand === "journey" ||
-      trimmedCommand === "mystory"
-    ) {
-      return emitStatic(commandResponses.story);
-    }
-
-    if (
-      trimmedCommand === "experience" ||
-      trimmedCommand === "exp" ||
-      trimmedCommand === "experiences"
-    ) {
-      const experienceList = experiencesData
-        .map(
-          (exp) =>
-            `• [window:experience:${exp.title}] (${exp.date})${exp.description ? "\n  " + exp.description.split("\n")[0].substring(0, 100) + "..." : ""}`,
-        )
-        .join("\n\n");
-      return emitStatic(
-        `here's my experience so far:\n\n${experienceList}\n\nclick any title to see more details!`,
-      );
-    }
-
-    if (trimmedCommand === "projects" || trimmedCommand === "project") {
-      const projectsList = projectsData
-        .map(
-          (proj) =>
-            `• [window:projects:${proj.title}] (${proj.date})${proj.description ? "\n  " + proj.description.split("\n")[0].substring(0, 100) + "..." : ""}`,
-        )
-        .join("\n\n");
-      return emitStatic(
-        `here are my projects:\n\n${projectsList}\n\nclick any title to see more details!`,
-      );
-    }
-
-    if (trimmedCommand === "skills" || trimmedCommand === "skill") {
-      return emitStatic(commandResponses.skills);
-    }
-
-    if (trimmedCommand === "goals" || trimmedCommand === "goal") {
-      return emitStatic(commandResponses.goals);
-    }
-
-    if (trimmedCommand === "funfact") {
-      return emitStatic(commandResponses.funfact);
-    }
-
-    if (trimmedCommand === "contact") {
-      return emitStatic(commandResponses.contact);
-    }
-
-    if (
-      trimmedCommand === "commands" ||
-      trimmedCommand === "command" ||
-      trimmedCommand === "help" ||
-      trimmedCommand === "cmd"
-    ) {
-      return emitStatic(commandResponses.commands);
-    }
-
     try {
-      await askQuestion(rawCommand, (chunk: string) => {
-        setResponse((prev) => prev + chunk);
-      });
+      if (trimmedCommand === "about") {
+        await emitStatic(commandResponses.about);
+      } else if (
+        trimmedCommand === "story" ||
+        trimmedCommand === "timeline" ||
+        trimmedCommand === "journey" ||
+        trimmedCommand === "mystory"
+      ) {
+        await emitStatic(commandResponses.story);
+      } else if (
+        trimmedCommand === "experience" ||
+        trimmedCommand === "exp" ||
+        trimmedCommand === "experiences"
+      ) {
+        const experienceList = experiencesData
+          .map(
+            (exp) =>
+              `• [window:experience:${exp.title}] (${exp.date})${exp.description ? "\n  " + exp.description.split("\n")[0].substring(0, 100) + "..." : ""}`,
+          )
+          .join("\n\n");
+        await emitStatic(
+          `here's my experience so far:\n\n${experienceList}\n\nclick any title to see more details!`,
+        );
+      } else if (trimmedCommand === "projects" || trimmedCommand === "project") {
+        const projectsList = projectsData
+          .map(
+            (proj) =>
+              `• [window:projects:${proj.title}] (${proj.date})${proj.description ? "\n  " + proj.description.split("\n")[0].substring(0, 100) + "..." : ""}`,
+          )
+          .join("\n\n");
+        await emitStatic(
+          `here are my projects:\n\n${projectsList}\n\nclick any title to see more details!`,
+        );
+      } else if (trimmedCommand === "skills" || trimmedCommand === "skill") {
+        await emitStatic(commandResponses.skills);
+      } else if (trimmedCommand === "goals" || trimmedCommand === "goal") {
+        await emitStatic(commandResponses.goals);
+      } else if (trimmedCommand === "funfact") {
+        await emitStatic(commandResponses.funfact);
+      } else if (trimmedCommand === "contact") {
+        await emitStatic(commandResponses.contact);
+      } else if (
+        trimmedCommand === "commands" ||
+        trimmedCommand === "command" ||
+        trimmedCommand === "help" ||
+        trimmedCommand === "cmd"
+      ) {
+        await emitStatic(commandResponses.commands);
+      } else {
+        await askQuestion(rawCommand, (chunk: string) => {
+          setResponse((prev) => prev + chunk);
+        });
+      }
     } catch (error) {
       console.error("Error streaming response:", error);
       setResponse("sorry, something went wrong. try again?");
+    } finally {
+      setIsResponding(false);
     }
   };
 
@@ -325,6 +321,8 @@ export const useCli = ({
     setCommand,
     lastCommand,
     response,
+    isResponding,
+    displayHistory,
     inputRef,
     focusInput,
     handleCommand,

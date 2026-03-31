@@ -212,6 +212,10 @@ export const useWindowNavigation = ({
       if (expandWindow === "leetcode" && e.key === "Enter") {
         setExpandWindow("");
       }
+
+      if (selectedWindow === "apps" && e.key === "Enter") {
+        window.open("/apps", "_blank");
+      }
     };
 
     window.addEventListener("keydown", handleKeyDown);
@@ -305,8 +309,8 @@ export const useWindowNavigation = ({
     if (isResumeOpen || isMediaPlayerOpen) return;
 
     const windowOrder = isTimerOpen
-      ? ["me", "experience", "projects", "skills", "timer", "cli"]
-      : ["me", "experience", "projects", "skills", "leetcode", "cli"];
+      ? ["me", "experience", "projects", "skills", "timer", "cli", "apps"]
+      : ["me", "experience", "projects", "skills", "leetcode", "cli", "apps"];
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (expandWindow) return;

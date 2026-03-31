@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import Script from "next/script";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import ParticleBackground from "@/components/ParticleBackground";
+
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
   title: "Justin Yoo Portfolio",
@@ -21,19 +24,15 @@ export default function RootLayout({
           {`
             window.addEventListener('error', event => {
               console.error('Global error caught:', event.error);
-              // TODO: send to your logging endpoint, e.g.:
-              // fetch('/api/log', { method: 'POST', body: JSON.stringify({ message: event.error.message, stack: event.error.stack }) });
             });
-
             window.addEventListener('unhandledrejection', event => {
               console.error('Unhandled promise rejection:', event.reason);
-              // TODO: send to your logging endpoint similarly
             });
           `}
         </Script>
       </head>
 
-      <body className="font-mono">
+      <body className={inter.variable}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
           <ParticleBackground />
           {children}

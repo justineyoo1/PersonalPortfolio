@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 
 export const runtime = "nodejs";
 
@@ -48,25 +48,28 @@ export async function POST(req: NextRequest) {
     const { messages } = body ?? {};
 
     if (!messages || !Array.isArray(messages) || messages.length === 0) {
-      return NextResponse.json({ error: "No messages provided" }, { status: 400 });
+      return new Response(JSON.stringify({ error: "No messages provided" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" },
+      });
     }
 
     if (!process.env.GEMINI_API_KEY) {
-      return NextResponse.json(
-        { error: "Missing GEMINI_API_KEY" },
-        { status: 500 },
-      );
+      return new Response(JSON.stringify({ error: "Missing GEMINI_API_KEY" }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      });
     }
 
-    const contents = messages
-      .filter((m: any) => m && (m.role === "user" || m.role === "assistant"))
-      .map((m: any) => ({
+    const contents = (messages as { role: string; content: string }[])
+      .filter((m) => m && (m.role === "user" || m.role === "assistant"))
+      .map((m) => ({
         role: m.role === "assistant" ? "model" : "user",
         parts: [{ text: String(m.content ?? "") }],
       }));
 
     const resp = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:streamGenerateContent?alt=sse&key=${process.env.GEMINI_API_KEY}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -77,23 +80,64 @@ export async function POST(req: NextRequest) {
       },
     );
 
-    if (!resp.ok) {
-      throw new Error(`Gemini request failed: ${resp.status} ${resp.statusText}`);
+    if (!resp.ok || !resp.body) {
+      throw new Error(`Gemini request failed: ${resp.status}`);
     }
 
-    const data = await resp.json();
-    const answer =
-      data?.candidates?.[0]?.content?.parts?.[0]?.text?.toString?.() || "";
-    return NextResponse.json({ answer });
+    // Forward SSE stream, extracting text chunks from each candidate
+    const upstream = resp.body;
+    const stream = new ReadableStream({
+      async start(controller) {
+        const reader = upstream.getReader();
+        const decoder = new TextDecoder();
+        let buffer = "";
+
+        try {
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+
+            buffer += decoder.decode(value, { stream: true });
+            const lines = buffer.split("\n");
+            buffer = lines.pop() ?? "";
+
+            for (const line of lines) {
+              if (!line.startsWith("data: ")) continue;
+              const json = line.slice(6).trim();
+              if (!json || json === "[DONE]") continue;
+              try {
+                const parsed = JSON.parse(json);
+                const text =
+                  parsed?.candidates?.[0]?.content?.parts?.[0]?.text;
+                if (text) {
+                  controller.enqueue(new TextEncoder().encode(text));
+                }
+              } catch {
+                // skip malformed chunk
+              }
+            }
+          }
+        } finally {
+          controller.close();
+        }
+      },
+    });
+
+    return new Response(stream, {
+      headers: { "Content-Type": "text/plain; charset=utf-8" },
+    });
   } catch (error) {
     console.error("Gemini error:", error);
-    return NextResponse.json(
-      { error: "LLM request failed", details: String(error) },
-      { status: 500 },
-    );
+    return new Response(JSON.stringify({ error: "LLM request failed" }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 }
 
 export function GET() {
-  return NextResponse.json({ error: "Only POST allowed" }, { status: 405 });
+  return new Response(JSON.stringify({ error: "Only POST allowed" }), {
+    status: 405,
+    headers: { "Content-Type": "application/json" },
+  });
 }

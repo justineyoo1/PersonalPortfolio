@@ -11,36 +11,12 @@ import { personalInfo } from "../data/info";
 export const Taskbar = ({ theme }: { theme: "dark" | "light" }) => {
   return (
     <div
-      className={`flex w-fit max-w-sm sm:max-w-md lg:w-fit fixed items-center gap-2 bottom-2 p-2 py-2 lg:py-1 rounded-xl justify-between px-3 lg:p-2 ${
-        theme === "dark" ? "shadow-xl" : "shadow-sm"
-      } mx-2 lg:mx-0 z-50 ${
+      className={`flex w-fit max-w-sm sm:max-w-md lg:w-fit fixed items-center gap-2 bottom-2 p-2 py-2 lg:py-1 rounded-xl justify-between px-3 lg:p-2 mx-2 lg:mx-0 z-50 ${
         theme === "dark"
-          ? "border border-gray-700 bg-gray-950"
-          : "border border-gray-300 bg-white"
+          ? "shadow-xl border border-gray-700 bg-gray-950"
+          : "apple-shadow-dock apple-glass-heavy rounded-[20px] border border-white/50"
       }`}
     >
-      {/* <div className="min-w-0 flex-shrink">
-        
-        <div className="hidden lg:flex text-gray-200 bg-gray-800 p-1 px-3 rounded-lg items-center gap-2 border border-gray-700">
-          <Search className="w-4 h-4 flex-shrink-0" />
-          <p className="text-sm bg-gray-800 p-1 px-3">
-            nguyendaniel1312@gmail.com
-          </p>
-        </div>
-
-       
-        <div className="lg:hidden">
-          <Tooltip text="Send Email">
-            <a
-              href="mailto:nguyendaniel1312@gmail.com"
-              className="text-gray-200 bg-gray-800 p-2 rounded-lg flex items-center justify-center border border-gray-700 transition-all duration-300 hover:bg-gray-700"
-            >
-              <Mail className="w-6 h-6" />
-            </a>
-          </Tooltip>
-        </div>
-      </div> */}
-
       {/* Icons section - larger touch targets on mobile */}
       <div className="flex gap-3 lg:gap-2 w-full justify-center">
         <Tooltip text="GitHub">
@@ -49,15 +25,15 @@ export const Taskbar = ({ theme }: { theme: "dark" | "light" }) => {
             target="_blank"
             rel="noopener noreferrer"
             className={
-              "border rounded-lg p-1 " +
+              "rounded-lg p-1 transition-colors " +
               (theme === "dark"
-                ? "border-gray-700 bg-gray-900"
-                : "border-gray-300 bg-white")
+                ? "border border-gray-700 bg-gray-900"
+                : "hover:bg-[#F2F2F7] rounded-xl apple-transition")
             }
           >
             <Github
               className="w-7 h-7 object-contain"
-              color={theme === "dark" ? "white" : "black"}
+              color={theme === "dark" ? "white" : "#1D1D1F"}
             />
           </a>
         </Tooltip>
@@ -68,15 +44,15 @@ export const Taskbar = ({ theme }: { theme: "dark" | "light" }) => {
             target="_blank"
             rel="noopener noreferrer"
             className={
-              "border rounded-lg p-1 " +
+              "rounded-lg p-1 transition-colors " +
               (theme === "dark"
-                ? "border-gray-700 bg-gray-900"
-                : "border-gray-300 bg-white")
+                ? "border border-gray-700 bg-gray-900"
+                : "hover:bg-[#F2F2F7] rounded-xl apple-transition")
             }
           >
             <Linkedin
               className="w-7 h-7 object-contain"
-              color={theme === "dark" ? "white" : "black"}
+              color={theme === "dark" ? "white" : "#1D1D1F"}
             />
           </a>
         </Tooltip>
@@ -87,27 +63,27 @@ export const Taskbar = ({ theme }: { theme: "dark" | "light" }) => {
               window.dispatchEvent(new CustomEvent("openResume"));
             }}
             className={
-              "border rounded-lg p-1 " +
+              "rounded-lg p-1 transition-colors " +
               (theme === "dark"
-                ? "border-gray-700 bg-gray-900"
-                : "border-gray-300 bg-white")
+                ? "border border-gray-700 bg-gray-900"
+                : "hover:bg-[#F2F2F7] rounded-xl apple-transition")
             }
           >
             <FileUser
               className="w-7 h-7 object-contain"
-              color={theme === "dark" ? "white" : "black"}
+              color={theme === "dark" ? "white" : "#1D1D1F"}
             />
           </button>
         </Tooltip>
-        <div className="border border-gray-300 rounded-full" />
+        <div className={`border rounded-full ${theme === "dark" ? "border-gray-700" : "border-[#E5E5EA]"}`} />
         <Tooltip text={theme === "dark" ? "Light Mode" : "Dark Mode"}>
           <button
             onClick={() => {
               window.dispatchEvent(new CustomEvent("toggleTheme"));
             }}
             className={
-              "border rounded-lg p-1 " +
-              (theme === "dark" ? "border-gray-700" : "border-gray-300 ")
+              "rounded-lg p-1 transition-colors " +
+              (theme === "dark" ? "border border-gray-700" : "hover:bg-[#F2F2F7] rounded-xl apple-transition")
             }
           >
             {theme === "dark" ? (

@@ -45,14 +45,14 @@ const LeetCodeBody = ({
             target="_blank"
             rel="noopener noreferrer"
             className={`${expanded ? "w-16 h-16" : "w-16 h-16"} rounded-xl p-1 flex items-center justify-center cursor-pointer ${
-              isDark ? "bg-gray-100" : "bg-gray-200"
+              isDark ? "bg-gray-100" : "bg-[#F2F2F7]"
             }`}
           >
             <img
               src="/img/Logos/leetcode_color.png"
               alt="LeetCode Logo"
               className={`${expanded ? "w-16 h-16" : "w-16 h-16"} rounded-xl p-1 object-contain ${
-                isDark ? "bg-gray-100" : "bg-gray-200"
+                isDark ? "bg-gray-100" : "bg-[#F2F2F7]"
               }`}
               onError={(e) => {
                 e.currentTarget.onerror = null;
@@ -63,15 +63,15 @@ const LeetCodeBody = ({
           <div className="flex-grow">
             <p
               className={`${expanded ? "text-[1.8rem] leading-tight" : "text-sm"} font-bold ${
-                isDark ? "text-white" : "text-gray-800"
+                isDark ? "text-white" : "text-[#1D1D1F] tracking-tight"
               }`}
             >
-              total solved: {leetCode.totalSolved}
+              {isDark ? "total solved" : "Total Solved"}: {leetCode.totalSolved}
             </p>
             <div className={`flex flex-col justify-between ${expanded ? "text-[1.55rem] leading-tight mt-1" : "text-sm"}`}>
-              <p className="text-green-400">easy: {leetCode.easySolved}</p>
-              <p className="text-yellow-400">medium: {leetCode.mediumSolved}</p>
-              <p className="text-red-400">hard: {leetCode.hardSolved}</p>
+              <p className={isDark ? "text-green-400" : "text-[#34C759] font-semibold"}>{isDark ? "easy" : "Easy"}: {leetCode.easySolved}</p>
+              <p className={isDark ? "text-yellow-400" : "text-[#FF9500] font-semibold"}>{isDark ? "medium" : "Medium"}: {leetCode.mediumSolved}</p>
+              <p className={isDark ? "text-red-400" : "text-[#FF3B30] font-semibold"}>{isDark ? "hard" : "Hard"}: {leetCode.hardSolved}</p>
             </div>
           </div>
         </div>
@@ -118,7 +118,8 @@ export const LeetCodeCollapsed = ({
       onClick={onSelect}
     >
       <WindowHeader
-        title="leetcode - zsh"
+        title={isDark ? "leetcode - zsh" : "LeetCode"}
+        isDark={isDark}
         selected={selectedWindow === "leetcode"}
         headerClass={headerClass}
         onMaximize={() => setExpandWindow("leetcode")}
@@ -151,7 +152,8 @@ export const LeetCodeExpanded = ({
       className={`w-full h-full lg:w-full lg:h-full max-w-4xl max-h-[90vh] lg:max-w-none lg:max-h-none ${windowThemeClass} rounded-xl overflow-hidden`}
     >
       <WindowHeader
-        title="leetcode - zsh"
+        title={isDark ? "leetcode - zsh" : "LeetCode"}
+        isDark={isDark}
         selected={selectedWindow === "leetcode"}
         headerClass={headerClass}
         sticky

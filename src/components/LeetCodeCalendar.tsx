@@ -42,11 +42,19 @@ const LeetCodeCalendar: React.FC<SubmissionCalendarProps> = ({
   };
 
   const getColor = (count: number) => {
-    if (count === 0) return "bg-slate-600";
-    if (count <= 2) return "bg-green-800";
-    if (count <= 5) return "bg-green-700";
-    if (count <= 10) return "bg-green-600";
-    return "bg-green-500";
+    if (isDark) {
+      if (count === 0) return "bg-slate-600";
+      if (count <= 2) return "bg-green-800";
+      if (count <= 5) return "bg-green-700";
+      if (count <= 10) return "bg-green-600";
+      return "bg-green-500";
+    }
+    // Light mode
+    if (count === 0) return "bg-[#E8E8EE] border border-[#D5D5DC]/40";
+    if (count <= 2) return "bg-[#34C759]/25";
+    if (count <= 5) return "bg-[#34C759]/45";
+    if (count <= 10) return "bg-[#34C759]/70";
+    return "bg-[#34C759]";
   };
 
   const daysOfWeek = ["S", "M", "T", "W", "T", "F", "S"];
@@ -72,7 +80,7 @@ const LeetCodeCalendar: React.FC<SubmissionCalendarProps> = ({
       <div className={`flex flex-col items-center mt-4 w-full ${size === "expanded" ? "px-0" : "px-4"}`}>
         <p
           className={`${size === "expanded" ? "text-[2.5rem] mb-2" : "text-sm mb-2"} self-center ${
-            isDark ? "text-gray-200" : "text-gray-800"
+            isDark ? "text-gray-200" : "text-[#1D1D1F]"
           }`}
         >
           {monthName.toLowerCase()} {year}
@@ -114,7 +122,7 @@ const LeetCodeCalendar: React.FC<SubmissionCalendarProps> = ({
                   }`}
                 >
                   <span
-                    className={`text-white ${
+                    className={`${isDark ? "text-white" : count === 0 ? "text-[#86868B]" : "text-[#1D1D1F]"} ${
                       size === "expanded" ? "text-[2rem] leading-none" : "text-xs"
                     }`}
                   >
@@ -146,7 +154,7 @@ const LeetCodeCalendar: React.FC<SubmissionCalendarProps> = ({
     <div className="flex flex-col items-center mt-4 w-full px-4">
       <p
         className={` text-sm mb-2 self-center ${
-          isDark ? "text-gray-200" : "text-gray-800"
+          isDark ? "text-gray-200" : "text-[#1D1D1F]"
         }`}
       >
         week's submissions
@@ -163,17 +171,17 @@ const LeetCodeCalendar: React.FC<SubmissionCalendarProps> = ({
               <div className="flex flex-col items-center gap-1">
                 <span
                   className={`text-xs text-gray-400 ${
-                    isDark ? "text-gray-200" : "text-gray-800"
+                    isDark ? "text-gray-200" : "text-[#1D1D1F]"
                   }`}
                 >
                   {daysOfWeek[index]}
                 </span>
                 <div
-                  className={`w-8 h-8 flex items-center justify-center rounded-sm ${color}`}
+                  className={`w-8 h-8 flex items-center justify-center rounded-lg ${color}`}
                 >
                   <span
-                    className={`text-white text-xs ${
-                      isDark ? "text-gray-200" : "text-gray-800"
+                    className={`text-xs ${
+                      isDark ? "text-white" : count === 0 ? "text-[#86868B]" : "text-[#1D1D1F]"
                     }`}
                   >
                     {day.getDate()}

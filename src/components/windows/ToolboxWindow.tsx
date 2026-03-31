@@ -92,13 +92,10 @@ const ToolboxBody = ({
 
   const selectedRow = selectedIndex !== null ? rows[selectedIndex] : null;
 
-  const previewText =
-    selectedRow && selectedRow.details.length > 120
-      ? `${selectedRow.details.slice(0, 120)}...`
-      : selectedRow?.details ?? "";
+  const previewText = selectedRow?.details ?? "";
 
   return (
-    <div className="mt-2 mx-4 pb-2 flex-1 min-h-0 flex flex-col gap-2 font-mono overflow-hidden">
+    <div className={`mt-2 mx-4 pb-2 flex-1 min-h-0 flex flex-col gap-2 ${isDark ? "font-mono" : ""} overflow-hidden`}>
       <div
         className="min-h-0 flex-1 overflow-y-auto overscroll-contain scroll-smooth"
         onMouseLeave={() => setHoveredToolboxIndex(null)}
@@ -109,22 +106,24 @@ const ToolboxBody = ({
             return (
               <button
                 key={row.id}
-                className={`w-full h-7 rounded-md transition-all duration-150 text-left px-2 text-[12px] leading-none flex items-center gap-2 ${
+                className={`w-full ${isDark ? "h-7 rounded-md" : "h-9 rounded-xl"} transition-all duration-200 text-left px-3 ${isDark ? "text-[13px]" : "text-[14px]"} leading-normal flex items-center gap-2 ${
                   isSelected
                     ? isDark
                       ? "bg-gray-200 text-black"
-                      : "bg-gray-800 text-white"
+                      : "bg-[#007AFF]/12 text-[#007AFF] font-bold"
                     : isDark
                       ? "bg-transparent text-[#60A5FA] hover:bg-gray-800/55"
-                      : "bg-transparent text-[#2563EB] hover:bg-gray-200/65"
+                      : "bg-transparent text-[#1D1D1F] font-medium hover:bg-[#E8E8ED]"
                 }`}
                 onMouseEnter={() => setHoveredToolboxIndex(index)}
                 onMouseLeave={() => setHoveredToolboxIndex(null)}
                 onClick={() => setSelectedToolboxIndex(index)}
               >
-                <span className="shrink-0">{isSelected ? "▌" : " "}</span>
+                <span className="shrink-0">{isSelected ? (isDark ? "▌" : "") : " "}</span>
                 <span className="min-w-0 truncate">{row.label}</span>
-                <span className="ml-auto shrink-0 opacity-80 text-[11px]">
+                <span className={`ml-auto shrink-0 text-[12px] ${
+                  isSelected ? "" : isDark ? "opacity-80" : "text-[#86868B] font-medium"
+                }`}>
                   {row.meta}
                 </span>
               </button>
@@ -134,16 +133,16 @@ const ToolboxBody = ({
       </div>
 
       <div
-        className={`h-[92px] shrink-0 rounded-md border px-2 py-2 overflow-hidden ${
-          isDark ? "border-gray-700 bg-gray-900/35" : "border-gray-300 bg-gray-100/60"
+        className={`h-[92px] shrink-0 rounded-lg px-2 py-2 overflow-y-auto ${
+          isDark ? "border border-gray-700 bg-gray-900/35" : "bg-gradient-to-br from-[#EAEAF0] to-[#E2E2EA] border border-[#D5D5DC]/40 rounded-xl"
         }`}
       >
         {selectedRow ? (
           <>
-            <p className={`text-[12px] font-semibold truncate ${isDark ? "text-gray-100" : "text-gray-900"}`}>
+            <p className={`text-[13px] font-bold leading-snug ${isDark ? "text-gray-100" : "text-[#1D1D1F]"}`}>
               {selectedRow.label}
             </p>
-            <p className={`text-[11px] mt-1 leading-relaxed ${isDark ? "text-gray-300" : "text-gray-700"}`}>
+            <p className={`text-xs mt-1 leading-relaxed ${isDark ? "text-gray-300" : "text-[#515154]"}`}>
               {previewText}
             </p>
           </>
@@ -187,23 +186,22 @@ export const ToolboxCollapsed = ({
       }}
     >
       <WindowHeader
-        title="toolbox — zsh"
+        title={isDark ? "toolbox — zsh" : "Toolbox"}
+        isDark={isDark}
         selected={selectedWindow === "skills"}
         headerClass={headerClass}
         onMaximize={() => setExpandWindow("skills")}
       />
       <div
-        className={`px-4 pt-2 pb-2 text-xs font-mono flex flex-nowrap items-center gap-2 border-b overflow-x-auto whitespace-nowrap ${
-          isDark ? "border-gray-700" : "border-gray-300"
-        }`}
+        className={`text-xs flex flex-nowrap items-center overflow-x-auto whitespace-nowrap ${isDark ? "px-4 pt-2 pb-2 font-mono border-b border-gray-700 gap-1.5" : "mx-4 mt-2 p-0.5 bg-[#DDDDE3] rounded-lg gap-0"}`}
       >
         {(["skills", "certs"] as ToolboxTab[]).map((tab) => (
           <button
             key={tab}
             onClick={() => setToolboxTab(tab)}
-            className={tabClass(toolboxTab === tab)}
+            className={`${tabClass(toolboxTab === tab)} ${!isDark ? "flex-1 text-center" : ""}`}
           >
-            [{tab} ({toolboxTabCounts[tab]})]
+            {isDark ? `[${tab} (${toolboxTabCounts[tab]})]` : tab.charAt(0).toUpperCase() + tab.slice(1)}
           </button>
         ))}
       </div>
@@ -242,7 +240,8 @@ export const ToolboxExpanded = ({
       className={`w-full h-full lg:w-full lg:h-full max-w-4xl max-h-[90vh] lg:max-w-none lg:max-h-none ${windowThemeClass} rounded-xl overflow-hidden flex flex-col overscroll-none`}
     >
       <WindowHeader
-        title="toolbox — zsh"
+        title={isDark ? "toolbox — zsh" : "Toolbox"}
+        isDark={isDark}
         selected={selectedWindow === "skills"}
         headerClass={headerClass}
         sticky
@@ -251,17 +250,15 @@ export const ToolboxExpanded = ({
         onMaximize={() => setExpandWindow("skills")}
       />
       <div
-        className={`px-4 pt-2 pb-2 text-xs font-mono flex flex-nowrap items-center gap-2 border-b overflow-x-auto whitespace-nowrap ${
-          isDark ? "border-gray-700" : "border-gray-300"
-        }`}
+        className={`text-xs flex flex-nowrap items-center overflow-x-auto whitespace-nowrap ${isDark ? "px-4 pt-2 pb-2 font-mono border-b border-gray-700 gap-1.5" : "mx-4 mt-2 p-0.5 bg-[#DDDDE3] rounded-lg gap-0"}`}
       >
         {(["skills", "certs"] as ToolboxTab[]).map((tab) => (
           <button
             key={tab}
             onClick={() => setToolboxTab(tab)}
-            className={tabClass(toolboxTab === tab)}
+            className={`${tabClass(toolboxTab === tab)} ${!isDark ? "flex-1 text-center" : ""}`}
           >
-            [{tab} ({toolboxTabCounts[tab]})]
+            {isDark ? `[${tab} (${toolboxTabCounts[tab]})]` : tab.charAt(0).toUpperCase() + tab.slice(1)}
           </button>
         ))}
       </div>

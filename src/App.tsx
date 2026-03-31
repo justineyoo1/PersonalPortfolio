@@ -27,6 +27,7 @@ import {
 import { MeCollapsed, MeExpanded } from "./components/windows/MeWindow";
 import { CliCollapsed, CliExpanded } from "./components/windows/CliWindow";
 import { ResumeWindow } from "./components/windows/ResumeWindow";
+import { AppsCollapsed } from "./components/windows/AppsWindow";
 import { useTheme } from "./hooks/useTheme";
 import { useCli } from "./hooks/useCli";
 import { useWindowNavigation } from "./hooks/useWindowNavigation";
@@ -48,15 +49,13 @@ const App = () => {
     headerClass,
     tabClass,
   } = useTheme();
-  const [time, setTime] = useState(new Date());
+  const [time, setTime] = useState<Date | null>(null);
 
-  // const [count, setCount] = useState(0);
   const [selectedAscii] = useState(asciiList[0] ?? ""); // selected ascii art
   const [expandWindow, setExpandWindow] = useState(String); // which window is expanded
   const [selectedWindow, setSelectedWindow] = useState("me"); // which window is selected
 
   const { leetCode, leetCodeError } = useLeetCode(personalInfo.leetcodeUsername);
-  // const [currentIndex, setCurrentIndex] = useState(0);
 
   const [experienceIndex, setExperienceIndex] = useState(0); // index of experience
   const [projectIndex, setProjectIndex] = useState(0); // index of project
@@ -103,11 +102,14 @@ const App = () => {
     setCommand,
     lastCommand,
     response,
+    isResponding,
+    displayHistory,
     inputRef,
     focusInput,
     handleCommand,
     renderTextWithLinks,
   } = useCli({
+    isDark,
     selectedWindow,
     accentTextClass,
     commandResponses,
@@ -165,11 +167,11 @@ const App = () => {
     [],
   );
 
-  // update time every second
+  // update time every second (client-only to avoid hydration mismatch)
   useEffect(() => {
-    setInterval(() => {
-      setTime(new Date());
-    }, 1000);
+    setTime(new Date());
+    const id = setInterval(() => setTime(new Date()), 1000);
+    return () => clearInterval(id);
   }, []);
 
   useWindowNavigation({
@@ -445,14 +447,14 @@ const App = () => {
   return (
     <div
       className={`${
-        isDark ? "bg-transparent text-white" : "bg-transparent text-black"
+        isDark ? "bg-transparent text-white font-mono" : "bg-transparent text-[#1D1D1F] font-sans"
       } relative z-10 min-h-screen w-screen flex items-center justify-center py-6 pb-24 lg:py-8 lg:pb-20 overscroll-none`}
     >
       {/* Bento box grid */}
       <div
         // Line 815 - Update the className
-        className={`relative grid grid-cols-2 lg:grid-cols-4 lg:row-span-4 w-full mx-1 gap-2 rounded-2xl p-1.5 ${gridThemeClass} max-w-6xl 2xl:max-w-7xl 2xl:gap-3 ${
-          isDark ? "shadow-xl" : "shadow-sm"
+        className={`relative grid grid-cols-2 lg:grid-cols-4 lg:row-span-4 w-full mx-1 rounded-2xl ${gridThemeClass} max-w-6xl 2xl:max-w-7xl ${
+          isDark ? "gap-2 p-1.5 shadow-xl 2xl:gap-3" : "gap-4 p-4 2xl:gap-5"
         }`}
       >
         {/* Main terminal window */}
@@ -513,6 +515,8 @@ const App = () => {
           setCommand={setCommand}
           lastCommand={lastCommand}
           response={response}
+          isResponding={isResponding}
+          displayHistory={displayHistory}
           renderTextWithLinks={renderTextWithLinks}
           inputRef={inputRef}
           focusInput={focusInput}
@@ -561,9 +565,20 @@ const App = () => {
           projectFilterCounts={projectFilterCounts}
         />
 
+        {/* Apps */}
+        <AppsCollapsed
+          isDark={isDark}
+          selectedWindow={selectedWindow}
+          windowThemeClass={windowThemeClass}
+          headerClass={headerClass}
+          setExpandWindow={setExpandWindow}
+          setSelectedWindow={setSelectedWindow}
+          isHidden={Boolean(expandWindow)}
+        />
+
         {/* Expanded overlay when user clicks */}
         {expandWindow && (
-          <div className="lg:absolute lg:inset-0 fixed inset-0 z-20 transition-opacity duration-300 lg:h-full h-screen max-h-screen overflow-hidden flex items-center justify-center lg:items-stretch lg:justify-stretch">
+          <div className={`lg:absolute lg:inset-0 fixed inset-0 z-20 transition-opacity duration-300 lg:h-full h-screen max-h-screen overflow-hidden flex items-center justify-center lg:items-stretch lg:justify-stretch ${!isDark ? "animate-[apple-sheet-in_0.3s_cubic-bezier(0.25,0.1,0.25,1)_forwards]" : ""}`}>
             {expandWindow === "me" && (
               <MeExpanded
                 isDark={isDark}
@@ -664,6 +679,8 @@ const App = () => {
                 setCommand={setCommand}
                 lastCommand={lastCommand}
                 response={response}
+                isResponding={isResponding}
+                displayHistory={displayHistory}
                 renderTextWithLinks={renderTextWithLinks}
                 inputRef={inputRef}
                 focusInput={focusInput}
@@ -675,6 +692,7 @@ const App = () => {
       </div>
 
       <ResumeWindow
+        isDark={isDark}
         isOpen={isResumeOpen}
         overlayThemeClass={overlayThemeClass}
         headerClass={headerClass}

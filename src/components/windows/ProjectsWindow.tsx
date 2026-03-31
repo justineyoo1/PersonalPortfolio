@@ -62,15 +62,14 @@ export const ProjectsCollapsed = ({
       onClick={() => setSelectedWindow("projects")}
     >
       <WindowHeader
-        title="projects — zsh"
+        title={isDark ? "projects — zsh" : "Projects"}
+        isDark={isDark}
         selected={selectedWindow === "projects"}
         headerClass={headerClass}
         onMaximize={() => setExpandWindow("projects")}
       />
       <div
-        className={`px-4 pt-2 pb-2 text-xs font-mono flex gap-2 border-b ${
-          isDark ? "border-gray-700" : "border-gray-300"
-        }`}
+        className={`text-xs flex ${isDark ? "px-4 pt-2 pb-2 font-mono border-b border-gray-700 gap-1.5" : "mx-4 mt-2 p-0.5 bg-[#DDDDE3] rounded-lg gap-0"}`}
       >
         {(["all", "swe", "ml/data"] as ProjectFilter[]).map((filter) => (
           <button
@@ -79,9 +78,9 @@ export const ProjectsCollapsed = ({
               setProjectFilter(filter);
               setProjectIndex(0);
             }}
-            className={tabClass(projectFilter === filter)}
+            className={`${tabClass(projectFilter === filter)} ${!isDark ? "flex-1 text-center" : ""}`}
           >
-            [{filter} ({projectFilterCounts[filter]})]
+            {isDark ? `[${filter} (${projectFilterCounts[filter]})]` : filter.charAt(0).toUpperCase() + filter.slice(1)}
           </button>
         ))}
       </div>
@@ -93,14 +92,14 @@ export const ProjectsCollapsed = ({
           return (
             <div
               key={index}
-              className={`rounded-md text-[12px] lg:text-[13px] leading-[1.25] transition-all duration-150 cursor-pointer my-1.5 lg:my-1 h-7 flex items-center px-2 whitespace-nowrap overflow-hidden text-ellipsis ${
+              className={`${isDark ? "text-[13px] lg:text-sm" : "text-[14px]"} leading-normal transition-all duration-200 cursor-pointer my-1.5 lg:my-1 ${isDark ? "h-7" : "h-9"} flex items-center px-3 whitespace-nowrap overflow-hidden text-ellipsis ${isDark ? "rounded-md" : "rounded-xl"} ${
                 isSelected
                   ? isDark
                     ? "bg-gray-200 text-black"
-                    : "bg-gray-800 text-white"
+                    : "bg-[#007AFF]/12 text-[#007AFF] font-bold"
                   : isDark
                     ? "bg-transparent text-[#60A5FA]"
-                    : "bg-transparent text-[#2563EB]"
+                    : "bg-transparent text-[#1D1D1F] font-medium"
               }`}
               onMouseEnter={() => setHoveredProjectIndex(index)}
               onMouseLeave={() => setHoveredProjectIndex(null)}
@@ -110,7 +109,7 @@ export const ProjectsCollapsed = ({
                 setSelectProject(project.title);
               }}
             >
-              {isSelected ? "▌ " : "  "}
+              {isDark ? (isSelected ? "▌ " : "  ") : <span className={`${isSelected ? "text-[#007AFF]" : "text-[#B0B0B5]"} text-[11px] shrink-0 font-mono mr-2.5 tracking-tight`}>/{String(index + 1).padStart(2, "0")}</span>}
               {project.compactTitle ?? project.title}
             </div>
           );
@@ -160,6 +159,7 @@ export const ProjectsExpanded = ({
       >
         <WindowHeader
           title={selectedProjectData?.window ?? "project"}
+          isDark={isDark}
           selected={selectedWindow === "projects"}
           headerClass={headerClass}
           sticky
@@ -170,81 +170,130 @@ export const ProjectsExpanded = ({
           }}
           onMaximize={() => setExpandWindow("projects")}
         />
-        <div className="m-4 flex-1 overflow-y-auto overscroll-contain scroll-smooth min-h-0">
+        <div className="flex-1 overflow-y-auto overscroll-contain scroll-smooth min-h-0">
           {selectedProjectData ? (
-            <div className="pb-4">
-              <img
-                src={selectedProjectData.image}
-                alt={selectedProjectData.title}
-                className="mx-auto h-48 object-contain rounded-lg mb-4"
-                onError={(e) => {
-                  e.currentTarget.onerror = null;
-                  e.currentTarget.src = "/image.jpg";
-                }}
-              />
-              <div className="max-w-[70ch] mx-auto mt-1">
-                <p
-                  className={`text-xl lg:text-2xl font-semibold tracking-[0.02em] ${
-                    isDark ? "text-blue-300" : "text-blue-700"
-                  }`}
-                >
-                  {selectedProjectData.window}
-                </p>
+            isDark ? (
+              /* Dark mode - unchanged */
+              <div className="m-4 pb-4">
+                <img
+                  src={selectedProjectData.image}
+                  alt={selectedProjectData.title}
+                  className="mx-auto h-48 object-contain rounded-lg mb-4"
+                  onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = "/image.jpg"; }}
+                />
+                <div className="max-w-[70ch] mx-auto mt-1">
+                  <p className="text-xl lg:text-2xl font-semibold tracking-[0.02em] text-blue-300">
+                    {selectedProjectData.window}
+                  </p>
+                </div>
+                <ul className="mt-2 max-w-[70ch] mx-auto list-disc pl-5 space-y-1 leading-relaxed text-gray-200">
+                  {projectBulletPoints.map((point) => (
+                    <li key={point}>{point}</li>
+                  ))}
+                </ul>
+                <div className="mt-4 max-w-[70ch] mx-auto flex flex-col">
+                  {selectedProjectData.links.map((link, index) => (
+                    <a href={link.url} target="_blank" rel="noopener noreferrer" key={link.name}
+                      className={`inline-block text-gray-200 rounded transition-all duration-150 ${index === selectedLinkIndex ? " font-bold" : ""}`}>
+                      {link.name} {index === selectedLinkIndex ? "❮ " : ""}
+                    </a>
+                  ))}
+                </div>
               </div>
-              <ul
-                className={`text-gray-400 mt-2 max-w-[70ch] mx-auto list-disc pl-5 space-y-1 leading-relaxed ${
-                  isDark ? "text-gray-200" : "text-gray-800"
-                }`}
-              >
-                {projectBulletPoints.map((point) => (
-                  <li key={point}>{point}</li>
-                ))}
-              </ul>
-              <div className="mt-4 max-w-[70ch] mx-auto flex flex-col">
-                {selectedProjectData.links.map((link, index) => (
-                  <a
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    key={link.name}
-                    className={`inline-block ${
-                      isDark ? "text-gray-200" : "text-gray-800"
-                    } rounded transition-all duration-150 ${
-                      index === selectedLinkIndex ? " font-bold" : ""
-                    }`}
-                  >
-                    {link.name} {index === selectedLinkIndex ? "❮ " : ""}
-                  </a>
-                ))}
+            ) : (
+              /* Light mode - App Store card */
+              <div className="pb-4">
+                {/* Hero image with gradient overlay */}
+                <div className="relative w-full h-56 lg:h-64 overflow-hidden">
+                  <img
+                    src={selectedProjectData.image}
+                    alt={selectedProjectData.title}
+                    className="w-full h-full object-cover"
+                    onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = "/image.jpg"; }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-5 lg:p-6">
+                    <h2 className="text-2xl lg:text-3xl font-bold text-white tracking-tight">
+                      {selectedProjectData.window}
+                    </h2>
+                    <p className="text-sm text-white/80 font-medium mt-1">
+                      {selectedProjectData.title}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Metadata pills */}
+                <div className="flex flex-wrap gap-2 px-5 lg:px-6 mt-4">
+                  {selectedProjectData.date && (
+                    <span className="bg-[#E8E8ED] text-[#515154] text-xs font-semibold px-3 py-1.5 rounded-lg">
+                      {selectedProjectData.date}
+                    </span>
+                  )}
+                  {selectedProjectData.category && (
+                    <span className="bg-[#007AFF]/10 text-[#007AFF] text-xs font-semibold px-3 py-1.5 rounded-lg">
+                      {selectedProjectData.category}
+                    </span>
+                  )}
+                </div>
+
+                {/* Description card */}
+                <div className="mx-5 lg:mx-6 mt-4 bg-[#F0F0F5] rounded-2xl p-5">
+                  <div className="space-y-3">
+                    {projectBulletPoints.map((point) => (
+                      <p key={point} className="text-[15px] leading-relaxed text-[#1D1D1F]">
+                        {point}
+                      </p>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Links as pill buttons */}
+                {selectedProjectData.links.length > 0 && (
+                  <div className="flex flex-wrap gap-3 px-5 lg:px-6 mt-4">
+                    {selectedProjectData.links.map((link) => (
+                      <a
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        key={link.name}
+                        className="inline-flex items-center gap-1.5 bg-[#007AFF] text-white text-sm font-semibold rounded-full px-5 py-2.5 apple-transition hover:bg-[#0066D6]"
+                      >
+                        {link.name}
+                        <span className="text-white/70">↗</span>
+                      </a>
+                    ))}
+                  </div>
+                )}
               </div>
-            </div>
+            )
           ) : (
-            <p>Project not found.</p>
+            <p className="m-4">Project not found.</p>
           )}
         </div>
         {selectedProjectData && (
           <div
-            className={`shrink-0 px-4 py-3 border-t ${
-              isDark ? "border-gray-700 bg-gray-900/35" : "border-gray-300 bg-gray-100/55"
+            className={`shrink-0 px-5 py-3 ${
+              isDark ? "border-t border-gray-700 bg-gray-900/35" : ""
             }`}
           >
             <button
               className={`rounded px-2 py-1 text-sm transition-all duration-150 ${
-                selectedLinkIndex === selectedProjectData.links.length
-                  ? isDark
+                isDark
+                  ? selectedLinkIndex === selectedProjectData.links.length
                     ? "text-gray-200 underline decoration-gray-500 underline-offset-2"
-                    : "text-gray-800 underline decoration-gray-500 underline-offset-2"
-                  : isDark
-                    ? "text-gray-400 hover:text-gray-200 hover:underline"
-                    : "text-gray-500 hover:text-gray-800 hover:underline"
+                    : "text-gray-400 hover:text-gray-200 hover:underline"
+                  : "text-[#007AFF] font-medium hover:text-[#0066D6] apple-transition"
               }`}
               onClick={() => {
                 setSelectProject("");
                 setExpandWindow("");
               }}
             >
-              back to projects
-              {selectedLinkIndex === selectedProjectData.links.length ? " <" : ""}
+              {isDark ? (
+                <>back to projects{selectedLinkIndex === selectedProjectData.links.length ? " <" : ""}</>
+              ) : (
+                "← Back"
+              )}
             </button>
           </div>
         )}
@@ -257,7 +306,8 @@ export const ProjectsExpanded = ({
       className={`w-full h-full lg:w-full lg:h-full max-w-4xl max-h-[92vh] lg:max-w-none lg:max-h-none ${windowThemeClass} rounded-xl overflow-hidden flex flex-col`}
     >
       <WindowHeader
-        title="splitprojects — zsh"
+        title={isDark ? "splitprojects — zsh" : "Projects"}
+        isDark={isDark}
         selected={selectedWindow === "projects"}
         headerClass={headerClass}
         onClose={() => setExpandWindow("")}
@@ -265,9 +315,7 @@ export const ProjectsExpanded = ({
         onMaximize={() => setExpandWindow("projects")}
       />
       <div
-        className={`px-4 pt-2 pb-2 text-xs font-mono flex gap-2 border-b ${
-          isDark ? "border-gray-700" : "border-gray-300"
-        }`}
+        className={`text-xs flex ${isDark ? "px-4 pt-2 pb-2 font-mono border-b border-gray-700 gap-1.5" : "mx-4 mt-2 p-0.5 bg-[#DDDDE3] rounded-lg gap-0"}`}
       >
         {(["all", "swe", "ml/data"] as ProjectFilter[]).map((filter) => (
           <button
@@ -276,9 +324,9 @@ export const ProjectsExpanded = ({
               setProjectFilter(filter);
               setProjectIndex(0);
             }}
-            className={tabClass(projectFilter === filter)}
+            className={`${tabClass(projectFilter === filter)} ${!isDark ? "flex-1 text-center" : ""}`}
           >
-            [{filter} ({projectFilterCounts[filter]})]
+            {isDark ? `[${filter} (${projectFilterCounts[filter]})]` : filter.charAt(0).toUpperCase() + filter.slice(1)}
           </button>
         ))}
       </div>
@@ -290,20 +338,20 @@ export const ProjectsExpanded = ({
           return (
             <div
               key={index}
-              className={`rounded-md text-[13px] leading-[1.25] whitespace-nowrap overflow-hidden text-ellipsis transition-all duration-150 cursor-pointer h-7 flex items-center px-2 ${
+              className={`rounded-md text-sm leading-normal whitespace-nowrap overflow-hidden text-ellipsis transition-all duration-150 cursor-pointer h-7 flex items-center px-2 ${
                 isSelected
                   ? isDark
                     ? "bg-gray-200 text-black"
-                    : "bg-gray-800 text-white"
+                    : "bg-[#007AFF]/10 text-[#007AFF] font-semibold"
                   : isDark
                     ? "bg-transparent text-[#60A5FA]"
-                    : "bg-transparent text-[#2563EB]"
+                    : "bg-transparent text-[#1D1D1F] font-medium"
               }`}
               onMouseEnter={() => setHoveredProjectIndex(index)}
               onMouseLeave={() => setHoveredProjectIndex(null)}
               onClick={() => setSelectProject(project.title)}
             >
-              {isSelected ? "▌ " : "  "}
+              {isDark ? (isSelected ? "▌ " : "  ") : <span className={`${isSelected ? "text-[#007AFF]" : "text-[#B0B0B5]"} text-[11px] shrink-0 font-mono mr-2.5 tracking-tight`}>/{String(index + 1).padStart(2, "0")}</span>}
               {project.compactTitle ?? project.title}
             </div>
           );

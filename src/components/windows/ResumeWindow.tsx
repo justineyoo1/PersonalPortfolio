@@ -2,6 +2,7 @@ import React from "react";
 import { WindowHeader } from "./WindowHeader";
 
 type ResumeWindowProps = {
+  isDark: boolean;
   isOpen: boolean;
   overlayThemeClass: string;
   headerClass: (selected: boolean) => string;
@@ -11,6 +12,7 @@ type ResumeWindowProps = {
 };
 
 export const ResumeWindow = ({
+  isDark,
   isOpen,
   overlayThemeClass,
   headerClass,
@@ -36,6 +38,7 @@ export const ResumeWindow = ({
       >
         <WindowHeader
           title={resumeFileName}
+          isDark={isDark}
           selected
           headerClass={headerClass}
           onClose={onClose}
@@ -45,14 +48,14 @@ export const ResumeWindow = ({
           href={`/${resumeFileName}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-sm text-gray-400 mx-4 mt-4 underline"
+          className={`text-sm mx-4 mt-4 underline ${isDark ? "text-gray-400" : "text-[#007AFF] hover:text-[#0066D6] apple-transition"}`}
         >
           click to view in new tab
         </a>
         <div className="flex-1 p-4 overflow-hidden">
           <iframe
             src={`/${resumeFileName}#view=FitH&zoom=page-fit`}
-            className="w-full h-full rounded-lg border border-gray-600"
+            className={`w-full h-full rounded-lg border ${isDark ? "border-gray-600" : "border-[#E5E5EA] rounded-xl"}`}
             title={`${personName} Resume`}
           />
         </div>
