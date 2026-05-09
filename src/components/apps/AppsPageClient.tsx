@@ -106,6 +106,16 @@ export function AppsPageClient() {
               <p className="font-mono text-xs text-gray-500">
                 4 iOS apps — built by a CS student at UNC
               </p>
+              <p className="font-mono text-xs text-gray-500 mt-1">
+                <span className="text-[#60A5FA]">$</span>{" "}
+                <span>need help? mail </span>
+                <a
+                  href="mailto:justinyoou@gmail.com"
+                  className="text-[#60A5FA] hover:text-[#93C5FD] underline underline-offset-2"
+                >
+                  justinyoou@gmail.com
+                </a>
+              </p>
             </>
           ) : (
             <div className="text-left">
@@ -114,6 +124,15 @@ export function AppsPageClient() {
               </h1>
               <p className="text-[12px] text-[#86868B]">
                 CS @ UNC — Building iOS apps for focus & fitness
+              </p>
+              <p className="text-[12px] text-[#86868B] mt-1">
+                Need help? Email me:{" "}
+                <a
+                  href="mailto:justinyoou@gmail.com"
+                  className="text-[#007AFF] font-medium hover:underline"
+                >
+                  justinyoou@gmail.com
+                </a>
               </p>
             </div>
           )}
