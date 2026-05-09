@@ -4,7 +4,7 @@ import { LegalPageClient } from "./LegalPageClient";
 
 export function PrivacyContent() {
   return (
-    <LegalPageClient title="Privacy Policy" lastUpdated="March 31, 2026">
+    <LegalPageClient title="Privacy Policy" lastUpdated="May 9, 2026">
       {(isDark) => <PrivacyBody isDark={isDark} />}
     </LegalPageClient>
   );
@@ -84,6 +84,14 @@ function PrivacyBody({ isDark }: { isDark: boolean }) {
           personal information is associated with this data.
         </li>
         <li>
+          <strong className={isDark ? "text-gray-100" : "text-[#1D1D1F]"}>Performance & Diagnostic Data (Uninstall only):</strong>{" "}
+          If you opt in to <em>Share With App Developers</em> in iOS Settings → Privacy & Security →
+          Analytics & Improvements, Apple may forward aggregated, anonymous performance metrics and
+          crash reports to us via Apple&apos;s MetricKit framework. This data is delivered by Apple,
+          not by the app, and is used solely to diagnose bugs and improve reliability. It is not
+          linked to your identity. You can disable it at any time in iOS Settings.
+        </li>
+        <li>
           <strong className={isDark ? "text-gray-100" : "text-[#1D1D1F]"}>Screen Time / Family Controls (Uninstall only):</strong>{" "}
           Uninstall uses Apple&apos;s Screen Time API (FamilyControls, ManagedSettings,
           DeviceActivity) to block apps you select. All blocking is processed entirely on-device by
@@ -95,8 +103,9 @@ function PrivacyBody({ isDark }: { isDark: boolean }) {
       <SectionTitle isDark={isDark}>Data We Do NOT Collect</SectionTitle>
       <Paragraph isDark={isDark}>
         We do not collect: names, email addresses, phone numbers, location data, contacts, photos,
-        health data, browsing history, advertising identifiers, analytics or crash reporting data, or
-        any data for tracking purposes.
+        health data, browsing history, advertising identifiers, or any data used for advertising or
+        tracking purposes. (Anonymous diagnostic data via Apple&apos;s MetricKit is opt-in by the
+        user through iOS Settings — see &quot;Performance & Diagnostic Data&quot; above.)
       </Paragraph>
 
       <SectionTitle isDark={isDark}>Third-Party SDKs</SectionTitle>
@@ -134,7 +143,9 @@ function PrivacyBody({ isDark }: { isDark: boolean }) {
         </table>
       </div>
       <Paragraph isDark={isDark}>
-        No advertising, analytics, or tracking SDKs are used in any of our apps.
+        No third-party advertising, analytics, or tracking SDKs are used in any of our apps. The
+        only telemetry source is Apple&apos;s first-party MetricKit framework, which the user opts
+        into via iOS Settings.
       </Paragraph>
 
       <SectionTitle isDark={isDark}>Children&apos;s Privacy</SectionTitle>
