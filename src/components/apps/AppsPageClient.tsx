@@ -44,7 +44,11 @@ export function AppsPageClient() {
   };
 
   const toggleAll = () => {
-    const unjoinedApps = apps.filter((a) => !joinedApps.has(a.slug));
+    // Only "waitlist"-status apps are toggleable. Coming-soon and available
+    // apps are excluded from Select All.
+    const unjoinedApps = apps.filter(
+      (a) => a.status === "waitlist" && !joinedApps.has(a.slug)
+    );
     if (selectedApps.size === unjoinedApps.length) {
       setSelectedApps(new Set());
     } else {
@@ -84,8 +88,13 @@ export function AppsPageClient() {
     }
   };
 
-  const allJoined = apps.every((a) => joinedApps.has(a.slug));
-  const unjoinedApps = apps.filter((a) => !joinedApps.has(a.slug));
+  // Only "waitlist"-status apps participate in Select All / Join waitlist.
+  // Coming-soon and available apps render their own non-interactive states.
+  const waitlistableApps = apps.filter((a) => a.status === "waitlist");
+  const allJoined =
+    waitlistableApps.length > 0 &&
+    waitlistableApps.every((a) => joinedApps.has(a.slug));
+  const unjoinedApps = waitlistableApps.filter((a) => !joinedApps.has(a.slug));
   const allSelected =
     unjoinedApps.length > 0 && selectedApps.size === unjoinedApps.length;
 
@@ -530,7 +539,19 @@ function WaitlistCard({
 
       {/* CTA */}
       <div className="px-2.5 pb-2.5">
-        {isJoined ? (
+        {app.status === "coming_soon" ? (
+          // Non-interactive: app is in App Review or otherwise imminent.
+          // No waitlist signup; users will see a real App Store link soon.
+          <div
+            className={`flex items-center justify-center w-full py-1.5 text-[11px] ${
+              isDark
+                ? "font-mono rounded-lg bg-amber-400/10 text-amber-300 border border-amber-400/25"
+                : "rounded-full bg-[#FF9F0A]/10 text-[#B25C00] font-medium"
+            }`}
+          >
+            {isDark ? "$ coming soon" : "Coming soon to iOS"}
+          </div>
+        ) : isJoined ? (
           <div
             className={`flex items-center justify-center w-full py-1.5 text-[11px] ${
               isDark

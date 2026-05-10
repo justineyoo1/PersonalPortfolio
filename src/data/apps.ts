@@ -1,4 +1,9 @@
-export type AppStatus = "waitlist" | "available";
+// "waitlist"     — pre-build, collecting emails on /apps
+// "coming_soon"  — submitted to App Review or otherwise imminent; no waitlist
+// "available"    — live on the App Store; flip to this and set appStoreUrl
+//                  the moment your review-approved email lands, and the CTA
+//                  will swap to the App Store download link automatically.
+export type AppStatus = "waitlist" | "coming_soon" | "available";
 
 export type AppInfo = {
   slug: string;
@@ -79,8 +84,10 @@ export const apps: AppInfo[] = [
       "Minimalist daily check-ins",
     ],
     icon: "/img/apps/eunho.png",
-    status: "waitlist",
-    waitlistUrl: "#",
+    // In App Store review (build 3, v1.0). When the approval email lands:
+    //   1. flip status to "available"
+    //   2. set appStoreUrl: "https://apps.apple.com/us/app/eunho/id..."
+    status: "coming_soon",
     accentColor: "#FBBF24",
     iconBg: "dark",
   },

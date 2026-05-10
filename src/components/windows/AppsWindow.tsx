@@ -42,7 +42,13 @@ export const AppsCollapsed = ({
         {apps.map((app) => (
           <a
             key={app.slug}
-            href={app.status === "available" ? app.appStoreUrl : (app.waitlistUrl ?? "/apps")}
+            href={
+              app.status === "available" && app.appStoreUrl
+                ? app.appStoreUrl
+                : app.status === "coming_soon"
+                  ? "/apps"
+                  : (app.waitlistUrl ?? "/apps")
+            }
             target="_blank"
             rel="noopener noreferrer"
             className={`group flex items-center gap-3 ${isDark ? "rounded-lg p-3" : "rounded-xl px-3 py-2"} transition-all duration-200 ${
@@ -105,7 +111,11 @@ export const AppsCollapsed = ({
                     color: app.accentColor,
                   }}
                 >
-                  {app.status === "available" ? "$ download" : "$ waitlist"}
+                  {app.status === "available"
+                    ? "$ download"
+                    : app.status === "coming_soon"
+                      ? "$ coming soon"
+                      : "$ waitlist"}
                 </span>
               )}
             </div>
