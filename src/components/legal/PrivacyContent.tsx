@@ -4,7 +4,7 @@ import { LegalPageClient } from "./LegalPageClient";
 
 export function PrivacyContent() {
   return (
-    <LegalPageClient title="Privacy Policy" lastUpdated="May 20, 2026">
+    <LegalPageClient title="Privacy Policy" lastUpdated="May 22, 2026">
       {(isDark) => <PrivacyBody isDark={isDark} />}
     </LegalPageClient>
   );
@@ -104,9 +104,9 @@ function PrivacyBody({ isDark }: { isDark: boolean }) {
       <Paragraph isDark={isDark}>
         We do not collect: names, email addresses, phone numbers, location data, contacts, photos,
         health data, browsing history, or in-app behavior data. Anonymous attribution identifiers
-        are used solely for measuring ad campaign performance — see &quot;Ad Performance and
-        Attribution&quot; below. (Anonymous diagnostic data via Apple&apos;s MetricKit is opt-in by
-        the user through iOS Settings — see &quot;Performance & Diagnostic Data&quot; above.)
+        are used solely for measuring ad campaign performance. See &quot;Third-Party Analytics &amp;
+        Ad Attribution&quot; below. (Anonymous diagnostic data via Apple&apos;s MetricKit is opt-in
+        by the user through iOS Settings — see &quot;Performance &amp; Diagnostic Data&quot; above.)
       </Paragraph>
 
       <SectionTitle isDark={isDark}>Third-Party SDKs</SectionTitle>
@@ -141,11 +141,11 @@ function PrivacyBody({ isDark }: { isDark: boolean }) {
               <td className="py-2">Purchase transactions (processed by Apple)</td>
             </tr>
             <tr>
-              <td className="py-2 pr-4">TikTok Business SDK</td>
-              <td className="py-2 pr-4">Ad campaign attribution (Uninstall, Brik, Eunho)</td>
+              <td className="py-2 pr-4">TikTok Business SDK 1.6.1</td>
+              <td className="py-2 pr-4">Ad campaign attribution (Brik, Uninstall)</td>
               <td className="py-2">
-                Anonymous device identifier (IDFA/IDFV per ATT choice); install + trial +
-                subscription events
+                IDFA (only if ATT permission is granted); SKAdNetwork postbacks; three custom
+                events (CompleteRegistration, StartTrial, Subscribe)
               </td>
             </tr>
           </tbody>
@@ -157,36 +157,18 @@ function PrivacyBody({ isDark }: { isDark: boolean }) {
         telemetry, and it requires user opt-in via iOS Settings.
       </Paragraph>
 
-      <SectionTitle isDark={isDark}>Ad Performance and Attribution</SectionTitle>
+      <SectionTitle isDark={isDark}>Third-Party Analytics &amp; Ad Attribution</SectionTitle>
       <Paragraph isDark={isDark}>
-        Effective May 20, 2026: our apps (Brik, Uninstall, Eunho) use the TikTok Business SDK to
-        measure how well our advertising performs. This is the entire scope of third-party data
-        collection in our apps.
+        We use the TikTok Business SDK, version 1.6.1, provided by TikTok Pte. Ltd., in two of our
+        apps: Brik (bundle ID com.justinyoo.brik) and Uninstall (bundle ID com.justinyoo.uninstall).
+        The SDK is used to attribute paid TikTok ad campaign installs to downstream conversion
+        events. It is not used for anything else.
       </Paragraph>
 
       <Paragraph isDark={isDark}>
-        <strong className={isDark ? "text-gray-100" : "text-[#1D1D1F]"}>What is collected:</strong>
-      </Paragraph>
-      <ul
-        className={`text-sm leading-relaxed mb-3 space-y-2 list-disc pl-6 ${
-          isDark ? "font-mono text-gray-300" : "text-[#515154]"
-        }`}
-      >
-        <li>
-          Anonymous device identifier (IDFA or IDFV, governed by your iOS App Tracking Transparency
-          choice)
-        </li>
-        <li>App install events</li>
-        <li>
-          Conversion events (start of free trial, subscription purchase, completion of onboarding)
-        </li>
-        <li>
-          Apple SKAdNetwork postbacks (privacy-preserving attribution standard built into iOS)
-        </li>
-      </ul>
-
-      <Paragraph isDark={isDark}>
-        <strong className={isDark ? "text-gray-100" : "text-[#1D1D1F]"}>What is NOT collected:</strong>
+        <strong className={isDark ? "text-gray-100" : "text-[#1D1D1F]"}>
+          Data the SDK transmits:
+        </strong>
       </Paragraph>
       <ul
         className={`text-sm leading-relaxed mb-3 space-y-2 list-disc pl-6 ${
@@ -194,37 +176,65 @@ function PrivacyBody({ isDark }: { isDark: boolean }) {
         }`}
       >
         <li>
-          Uninstall: which apps you block, your screen time usage, any Screen Time framework data
+          Your Advertising Identifier (IDFA), only if you grant App Tracking Transparency
+          permission for the app
         </li>
+        <li>Apple SKAdNetwork postbacks (anonymized install events)</li>
         <li>
-          Brik: your alarm history, mission completions, photos taken to silence alarms, or
-          wake-up patterns
+          Three custom conversion events: CompleteRegistration (onboarding completion), StartTrial
+          (RevenueCat trial start), and Subscribe (paid conversion, including the product ID,
+          revenue, and currency of the purchase)
         </li>
-        <li>Eunho: your habit data, hold-to-check-in history, or streaks</li>
-        <li>Any content you interact with in our apps</li>
-        <li>Your location, contacts, photos, or any other on-device information</li>
       </ul>
 
       <Paragraph isDark={isDark}>
-        This data is used to measure ad campaign performance only. We do not sell this data, share
-        it with any third party other than TikTok for attribution purposes, or use it to build any
-        user profile beyond the install or conversion record.
+        <strong className={isDark ? "text-gray-100" : "text-[#1D1D1F]"}>
+          Data the SDK does NOT collect:
+        </strong>
+      </Paragraph>
+      <ul
+        className={`text-sm leading-relaxed mb-3 space-y-2 list-disc pl-6 ${
+          isDark ? "font-mono text-gray-300" : "text-[#515154]"
+        }`}
+      >
+        <li>Any in-app behavior or interaction outside the three events listed above</li>
+        <li>
+          Screen Time data, your blocking list, or anything from the FamilyControls or
+          ManagedSettings frameworks (Uninstall)
+        </li>
+        <li>
+          Alarm history, mission completions, or photos taken to verify a mission (Brik)
+        </li>
+        <li>Location, contacts, photos, microphone, or camera data</li>
+        <li>
+          Any personally identifiable information beyond the IDFA, and the IDFA is itself opt-in
+          via ATT
+        </li>
+      </ul>
+
+      <Paragraph isDark={isDark}>
+        <strong className={isDark ? "text-gray-100" : "text-[#1D1D1F]"}>Opt-out:</strong>
+      </Paragraph>
+      <Paragraph isDark={isDark}>
+        If you decline tracking via iOS Settings &gt; Privacy &amp; Security &gt; Tracking, the
+        IDFA is not shared with TikTok. SKAdNetwork postbacks still fire, but they are aggregated,
+        time-shifted, and non-personal by Apple&apos;s design. Declining tracking does not change
+        any functionality of the app.
       </Paragraph>
 
       <Paragraph isDark={isDark}>
-        You can decline tracking at any time via iOS Settings → Privacy and Security → Tracking.
-        Declining tracking does not affect any functionality of our apps — it switches our
-        attribution method to Apple&apos;s privacy-preserving SKAdNetwork.
-      </Paragraph>
-
-      <Paragraph isDark={isDark}>
-        Third-party SDK: TikTok Business SDK. TikTok&apos;s privacy policy:{" "}
+        TikTok&apos;s privacy policy:{" "}
         <Link
           isDark={isDark}
-          href="https://www.tiktok.com/legal/page/global/partner-privacy-policy/en"
+          href="https://www.tiktok.com/legal/page/global/privacy-policy/en"
         >
-          tiktok.com/legal/page/global/partner-privacy-policy/en
+          tiktok.com/legal/page/global/privacy-policy/en
         </Link>
+      </Paragraph>
+
+      <Paragraph isDark={isDark}>
+        This integration applies only to Brik and Uninstall. Eunho and Shwup do not include any
+        third-party advertising or attribution SDK.
       </Paragraph>
 
       <SectionTitle isDark={isDark}>Children&apos;s Privacy</SectionTitle>
