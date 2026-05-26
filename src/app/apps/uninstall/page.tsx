@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { JetBrains_Mono } from "next/font/google";
+import { AppPageFooter } from "@/components/apps/AppPageFooter";
+import { ThemedAppsBottomNav } from "@/components/apps/ThemedAppsBottomNav";
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -278,7 +280,12 @@ export default function UninstallLandingPage() {
               <span>UNINSTALL</span>
             </a>
           </div>
-          <a href="#pricing" className="btn-bracket btn-bracket-sm">
+          <a
+            href="https://apps.apple.com/app/id6761068093?platform=iphone&app=jstnyoo-uninstall"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-bracket btn-bracket-sm"
+          >
             [ DOWNLOAD ]
           </a>
         </nav>
@@ -317,10 +324,11 @@ export default function UninstallLandingPage() {
             </p>
 
             <div className="mt-6 sm:mt-7 flex flex-col sm:flex-row sm:items-center gap-4">
-              {/* TODO: swap href for real App Store URL once Uninstall 1.0.2 clears review */}
               <a
                 id="download"
-                href="#pricing"
+                href="https://apps.apple.com/app/id6761068093?platform=iphone&app=jstnyoo-uninstall"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="btn-bracket text-sm sm:text-base cursor-blink"
               >
                 [ DOWNLOAD ]
@@ -476,8 +484,12 @@ export default function UninstallLandingPage() {
           </p>
 
           <div className="mt-5">
-            {/* TODO: swap href for real App Store URL once Uninstall 1.0.2 clears review */}
-            <a href="#" className="btn-bracket text-sm sm:text-base">
+            <a
+              href="https://apps.apple.com/app/id6761068093?platform=iphone&app=jstnyoo-uninstall"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-bracket text-sm sm:text-base"
+            >
               [ START 7 DAYS FREE ]
             </a>
           </div>
@@ -491,45 +503,8 @@ export default function UninstallLandingPage() {
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="border-t border-gray-700">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 py-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div className="flex items-center gap-2 text-gray-500 text-xs font-bold uppercase tracking-tight">
-            <img
-              src="/uninstall/assets/logo.svg"
-              alt=""
-              className="w-4 h-4 opacity-60"
-            />
-            <span>UNINSTALL</span>
-            <span
-              className="ml-3 uppercase text-[10px] tracking-wide"
-              style={{ color: "var(--gray-700)" }}
-            >
-              © 2026 JUSTIN YOO
-            </span>
-          </div>
-          <div className="flex items-center gap-5 text-gray-500 uppercase text-[11px]">
-            <a
-              href="/apps/uninstall/privacy"
-              className="hover:text-white transition-colors"
-            >
-              [ PRIVACY ]
-            </a>
-            <a
-              href="/apps/uninstall/terms"
-              className="hover:text-white transition-colors"
-            >
-              [ TERMS ]
-            </a>
-            <a
-              href="mailto:justineyoo2005@gmail.com"
-              className="hover:text-white transition-colors"
-            >
-              [ SUPPORT ]
-            </a>
-          </div>
-        </div>
-      </footer>
+      <AppPageFooter currentSlug="uninstall" supportUrl="https://jstnyoo.com/app/support" />
+      <ThemedAppsBottomNav />
     </div>
   );
 }

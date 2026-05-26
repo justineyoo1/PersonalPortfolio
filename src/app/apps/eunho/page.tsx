@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Cormorant_Garamond } from "next/font/google";
+import { AppPageFooter } from "@/components/apps/AppPageFooter";
+import { ThemedAppsBottomNav } from "@/components/apps/ThemedAppsBottomNav";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -694,83 +696,89 @@ export default function EunhoLandingPage() {
                 className="font-serif font-medium mt-2 leading-[1.0] tracking-tight text-[#F5F5F5]"
                 style={{ fontSize: "clamp(32px, 4.6vw, 48px)" }}
               >
-                Two ways to keep it<span className="dot-cyan">.</span>
+                Free to start<span className="dot-cyan">.</span>
               </h2>
             </div>
             <p className="text-[#8B8B8B] text-[12px] max-w-xs">
-              Auto-renews at $19.99/year until canceled. Cancel anytime in
+              Pro auto-renews at $19.99/year until canceled. Cancel anytime in
               Settings.
             </p>
           </div>
 
           <div className="mt-8 grid md:grid-cols-2 gap-5">
-            {/* Monthly */}
-            <div className="card-premium rounded-2xl border hair bg-[#0E0E0E] p-6 flex items-center justify-between gap-6">
-              <div>
-                <p className="eyebrow text-[#8B8B8B]">Monthly</p>
-                <p
-                  className="font-serif font-medium text-[#F5F5F5] mt-1 leading-none"
-                  style={{ fontSize: "40px" }}
-                >
-                  $3.99<span className="dot-cyan">.</span>
-                </p>
-                <p className="text-[#8B8B8B] text-[11.5px] mt-1.5">
-                  Single-habit ritual. Widgets. History.
-                </p>
-              </div>
+            {/* Free */}
+            <div className="card-premium rounded-2xl border hair bg-[#0E0E0E] p-6">
+              <p className="eyebrow text-[#8B8B8B]">Free</p>
+              <p
+                className="font-serif font-medium text-[#F5F5F5] mt-1 leading-none"
+                style={{ fontSize: "40px" }}
+              >
+                $0<span className="dot-cyan">.</span>
+              </p>
+              <ul className="mt-4 space-y-1.5 text-[#8B8B8B] text-[12px]">
+                <li>Full hold ritual</li>
+                <li>Basic streak and completion stats</li>
+                <li>Home, Lock Screen, StandBy widgets</li>
+                <li>Local reminders</li>
+              </ul>
               <a
                 href="https://apps.apple.com/app/id6761335497"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="shrink-0 pill-cta inline-flex items-center justify-center rounded-full border hair-strong h-10 px-5 text-[12px] font-medium tracking-wide text-[#F5F5F5]"
+                className="mt-5 pill-cta inline-flex items-center justify-center rounded-full border hair-strong h-10 px-5 text-[12px] font-medium tracking-wide text-[#F5F5F5]"
               >
-                Start
+                Download
               </a>
             </div>
 
-            {/* Annual */}
+            {/* Pro */}
             <div
-              className="card-premium rounded-2xl border bg-[#0E0E0E] p-6 flex items-center justify-between gap-6 relative"
+              className="card-premium rounded-2xl border bg-[#0E0E0E] p-6 relative"
               style={{ borderColor: "rgba(255,59,122,0.45)" }}
             >
-              <div>
-                <div className="flex items-center gap-2">
-                  <p className="eyebrow" style={{ color: "#FF8FB0" }}>
-                    Annual
-                  </p>
-                  <span
-                    className="eyebrow inline-block px-2 py-0.5 rounded-full"
-                    style={{
-                      background: "rgba(255,59,122,0.12)",
-                      color: "#FF8FB0",
-                      border: "1px solid rgba(255,59,122,0.4)",
-                    }}
-                  >
-                    7-day free trial
-                  </span>
-                </div>
-                <p
-                  className="font-serif font-medium text-[#F5F5F5] mt-1 leading-none"
-                  style={{ fontSize: "40px" }}
+              <div className="flex items-center gap-2">
+                <p className="eyebrow" style={{ color: "#FF8FB0" }}>
+                  Eunho Pro
+                </p>
+                <span
+                  className="eyebrow inline-block px-2 py-0.5 rounded-full"
+                  style={{
+                    background: "rgba(255,59,122,0.12)",
+                    color: "#FF8FB0",
+                    border: "1px solid rgba(255,59,122,0.4)",
+                  }}
                 >
-                  $19.99
-                  <span
-                    className="text-[#F5F5F5]/50 font-serif"
-                    style={{ fontSize: "16px" }}
-                  >
-                    /yr
-                  </span>
-                  <span className="dot-cyan">.</span>
-                </p>
-                <p className="text-[#8B8B8B] text-[11.5px] mt-1.5">
-                  Insights. Streak freeze. Retroactive check-ins.
-                </p>
+                  7-day free trial
+                </span>
               </div>
+              <p
+                className="font-serif font-medium text-[#F5F5F5] mt-1 leading-none"
+                style={{ fontSize: "40px" }}
+              >
+                $3.99
+                <span
+                  className="text-[#F5F5F5]/50 font-serif"
+                  style={{ fontSize: "16px" }}
+                >
+                  /mo
+                </span>
+                <span className="dot-cyan">.</span>
+              </p>
+              <p className="text-[#8B8B8B] text-[11.5px] mt-1.5">
+                or $19.99 a year. 7-day free trial on annual.
+              </p>
+              <ul className="mt-4 space-y-1.5 text-[#8B8B8B] text-[12px]">
+                <li>Everything in Free</li>
+                <li>Retroactive check-ins</li>
+                <li>Streak freeze</li>
+                <li>Detailed insights and heatmaps</li>
+                <li>Share card</li>
+              </ul>
               <a
                 href="https://apps.apple.com/app/id6761335497"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="shrink-0 inline-flex items-center justify-center rounded-full h-10 px-5 text-[12px] font-medium tracking-wide text-white"
+                className="mt-5 inline-flex items-center justify-center rounded-full h-10 px-5 text-[12px] font-medium tracking-wide text-white"
                 style={{ background: "#FF3B7A" }}
               >
                 Start Trial
@@ -780,33 +788,8 @@ export default function EunhoLandingPage() {
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="relative border-t hair py-8">
-        <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <a
-            href="#top"
-            className="font-serif text-[18px] leading-none tracking-tight text-[#F5F5F5]"
-          >
-            eunho<span className="dot-cyan">.</span>
-          </a>
-
-          <div className="flex items-center gap-5">
-            <a href="/apps/eunho/privacy" className="footlink">
-              Privacy
-            </a>
-            <span className="chip-sep">·</span>
-            <a href="/apps/eunho/terms" className="footlink">
-              Terms
-            </a>
-            <span className="chip-sep">·</span>
-            <a href="mailto:justineyoo2005@gmail.com" className="footlink">
-              Support
-            </a>
-          </div>
-
-          <p className="text-[11px] text-[#8B8B8B]">© 2026 Justin Yoo.</p>
-        </div>
-      </footer>
+      <AppPageFooter currentSlug="eunho" supportUrl="https://jstnyoo.com/app/support" />
+      <ThemedAppsBottomNav />
     </div>
   );
 }

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { AppPageFooter } from "@/components/apps/AppPageFooter";
+import { ThemedAppsBottomNav } from "@/components/apps/ThemedAppsBottomNav";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -314,9 +316,10 @@ export default function BrikLandingPage() {
               className="mt-5 flex flex-wrap items-center justify-center md:justify-start gap-3"
               id="download"
             >
-              {/* TODO: swap href for real App Store URL once Brik 1.0.2 clears review */}
               <a
-                href="#"
+                href="https://apps.apple.com/app/id6761065846?platform=iphone&app=jstnyoo-brik"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-3 rounded-2xl bg-black text-white px-5 py-3 border border-white/10 hover:border-white/25 transition-colors"
               >
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -517,9 +520,10 @@ export default function BrikLandingPage() {
                 <span className="text-3xl font-extrabold">$9.99</span>
                 <span className="text-[#9CA3AF] text-sm font-medium">/ month</span>
               </div>
-              {/* TODO: swap href for real App Store URL once Brik 1.0.2 clears review */}
               <a
-                href="#"
+                href="https://apps.apple.com/app/id6761065846?platform=iphone&app=jstnyoo-brik"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex w-full items-center justify-center rounded-xl border border-white/15 px-4 py-2.5 text-sm font-extrabold text-white hover:border-amber-500 hover:text-amber-500 transition-colors"
               >
                 Start free trial
@@ -547,9 +551,10 @@ export default function BrikLandingPage() {
                   / year. $2.50 / mo.
                 </span>
               </div>
-              {/* TODO: swap href for real App Store URL once Brik 1.0.2 clears review */}
               <a
-                href="#"
+                href="https://apps.apple.com/app/id6761065846?platform=iphone&app=jstnyoo-brik"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex w-full items-center justify-center rounded-xl bg-white text-[#0A0605] px-4 py-2.5 text-sm font-extrabold hover:bg-amber-500 transition-colors"
               >
                 Start free trial
@@ -564,37 +569,8 @@ export default function BrikLandingPage() {
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="px-5 sm:px-8 pt-5 pb-6 border-t border-white/5">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-xs text-[#9CA3AF]">
-          <a href="#top" className="flex items-center gap-2 text-white">
-            <span className="text-lg font-extrabold tracking-tight">
-              Brik<span className="wordmark-period">.</span>
-            </span>
-          </a>
-          <nav className="flex items-center gap-5 font-medium">
-            <a href="/apps/brik/privacy" className="hover:text-white transition-colors">
-              Privacy
-            </a>
-            <a href="/apps/brik/terms" className="hover:text-white transition-colors">
-              Terms
-            </a>
-            <a
-              href="mailto:justineyoo2005@gmail.com"
-              className="hover:text-white transition-colors"
-            >
-              Support
-            </a>
-            <a
-              href="mailto:justineyoo2005@gmail.com"
-              className="hidden md:inline hover:text-white transition-colors"
-            >
-              justineyoo2005@gmail.com
-            </a>
-          </nav>
-          <p>© 2026 Justin Yoo.</p>
-        </div>
-      </footer>
+      <AppPageFooter currentSlug="brik" supportUrl="https://jstnyoo.com/app/support" />
+      <ThemedAppsBottomNav />
     </div>
   );
 }
