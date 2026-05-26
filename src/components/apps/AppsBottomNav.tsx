@@ -47,7 +47,7 @@ export const AppsBottomNav: React.FC<AppsBottomNavProps> = ({
           : "bg-white/70 backdrop-blur-2xl border border-white/50 shadow-[0_4px_30px_rgba(0,0,0,0.08)]",
       )}
     >
-      <a href="/" className={linkClasses(isDark)}>
+      <a href="/" aria-label="Back to home" className={linkClasses(isDark)}>
         <ArrowLeft className="w-6 h-6" color={color} />
       </a>
       <div className={dividerClasses(isDark)} />
@@ -55,6 +55,7 @@ export const AppsBottomNav: React.FC<AppsBottomNavProps> = ({
         href="https://github.com/justineyoo1"
         target="_blank"
         rel="noopener noreferrer"
+        aria-label="GitHub profile"
         className={linkClasses(isDark)}
       >
         <Github className="w-6 h-6" color={color} />
@@ -63,6 +64,7 @@ export const AppsBottomNav: React.FC<AppsBottomNavProps> = ({
         href="https://www.linkedin.com/in/justineyoo"
         target="_blank"
         rel="noopener noreferrer"
+        aria-label="LinkedIn profile"
         className={linkClasses(isDark)}
       >
         <Linkedin className="w-6 h-6" color={color} />
@@ -71,12 +73,13 @@ export const AppsBottomNav: React.FC<AppsBottomNavProps> = ({
         href="https://x.com/jstnyoo"
         target="_blank"
         rel="noopener noreferrer"
+        aria-label="X profile"
         className={linkClasses(isDark)}
       >
         <XIcon fill={color} />
       </a>
       <div className={dividerClasses(isDark)} />
-      <button onClick={onToggleTheme} className={buttonClasses(isDark)}>
+      <button onClick={onToggleTheme} aria-label="Toggle theme" className={buttonClasses(isDark)}>
         {isDark ? (
           <Sun className="w-6 h-6" color="white" />
         ) : (

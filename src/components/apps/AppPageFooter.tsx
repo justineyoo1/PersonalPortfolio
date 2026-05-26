@@ -86,7 +86,7 @@ export const AppPageFooter: React.FC<AppPageFooterProps> = ({
           >
             Support
           </a>
-          <span className="ml-auto text-neutral-400 dark:text-neutral-600">
+          <span className="ml-auto text-neutral-500 dark:text-neutral-400">
             © {new Date().getFullYear()} Justin Yoo
           </span>
         </div>

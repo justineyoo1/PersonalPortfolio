@@ -19,21 +19,12 @@ export const metadata: Metadata = {
       "Pick apps. Set duration. Lock. No cancel. No pause. No bypass.",
     url: "https://jstnyoo.com/apps/uninstall",
     type: "website",
-    images: [
-      {
-        url: "/uninstall/assets/home-idle.svg",
-        width: 1206,
-        height: 2622,
-        alt: "UNINSTALL",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "UNINSTALL · THE APP BLOCKER THAT REFUSES YOUR ESCAPE",
     description:
       "Pick apps. Set duration. Lock. No cancel. No pause. No bypass.",
-    images: ["/uninstall/assets/home-idle.svg"],
   },
 };
 
@@ -41,10 +32,10 @@ const UNINSTALL_CSS = `
 .uninstall-root {
   --green: #00FF66;
   --red: #FF3B30;
-  --gray-400: #9CA3AF;
-  --gray-500: #6B7280;
-  --gray-600: #4B5563;
-  --gray-700: #374151;
+  --gray-400: #D1D5DB;
+  --gray-500: #9CA3AF;
+  --gray-600: #9CA3AF;
+  --gray-700: #6B7280;
   background: #000000;
   color: #ffffff;
   -webkit-font-smoothing: antialiased;
@@ -246,15 +237,22 @@ const UNINSTALL_CSS = `
     drop-shadow(0 30px 40px rgba(0, 0, 0, 0.55));
 }
 @media (prefers-reduced-motion: reduce) {
+  .uninstall-root *,
+  .uninstall-root *::before,
+  .uninstall-root *::after {
+    animation-duration: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0s !important;
+  }
   .uninstall-root .scanline-drift { display: none; }
-  .uninstall-root .cursor-blink::after { animation: none; }
 }
 .uninstall-root ::selection { background: #00FF66; color: #000; }
+.uninstall-root { padding-bottom: 96px; }
 `;
 
 export default function UninstallLandingPage() {
   return (
-    <div
+    <main
       className={`${jetbrainsMono.className} uninstall-root relative z-10 min-h-screen overflow-x-hidden bg-black text-white`}
     >
       <style dangerouslySetInnerHTML={{ __html: UNINSTALL_CSS }} />
@@ -505,6 +503,6 @@ export default function UninstallLandingPage() {
 
       <AppPageFooter currentSlug="uninstall" supportUrl="https://jstnyoo.com/app/support" />
       <ThemedAppsBottomNav />
-    </div>
+    </main>
   );
 }

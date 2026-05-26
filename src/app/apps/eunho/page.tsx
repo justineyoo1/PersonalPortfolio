@@ -26,20 +26,11 @@ export const metadata: Metadata = {
     description: "The single-habit tracker. Hold. Don't tap.",
     url: "https://jstnyoo.com/apps/eunho",
     type: "website",
-    images: [
-      {
-        url: "/img/apps/eunho/1-intro.png",
-        width: 1320,
-        height: 2868,
-        alt: "eunho. One habit. Held daily.",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "eunho. One habit. Held daily.",
     description: "The single-habit tracker. Hold. Don't tap.",
-    images: ["/img/apps/eunho/1-intro.png"],
   },
 };
 
@@ -134,6 +125,7 @@ const EUNHO_CSS = `
 }
 .eunho-root .footlink:hover { color: #F5F5F5; }
 .eunho-root ::selection { background: rgba(0,229,255,0.35); color: #fff; }
+.eunho-root { padding-bottom: 96px; }
 
 .eunho-root .phone-device {
   position: relative;
@@ -250,7 +242,7 @@ const EUNHO_CSS = `
 
 export default function EunhoLandingPage() {
   return (
-    <div
+    <main
       className={`${inter.variable} ${cormorant.variable} eunho-root relative z-10 min-h-screen overflow-x-hidden antialiased`}
     >
       <style dangerouslySetInnerHTML={{ __html: EUNHO_CSS }} />
@@ -778,8 +770,8 @@ export default function EunhoLandingPage() {
                 href="https://apps.apple.com/app/id6761335497"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-5 inline-flex items-center justify-center rounded-full h-10 px-5 text-[12px] font-medium tracking-wide text-white"
-                style={{ background: "#FF3B7A" }}
+                className="mt-5 inline-flex items-center justify-center rounded-full h-10 px-5 text-[13px] font-semibold tracking-wide text-white"
+                style={{ background: "#D6195C" }}
               >
                 Start Trial
               </a>
@@ -790,6 +782,6 @@ export default function EunhoLandingPage() {
 
       <AppPageFooter currentSlug="eunho" supportUrl="https://jstnyoo.com/app/support" />
       <ThemedAppsBottomNav />
-    </div>
+    </main>
   );
 }

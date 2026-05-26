@@ -19,21 +19,12 @@ export const metadata: Metadata = {
       "The alarm rings. The mission runs. Only completing the mission silences the alarm.",
     url: "https://jstnyoo.com/apps/brik",
     type: "website",
-    images: [
-      {
-        url: "/brik/assets/hero.png",
-        width: 1320,
-        height: 2868,
-        alt: "Brik. Mornings you don't snooze.",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Brik. Mornings you don't snooze.",
     description:
       "The alarm rings. The mission runs. Only completing the mission silences the alarm.",
-    images: ["/brik/assets/hero.png"],
   },
 };
 
@@ -100,6 +91,7 @@ const BRIK_CSS = `
 }
 .brik-root .hairline { background: linear-gradient(90deg, transparent, rgba(245,158,11,0.22), transparent); height: 1px; }
 .brik-root ::selection { background: #EA580C; color: #fff; }
+.brik-root { padding-bottom: 96px; }
 
 /* iPhone 15 Pro mockup */
 .brik-root .phone {
@@ -246,7 +238,7 @@ const BRIK_CSS = `
 
 export default function BrikLandingPage() {
   return (
-    <div
+    <main
       className={`${inter.className} brik-root relative z-10 min-h-screen overflow-x-hidden`}
     >
       <style dangerouslySetInnerHTML={{ __html: BRIK_CSS }} />
@@ -414,7 +406,7 @@ export default function BrikLandingPage() {
             </div>
           </div>
 
-          <ol className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-4 lg:gap-8">
+          <ol className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
             <li className="flex items-center gap-4 sm:gap-5">
               <div
                 className="phone shrink-0"
@@ -541,9 +533,6 @@ export default function BrikLandingPage() {
               <div className="ribbon">BEST VALUE</div>
               <header className="flex items-center justify-between gap-3 mb-3">
                 <h3 className="text-lg font-extrabold tracking-tight">Yearly</h3>
-                <span className="chip rounded-full px-2.5 py-0.5 text-[10px] font-bold tracking-wider text-amber-500 uppercase">
-                  3 day free trial
-                </span>
               </header>
               <div className="flex items-baseline gap-1 mb-3">
                 <span className="text-3xl font-extrabold">$29.99</span>
@@ -571,6 +560,6 @@ export default function BrikLandingPage() {
 
       <AppPageFooter currentSlug="brik" supportUrl="https://jstnyoo.com/app/support" />
       <ThemedAppsBottomNav />
-    </div>
+    </main>
   );
 }
