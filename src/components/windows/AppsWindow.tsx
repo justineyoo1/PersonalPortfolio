@@ -45,7 +45,7 @@ export const AppsCollapsed = ({
             href={
               app.status === "available" && app.appStoreUrl
                 ? app.appStoreUrl
-                : app.status === "coming_soon"
+                : app.status === "waitlist"
                   ? "/apps"
                   : (app.waitlistUrl ?? "/apps")
             }
@@ -113,7 +113,7 @@ export const AppsCollapsed = ({
                 >
                   {app.status === "available"
                     ? "$ download"
-                    : app.status === "coming_soon"
+                    : app.status === "waitlist"
                       ? "$ coming soon"
                       : "$ waitlist"}
                 </span>
