@@ -1,59 +1,41 @@
 import { useEffect, useMemo, useState } from "react";
+import { useTheme as useNextTheme } from "next-themes";
 
 type Theme = "dark" | "light";
 
+/**
+ * Single source of truth for theming. Delegates state to next-themes (which
+ * also runs in the root layout's ThemeProvider) and exposes the derived class
+ * helpers used across the app.
+ *
+ * The Taskbar dispatches a "toggleTheme" CustomEvent for legacy reasons; we
+ * keep listening for it here and forward to next-themes so callers don't need
+ * to change.
+ */
 export const useTheme = () => {
-  const [theme, setTheme] = useState<Theme>("dark");
+  const { resolvedTheme, setTheme: setNextTheme } = useNextTheme();
+  const [mounted, setMounted] = useState(false);
 
-  // Hydrate real theme on mount to avoid server/client mismatch
   useEffect(() => {
-    const saved = localStorage.getItem("theme");
-    if (saved === "dark" || saved === "light") {
-      setTheme(saved);
-      return;
-    }
-    if (window.matchMedia?.("(prefers-color-scheme: dark)").matches) {
-      setTheme("dark");
-    } else {
-      setTheme("light");
-    }
+    setMounted(true);
   }, []);
 
+  // Default to "dark" pre-mount to match the configured next-themes default
+  // and avoid a flash on first paint.
+  const theme: Theme =
+    mounted && (resolvedTheme === "dark" || resolvedTheme === "light")
+      ? resolvedTheme
+      : "dark";
+
+  const setTheme = (next: Theme) => setNextTheme(next);
+
   useEffect(() => {
-    const handler = () =>
-      setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+    const handler = () => setNextTheme(theme === "dark" ? "light" : "dark");
     window.addEventListener("toggleTheme", handler);
     return () => window.removeEventListener("toggleTheme", handler);
-  }, []);
-
-  useEffect(() => {
-    try {
-      localStorage.setItem("theme", theme);
-    } catch {}
-    // Sync with next-themes class on <html> so CSS variables match
-    const html = document.documentElement;
-    html.classList.remove("dark", "light");
-    html.classList.add(theme);
-    html.style.colorScheme = theme;
-  }, [theme]);
-
-  useEffect(() => {
-    if (typeof window === "undefined" || !window.matchMedia) return;
-
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    const handleChange = (e: MediaQueryListEvent) => {
-      const savedTheme = localStorage.getItem("theme");
-      if (!savedTheme) {
-        setTheme(e.matches ? "dark" : "light");
-      }
-    };
-
-    mediaQuery.addEventListener("change", handleChange);
-    return () => mediaQuery.removeEventListener("change", handleChange);
-  }, []);
+  }, [theme, setNextTheme]);
 
   const isDark = theme === "dark";
-  const accentTextClass = isDark ? "text-[#60A5FA]" : "text-[#007AFF]";
 
   const windowThemeClass = isDark
     ? "terminal-window bg-[#0B0F14]/90 border border-gray-700/90"
@@ -97,7 +79,6 @@ export const useTheme = () => {
     theme,
     setTheme,
     isDark,
-    accentTextClass,
     windowThemeClass,
     gridThemeClass,
     overlayThemeClass,

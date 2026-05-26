@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 780" fill="none" font-family="&#39;JetBrains Mono&#39;, monospace">
+  <rect x="2" y="2" width="376" height="776" fill="#000" stroke="#fff" stroke-width="2"></rect>
+  <text x="24" y="36" fill="#fff" font-size="14" font-weight="700">9:41</text>
+  <rect x="316" y="24" width="18" height="12" fill="#fff"></rect>
+  <rect x="340" y="24" width="20" height="12" fill="#fff" opacity="0.7"></rect>
+
+  
+  <text x="24" y="92" fill="#6B7280" font-size="11" font-weight="500">&gt; STEP 01 OF 03</text>
+  <text x="24" y="124" fill="#fff" font-size="20" font-weight="700">SELECT APPS</text>
+  <text x="24" y="148" fill="#6B7280" font-size="11" font-weight="500">&gt; CHOOSE TARGETS TO RESTRICT</text>
+
+  
+  <rect x="20" y="172" width="170" height="38" fill="#fff"></rect>
+  <text x="105" y="197" fill="#000" font-size="11" font-weight="700" text-anchor="middle">[ ONE TIME ]</text>
+  <rect x="190" y="172" width="170" height="38" fill="#000" stroke="#1f2937" stroke-width="1"></rect>
+  <text x="275" y="197" fill="#6B7280" font-size="11" font-weight="500" text-anchor="middle">[ SCHEDULE ]</text>
+
+  
+  <g font-size="13" font-weight="500">
+    <rect x="20" y="232" width="340" height="56" fill="#000" stroke="#1f2937" stroke-width="1"></rect>
+    <rect x="36" y="248" width="24" height="24" fill="#fff"></rect>
+    <text x="76" y="266" fill="#fff">INSTAGRAM</text>
+    <text x="76" y="282" fill="#6B7280" font-size="10">SOCIAL · 2H 14M/DAY</text>
+    <rect x="324" y="248" width="20" height="20" fill="#00FF66"></rect>
+    <text x="334" y="264" fill="#000" font-size="14" font-weight="700" text-anchor="middle">✓</text>
+
+    <rect x="20" y="296" width="340" height="56" fill="#000" stroke="#1f2937" stroke-width="1"></rect>
+    <rect x="36" y="312" width="24" height="24" fill="#fff"></rect>
+    <text x="76" y="330" fill="#fff">TIKTOK</text>
+    <text x="76" y="346" fill="#6B7280" font-size="10">SOCIAL · 1H 48M/DAY</text>
+    <rect x="324" y="312" width="20" height="20" fill="#00FF66"></rect>
+    <text x="334" y="328" fill="#000" font-size="14" font-weight="700" text-anchor="middle">✓</text>
+
+    <rect x="20" y="360" width="340" height="56" fill="#000" stroke="#1f2937" stroke-width="1"></rect>
+    <rect x="36" y="376" width="24" height="24" fill="#fff"></rect>
+    <text x="76" y="394" fill="#fff">X</text>
+    <text x="76" y="410" fill="#6B7280" font-size="10">SOCIAL · 1H 06M/DAY</text>
+    <rect x="324" y="376" width="20" height="20" fill="#00FF66"></rect>
+    <text x="334" y="392" fill="#000" font-size="14" font-weight="700" text-anchor="middle">✓</text>
+
+    <rect x="20" y="424" width="340" height="56" fill="#000" stroke="#1f2937" stroke-width="1"></rect>
+    <rect x="36" y="440" width="24" height="24" fill="#fff"></rect>
+    <text x="76" y="458" fill="#fff">YOUTUBE</text>
+    <text x="76" y="474" fill="#6B7280" font-size="10">VIDEO · 47M/DAY</text>
+    <rect x="324" y="440" width="20" height="20" fill="#000" stroke="#6B7280" stroke-width="1"></rect>
+
+    <rect x="20" y="488" width="340" height="56" fill="#000" stroke="#1f2937" stroke-width="1"></rect>
+    <rect x="36" y="504" width="24" height="24" fill="#fff"></rect>
+    <text x="76" y="522" fill="#fff">REDDIT</text>
+    <text x="76" y="538" fill="#6B7280" font-size="10">SOCIAL · 32M/DAY</text>
+    <rect x="324" y="504" width="20" height="20" fill="#000" stroke="#6B7280" stroke-width="1"></rect>
+
+    <rect x="20" y="552" width="340" height="56" fill="#000" stroke="#1f2937" stroke-width="1"></rect>
+    <rect x="36" y="568" width="24" height="24" fill="#fff"></rect>
+    <text x="76" y="586" fill="#fff">SAFARI</text>
+    <text x="76" y="602" fill="#6B7280" font-size="10">BROWSER · 1H 21M/DAY</text>
+    <rect x="324" y="568" width="20" height="20" fill="#000" stroke="#6B7280" stroke-width="1"></rect>
+  </g>
+
+  
+  <text x="24" y="640" fill="#6B7280" font-size="11" font-weight="500">&gt; 3 APPS SELECTED</text>
+
+  
+  <rect x="20" y="660" width="340" height="56" fill="#000" stroke="#fff" stroke-width="2"></rect>
+  <text x="190" y="695" fill="#fff" font-size="14" font-weight="700" text-anchor="middle">[ NEXT ]</text>
+
+  <rect x="140" y="754" width="100" height="4" fill="#fff"></rect>
+</svg>

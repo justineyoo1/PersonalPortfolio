@@ -64,12 +64,14 @@ async function fetchFromLeetCodeGraphQL(username: string): Promise<CachedStats> 
     throw new Error(`leetcode graphql failed: ${response.status} ${response.statusText}`);
   }
 
+  type AcSubmissionEntry = { difficulty?: string; count?: number };
   const data = await response.json();
-  const ac = data?.data?.matchedUser?.submitStatsGlobal?.acSubmissionNum ?? [];
+  const ac: AcSubmissionEntry[] =
+    data?.data?.matchedUser?.submitStatsGlobal?.acSubmissionNum ?? [];
   const calendarRaw = data?.data?.matchedUser?.userCalendar?.submissionCalendar;
 
   const getCount = (difficulty: string) =>
-    Number(ac.find((x: any) => x?.difficulty === difficulty)?.count || 0);
+    Number(ac.find((x) => x?.difficulty === difficulty)?.count || 0);
 
   const submissionCalendar =
     typeof calendarRaw === "string" && calendarRaw.trim().length > 0

@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 780" fill="none" font-family="&#39;JetBrains Mono&#39;, monospace">
+  
+  <rect x="2" y="2" width="376" height="776" fill="#000" stroke="#fff" stroke-width="2"></rect>
+  
+  <text x="24" y="36" fill="#fff" font-size="14" font-weight="700">9:41</text>
+  <rect x="316" y="24" width="18" height="12" fill="#fff"></rect>
+  <rect x="340" y="24" width="20" height="12" fill="#fff" opacity="0.7"></rect>
+  
+  <text x="24" y="92" fill="#fff" font-size="22" font-weight="700" letter-spacing="-0.5">UNINSTALL</text>
+  <text x="24" y="116" fill="#6B7280" font-size="11" font-weight="500">&gt; SYSTEM READY</text>
+
+  
+  <rect x="20" y="148" width="340" height="170" fill="#000" stroke="#1f2937" stroke-width="1"></rect>
+  <text x="36" y="178" fill="#6B7280" font-size="11" font-weight="500">&gt; STATUS</text>
+  <text x="36" y="226" fill="#00FF66" font-size="32" font-weight="700">IDLE</text>
+  <text x="36" y="262" fill="#6B7280" font-size="11" font-weight="500">&gt; NO ACTIVE BLOCK</text>
+  <text x="36" y="282" fill="#6B7280" font-size="11" font-weight="500">&gt; 0 APPS RESTRICTED</text>
+  <text x="36" y="302" fill="#6B7280" font-size="11" font-weight="500">&gt; LAST BLOCK 14H AGO</text>
+
+  
+  <rect x="20" y="340" width="164" height="120" fill="#000" stroke="#1f2937" stroke-width="1"></rect>
+  <text x="36" y="368" fill="#6B7280" font-size="10" font-weight="500">&gt; RECLAIMED</text>
+  <text x="36" y="408" fill="#fff" font-size="24" font-weight="700">312H</text>
+  <text x="36" y="434" fill="#6B7280" font-size="10" font-weight="500">20M TOTAL</text>
+
+  <rect x="196" y="340" width="164" height="120" fill="#000" stroke="#1f2937" stroke-width="1"></rect>
+  <text x="212" y="368" fill="#6B7280" font-size="10" font-weight="500">&gt; BLOCKS</text>
+  <text x="212" y="408" fill="#fff" font-size="24" font-weight="700">73</text>
+  <text x="212" y="434" fill="#6B7280" font-size="10" font-weight="500">COMPLETED</text>
+
+  <rect x="20" y="478" width="340" height="100" fill="#000" stroke="#1f2937" stroke-width="1"></rect>
+  <text x="36" y="506" fill="#6B7280" font-size="10" font-weight="500">&gt; APPS UNINSTALLED</text>
+  <text x="36" y="548" fill="#FF3B30" font-size="28" font-weight="700">04</text>
+  <text x="100" y="548" fill="#6B7280" font-size="11" font-weight="500">PERMANENT EXITS</text>
+
+  
+  <rect x="20" y="608" width="340" height="56" fill="#000" stroke="#fff" stroke-width="2"></rect>
+  <text x="190" y="643" fill="#fff" font-size="14" font-weight="700" text-anchor="middle">[ SET BLOCK ]</text>
+
+  
+  <text x="190" y="700" fill="#6B7280" font-size="10" font-weight="500" text-anchor="middle">&gt; FAMILY CONTROLS · ON-DEVICE</text>
+
+  
+  <rect x="140" y="754" width="100" height="4" fill="#fff"></rect>
+</svg>

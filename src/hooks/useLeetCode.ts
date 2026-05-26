@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { LeetCodeData } from "../types/indexs";
+import type { LeetCodeData } from "../types";
 
 export const useLeetCode = (leetcodeUsername?: string) => {
   const [leetCode, setLeetCode] = useState<LeetCodeData | null>(null);

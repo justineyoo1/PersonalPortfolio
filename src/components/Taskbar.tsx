@@ -100,5 +100,3 @@ export const Taskbar = ({ theme }: { theme: "dark" | "light" }) => {
     </div>
   );
 };
-
-export default Taskbar;

@@ -1,9 +1,4 @@
-// "waitlist"     — pre-build, collecting emails on /apps
-// "coming_soon"  — submitted to App Review or otherwise imminent; no waitlist
-// "available"    — live on the App Store; flip to this and set appStoreUrl
-//                  the moment your review-approved email lands, and the CTA
-//                  will swap to the App Store download link automatically.
-export type AppStatus = "waitlist" | "coming_soon" | "available";
+export type AppStatus = "waitlist" | "available";
 
 export type AppInfo = {
   slug: string;
@@ -14,81 +9,82 @@ export type AppInfo = {
   icon: string | null;
   status: AppStatus;
   appStoreUrl?: string;
+  appStoreId?: string;
   waitlistUrl?: string;
   accentColor: string;
-  /** "light" = white bg in dark mode; "dark" = dark bg in both modes */
   iconBg?: "light" | "dark";
 };
 
 export const apps: AppInfo[] = [
   {
-    slug: "brik",
-    name: "Brik",
-    tagline: "Alarm Clock to Wake Up",
+    slug: "eunho",
+    name: "Eunho",
+    tagline: "One habit. Held daily.",
     description:
-      "Stop snoozing. Stack a brick for every alarm you beat — miss one and your wall crumbles.",
+      "A streak tracker for one habit. Hold the ring for 2.5 seconds. That is the check-in.",
     features: [
-      "Gamified wake-up streaks",
-      "Progressive difficulty levels",
-      "Sleep analytics dashboard",
+      "Hold the ring for 2.5 seconds",
+      "100 days, visible on one screen",
+      "Lock Screen, Home Screen, StandBy widgets",
     ],
-    icon: "/img/apps/brik.png",
-    status: "waitlist",
-    waitlistUrl: "#",
-    accentColor: "#F87171",
+    icon: "/img/apps/eunho/icon-1024-dark.png",
+    status: "available",
+    appStoreUrl: "https://apps.apple.com/app/id6761335497",
+    appStoreId: "6761335497",
+    accentColor: "#FF3B5C",
     iconBg: "dark",
   },
   {
     slug: "uninstall",
     name: "Uninstall",
-    tagline: "Screentime Control",
+    tagline: "App blocker. No takebacks.",
     description:
-      "Take back your time. Set app limits that actually stick with accountability-first design.",
+      "A focus app that doesn't ask nicely. Set a block, lose the off switch. Friction beats willpower.",
     features: [
-      "Smart app blocking schedules",
-      "Focus sessions with friends",
-      "Weekly screentime reports",
+      "Apps, categories, websites",
+      "10-second hold plus 5-minute lockout",
+      "Routines run themselves",
     ],
-    icon: "/img/apps/uninstall.png",
-    status: "waitlist",
-    waitlistUrl: "#",
-    accentColor: "#60A5FA",
-    iconBg: "dark",
+    icon: "/img/apps/uninstall/icon-1024.png",
+    status: "available",
+    appStoreUrl: "https://apps.apple.com/app/id6761068093",
+    appStoreId: "6761068093",
+    accentColor: "#D63B2E",
+    iconBg: "light",
+  },
+  {
+    slug: "brik",
+    name: "Brik",
+    tagline: "Mornings you don't snooze.",
+    description:
+      "A hard alarm that only silences when you finish a verified mission. Pushups, math, sky, or a made bed.",
+    features: [
+      "Pushups verified by Vision pose detection",
+      "Photo missions verified on-device",
+      "16 watchdog alarms. No notification escape.",
+    ],
+    icon: "/img/apps/brik/icon-1024.png",
+    status: "available",
+    appStoreUrl: "https://apps.apple.com/app/id6761065846",
+    appStoreId: "6761065846",
+    accentColor: "#FF7A1A",
+    iconBg: "light",
   },
   {
     slug: "shwup",
     name: "Shwup",
     tagline: "Workout Tracker & Gym Log",
     description:
-      "Log workouts in seconds. Track PRs, visualize progress, and never forget a set again.",
+      "Log workouts in seconds. Track PRs, visualize progress, never forget a set.",
     features: [
       "One-tap exercise logging",
       "Personal record tracking",
-      "Progress charts & streaks",
+      "Progress charts and streaks",
     ],
     icon: "/img/Logos/shwup_app_logo.png",
     status: "waitlist",
     waitlistUrl: "#",
     accentColor: "#34D399",
     iconBg: "light",
-  },
-  {
-    slug: "eunho",
-    name: "Eunho",
-    tagline: "Focus on One Habit Tracker",
-    description:
-      "One habit at a time. Master it before moving on — no overwhelm, just steady growth.",
-    features: [
-      "Single-habit focus system",
-      "Milestone-based progression",
-      "Minimalist daily check-ins",
-    ],
-    icon: "/img/apps/eunho.png",
-    // In App Store review (build 3, v1.0). When the approval email lands:
-    //   1. flip status to "available"
-    //   2. set appStoreUrl: "https://apps.apple.com/us/app/eunho/id..."
-    status: "coming_soon",
-    accentColor: "#FBBF24",
-    iconBg: "dark",
   },
 ];

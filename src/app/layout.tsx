@@ -8,6 +8,7 @@ import ParticleBackground from "@/components/ParticleBackground";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://jstnyoo.com"),
   title: "Justin Yoo Portfolio",
   description: "Justin Yoo's portfolio highlighting skills, projects, and experience.",
 };

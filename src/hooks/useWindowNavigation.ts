@@ -1,16 +1,15 @@
 import { useEffect } from "react";
+import type { ExperienceItem, ProjectItem } from "@/types";
 
-type LinkItem = { name: string; url: string };
-
-type ExperienceItem = {
-  title: string;
-  links: LinkItem[];
-};
-
-type ProjectItem = {
-  title: string;
-  links: LinkItem[];
-};
+const WINDOW_ORDER = [
+  "me",
+  "experience",
+  "projects",
+  "skills",
+  "leetcode",
+  "cli",
+  "apps",
+] as const;
 
 type UseWindowNavigationArgs = {
   selectedWindow: string;
@@ -19,8 +18,6 @@ type UseWindowNavigationArgs = {
   setExpandWindow: (value: string) => void;
   meWindowRef: React.RefObject<HTMLDivElement>;
   isResumeOpen: boolean;
-  isMediaPlayerOpen: boolean;
-  isTimerOpen: boolean;
   experiencesData: ExperienceItem[];
   filteredExperiences: ExperienceItem[];
   experienceIndex: number;
@@ -50,8 +47,6 @@ export const useWindowNavigation = ({
   setExpandWindow,
   meWindowRef,
   isResumeOpen,
-  isMediaPlayerOpen,
-  isTimerOpen,
   experiencesData,
   filteredExperiences,
   experienceIndex,
@@ -73,6 +68,7 @@ export const useWindowNavigation = ({
   experienceFilter,
   projectFilter,
 }: UseWindowNavigationArgs) => {
+  // Main key handler: enter/arrows for the focused window
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (isResumeOpen) return;
@@ -87,12 +83,8 @@ export const useWindowNavigation = ({
         } else if (e.key === "ArrowUp" || e.key === "ArrowDown") {
           e.preventDefault();
           if (meWindowRef.current) {
-            const scrollAmount = 50;
-            if (e.key === "ArrowUp") {
-              meWindowRef.current.scrollTop -= scrollAmount;
-            } else {
-              meWindowRef.current.scrollTop += scrollAmount;
-            }
+            const delta = e.key === "ArrowUp" ? -50 : 50;
+            meWindowRef.current.scrollTop += delta;
           }
         }
       }
@@ -106,50 +98,37 @@ export const useWindowNavigation = ({
 
       if (selectedWindow === "experience") {
         if (selectExperience) {
-          const selectedExperienceData = experiencesData.find(
-            (exp) => exp.title === selectExperience,
-          );
-          if (selectedExperienceData) {
-            const totalItems = selectedExperienceData.links.length + 1;
+          const data = experiencesData.find((x) => x.title === selectExperience);
+          if (!data) return;
+          const total = data.links.length + 1;
 
-            if (e.key === "ArrowUp") {
-              e.preventDefault();
-              setSelectedExperienceLinkIndex(
-                (prev) => (prev - 1 + totalItems) % totalItems,
-              );
-            } else if (e.key === "ArrowDown") {
-              e.preventDefault();
-              setSelectedExperienceLinkIndex((prev) => (prev + 1) % totalItems);
-            } else if (e.key === "Enter") {
-              e.preventDefault();
-              if (
-                selectedExperienceLinkIndex <
-                selectedExperienceData.links.length
-              ) {
-                window.open(
-                  selectedExperienceData.links[selectedExperienceLinkIndex].url,
-                  "_blank",
-                );
-              } else {
-                setSelectExperience("");
-                setExpandWindow("");
-              }
+          if (e.key === "ArrowUp") {
+            e.preventDefault();
+            setSelectedExperienceLinkIndex((prev) => (prev - 1 + total) % total);
+          } else if (e.key === "ArrowDown") {
+            e.preventDefault();
+            setSelectedExperienceLinkIndex((prev) => (prev + 1) % total);
+          } else if (e.key === "Enter") {
+            e.preventDefault();
+            if (selectedExperienceLinkIndex < data.links.length) {
+              window.open(data.links[selectedExperienceLinkIndex].url, "_blank");
+            } else {
+              setSelectExperience("");
+              setExpandWindow("");
             }
           }
-        } else {
-          if (filteredExperiences.length === 0) return;
+        } else if (filteredExperiences.length > 0) {
           if (e.key === "ArrowUp") {
             setExperienceIndex((prev) => {
-              const newIndex =
-                prev === 0 ? filteredExperiences.length - 1 : prev - 1;
-              setHoveredExperienceIndex(newIndex);
-              return newIndex;
+              const next = prev === 0 ? filteredExperiences.length - 1 : prev - 1;
+              setHoveredExperienceIndex(next);
+              return next;
             });
           } else if (e.key === "ArrowDown") {
             setExperienceIndex((prev) => {
-              const newIndex = (prev + 1) % filteredExperiences.length;
-              setHoveredExperienceIndex(newIndex);
-              return newIndex;
+              const next = (prev + 1) % filteredExperiences.length;
+              setHoveredExperienceIndex(next);
+              return next;
             });
           } else if (e.key === "Enter") {
             setSelectExperience(filteredExperiences[experienceIndex].title);
@@ -158,46 +137,37 @@ export const useWindowNavigation = ({
         }
       } else if (selectedWindow === "projects") {
         if (selectProject) {
-          const selectedProjectData = projectsData.find(
-            (p) => p.title === selectProject,
-          );
-          if (selectedProjectData) {
-            const totalItems = selectedProjectData.links.length + 1;
-            if (e.key === "ArrowUp") {
-              e.preventDefault();
-              setSelectedLinkIndex(
-                (prev) => (prev - 1 + totalItems) % totalItems,
-              );
-            } else if (e.key === "ArrowDown") {
-              e.preventDefault();
-              setSelectedLinkIndex((prev) => (prev + 1) % totalItems);
-            } else if (e.key === "Enter") {
-              e.preventDefault();
-              if (selectedLinkIndex < selectedProjectData.links.length) {
-                window.open(
-                  selectedProjectData.links[selectedLinkIndex].url,
-                  "_blank",
-                );
-              } else {
-                setSelectProject("");
-                setExpandWindow("");
-              }
+          const data = projectsData.find((p) => p.title === selectProject);
+          if (!data) return;
+          const total = data.links.length + 1;
+
+          if (e.key === "ArrowUp") {
+            e.preventDefault();
+            setSelectedLinkIndex((prev) => (prev - 1 + total) % total);
+          } else if (e.key === "ArrowDown") {
+            e.preventDefault();
+            setSelectedLinkIndex((prev) => (prev + 1) % total);
+          } else if (e.key === "Enter") {
+            e.preventDefault();
+            if (selectedLinkIndex < data.links.length) {
+              window.open(data.links[selectedLinkIndex].url, "_blank");
+            } else {
+              setSelectProject("");
+              setExpandWindow("");
             }
           }
-        } else {
-          if (filteredProjects.length === 0) return;
+        } else if (filteredProjects.length > 0) {
           if (e.key === "ArrowUp") {
             setProjectIndex((prev) => {
-              const newIndex =
-                prev === 0 ? filteredProjects.length - 1 : prev - 1;
-              setHoveredProjectIndex(newIndex);
-              return newIndex;
+              const next = prev === 0 ? filteredProjects.length - 1 : prev - 1;
+              setHoveredProjectIndex(next);
+              return next;
             });
           } else if (e.key === "ArrowDown") {
             setProjectIndex((prev) => {
-              const newIndex = (prev + 1) % filteredProjects.length;
-              setHoveredProjectIndex(newIndex);
-              return newIndex;
+              const next = (prev + 1) % filteredProjects.length;
+              setHoveredProjectIndex(next);
+              return next;
             });
           } else if (e.key === "Enter") {
             setSelectProject(filteredProjects[projectIndex].title);
@@ -230,7 +200,6 @@ export const useWindowNavigation = ({
     selectExperience,
     selectedExperienceLinkIndex,
     isResumeOpen,
-    isMediaPlayerOpen,
     filteredExperiences,
     filteredProjects,
     experiencesData,
@@ -247,6 +216,7 @@ export const useWindowNavigation = ({
     setSelectProject,
   ]);
 
+  // Reset hover + clamp index when filters change
   useEffect(() => {
     setHoveredExperienceIndex(null);
     if (experienceIndex >= filteredExperiences.length) {
@@ -273,14 +243,11 @@ export const useWindowNavigation = ({
     setHoveredProjectIndex,
   ]);
 
+  // Default link selection to "back" entry when an item is selected
   useEffect(() => {
     if (selectProject) {
-      const selectedProjectData = projectsData.find(
-        (p) => p.title === selectProject,
-      );
-      if (selectedProjectData) {
-        setSelectedLinkIndex(selectedProjectData.links.length);
-      }
+      const data = projectsData.find((p) => p.title === selectProject);
+      if (data) setSelectedLinkIndex(data.links.length);
     } else {
       setSelectedLinkIndex(0);
     }
@@ -288,53 +255,40 @@ export const useWindowNavigation = ({
 
   useEffect(() => {
     if (selectExperience) {
-      const selectedExperienceData = experiencesData.find(
-        (exp) => exp.title === selectExperience,
-      );
-      if (selectedExperienceData) {
-        setSelectedExperienceLinkIndex(selectedExperienceData.links.length);
-      }
+      const data = experiencesData.find((e) => e.title === selectExperience);
+      if (data) setSelectedExperienceLinkIndex(data.links.length);
     } else {
       setSelectedExperienceLinkIndex(0);
     }
   }, [selectExperience, experiencesData, setSelectedExperienceLinkIndex]);
 
+  // Auto-focus me window when expanded for keyboard scroll
   useEffect(() => {
     if (expandWindow === "me" && meWindowRef.current) {
       meWindowRef.current.focus();
     }
   }, [expandWindow, meWindowRef]);
 
+  // Left/right cycle between bento windows when not in expanded view
   useEffect(() => {
-    if (isResumeOpen || isMediaPlayerOpen) return;
-
-    const windowOrder = isTimerOpen
-      ? ["me", "experience", "projects", "skills", "timer", "cli", "apps"]
-      : ["me", "experience", "projects", "skills", "leetcode", "cli", "apps"];
+    if (isResumeOpen) return;
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (expandWindow) return;
+      if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
 
-      if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
-        const currentIndex = windowOrder.indexOf(selectedWindow);
-        let nextIndex;
-        if (e.key === "ArrowRight") {
-          nextIndex = (currentIndex + 1) % windowOrder.length;
-        } else {
-          nextIndex = (currentIndex - 1 + windowOrder.length) % windowOrder.length;
-        }
-        setSelectedWindow(windowOrder[nextIndex]);
-      }
+      const currentIndex = WINDOW_ORDER.indexOf(
+        selectedWindow as (typeof WINDOW_ORDER)[number],
+      );
+      const length = WINDOW_ORDER.length;
+      const nextIndex =
+        e.key === "ArrowRight"
+          ? (currentIndex + 1) % length
+          : (currentIndex - 1 + length) % length;
+      setSelectedWindow(WINDOW_ORDER[nextIndex]);
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [
-    selectedWindow,
-    expandWindow,
-    isTimerOpen,
-    isResumeOpen,
-    isMediaPlayerOpen,
-    setSelectedWindow,
-  ]);
+  }, [selectedWindow, expandWindow, isResumeOpen, setSelectedWindow]);
 };

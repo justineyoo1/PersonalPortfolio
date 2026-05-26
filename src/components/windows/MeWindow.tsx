@@ -1,5 +1,6 @@
 import React from "react";
 import { WindowHeader } from "./WindowHeader";
+import { BackFooter } from "./BackFooter";
 import MathBlob from "../MathBlob";
 
 type PersonalInfo = {
@@ -168,22 +169,11 @@ export const MeExpanded = ({
           ))}
         </div>
       </div>
-      <div
-        className={`shrink-0 px-4 py-3 border-t ${
-          isDark ? "border-gray-700 bg-gray-900/35" : "border-[#D5D5DC]/60 bg-[#EAEAF0]/70"
-        }`}
-      >
-        <button
-          className={`rounded px-2 py-1 text-sm transition-all duration-150 ${
-            isDark
-              ? "text-gray-400 hover:text-gray-200 hover:underline"
-              : "text-[#86868B] hover:text-[#1D1D1F] hover:underline"
-          }`}
-          onClick={() => setExpandWindow("")}
-        >
-          back to main page {"<"}
-        </button>
-      </div>
+      <BackFooter
+        isDark={isDark}
+        label="main page"
+        onClick={() => setExpandWindow("")}
+      />
     </div>
   );
 };

@@ -13,7 +13,6 @@ type ProjectOrExperience = {
 type UseCliArgs = {
   isDark: boolean;
   selectedWindow: string;
-  accentTextClass: string;
   commandResponses: Record<string, string>;
   experiencesData: ProjectOrExperience[];
   projectsData: ProjectOrExperience[];
@@ -28,7 +27,6 @@ const MAX_CONTEXT_MESSAGES = 10;
 export const useCli = ({
   isDark,
   selectedWindow,
-  accentTextClass,
   commandResponses,
   experiencesData,
   projectsData,
@@ -49,11 +47,19 @@ export const useCli = ({
     inputRef.current?.focus();
   };
 
+  // Focus the input when the CLI window becomes selected via keyboard nav,
+  // but skip on touch devices so we don't pop the on-screen keyboard
+  // unsolicited. Mobile users can tap the input directly to focus.
   useEffect(() => {
-    if (selectedWindow === "cli") {
-      inputRef.current?.focus();
-    } else {
+    if (selectedWindow !== "cli") {
       inputRef.current?.blur();
+      return;
+    }
+    const isTouch =
+      typeof window !== "undefined" &&
+      window.matchMedia?.("(hover: none) and (pointer: coarse)").matches;
+    if (!isTouch) {
+      inputRef.current?.focus();
     }
   }, [selectedWindow]);
 
