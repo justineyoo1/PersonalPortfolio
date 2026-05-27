@@ -288,20 +288,17 @@ export default function EunhoLandingPage() {
         <div className="relative max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 w-full grid md:grid-cols-[1.1fr_0.9fr] gap-10 items-center">
           <div className="text-center md:text-left">
             <div className="flex items-center gap-3 justify-center md:justify-start mb-6">
-              <div className="relative w-10 h-10">
-                <div className="absolute inset-0 -m-3 radial-cyan rounded-full"></div>
-                <img
-                  src="/img/apps/eunho/logo-mark.png"
-                  alt="eunho logo"
-                  width={40}
-                  height={40}
-                  className="relative w-10 h-10"
-                  style={{
-                    filter:
-                      "brightness(0) saturate(100%) invert(80%) sepia(60%) saturate(2500%) hue-rotate(140deg) brightness(105%) contrast(95%) drop-shadow(0 0 6px rgba(0,229,255,0.55))",
-                  }}
-                />
-              </div>
+              <img
+                src="/img/apps/eunho/logo-mark.png"
+                alt="eunho logo"
+                width={40}
+                height={40}
+                className="w-10 h-10"
+                style={{
+                  filter:
+                    "brightness(0) saturate(100%) invert(80%) sepia(60%) saturate(2500%) hue-rotate(140deg) brightness(105%) contrast(95%) drop-shadow(0 0 6px rgba(0,229,255,0.55))",
+                }}
+              />
               <p className="eyebrow text-[#8B8B8B]">The single-habit tracker</p>
             </div>
 
