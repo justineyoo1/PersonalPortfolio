@@ -440,6 +440,36 @@ export default function UninstallLandingPage() {
         </div>
       </section>
 
+      {/* MANIFESTO — closing band. Owns the paradox of an app called
+          Uninstall: the goal is to be the one app you delete. */}
+      <section className="border-b border-gray-800">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-24 sm:py-32 text-center">
+          <p className="marker mb-10">&gt; END OF PROTOCOL</p>
+
+          <h2 className="text-white font-bold uppercase tracking-tight leading-[0.98] text-3xl sm:text-5xl md:text-6xl lg:text-[3.25rem]">
+            I&apos;LL BE YOUR MOST
+            <br />
+            UNINSTALLED APP.
+            <br />
+            THAT MEANS IT&apos;S WORKING.
+          </h2>
+
+          <div className="mt-12 sm:mt-14 flex flex-col sm:flex-row items-center justify-center gap-5">
+            <a
+              href="https://apps.apple.com/app/id6761068093?platform=iphone&app=jstnyoo-uninstall"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-bracket text-sm sm:text-base cursor-blink"
+            >
+              [ DOWNLOAD ]
+            </a>
+            <span className="marker">
+              iOS 16+ &nbsp;·&nbsp; 14 MB &nbsp;·&nbsp; 7-day trial
+            </span>
+          </div>
+        </div>
+      </section>
+
 
       <AppPageFooter currentSlug="uninstall" supportUrl="https://jstnyoo.com/app/support" />
       <ThemedAppsBottomNav />
