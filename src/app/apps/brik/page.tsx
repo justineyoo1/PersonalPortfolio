@@ -218,7 +218,7 @@ const BRIK_CSS = `
   height: 8%;
   background: linear-gradient(90deg, #3a2c25, #5a473e 40%, #3a2c25);
   border-radius: 2px 0 0 2px;
-  box-shadow: 0 6%/0 6% 0 #3a2c25;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
 }
 @media (prefers-reduced-motion: reduce) {
   .brik-root *, .brik-root *::before, .brik-root *::after {
@@ -261,10 +261,8 @@ export default function BrikLandingPage() {
               />
             </div>
 
-            <h1 className="font-extrabold tracking-tight leading-[0.9]">
-              <span className="block text-[56px] sm:text-[76px] md:text-[84px] lg:text-[96px]">
-                Brik<span className="wordmark-period">.</span>
-              </span>
+            <h1 className="font-extrabold tracking-tight leading-[0.9] text-[56px] sm:text-[76px] md:text-[84px] lg:text-[96px]">
+              Brik<span className="wordmark-period">.</span>
             </h1>
 
             <p className="mt-3 text-2xl sm:text-3xl md:text-[28px] lg:text-[34px] font-extrabold tracking-tight text-balance">
@@ -306,7 +304,7 @@ export default function BrikLandingPage() {
                 </span>
               </a>
               <span className="text-xs text-[#9CA3AF] font-medium">
-                iOS 17. iPhone only.
+                iOS 17+ &nbsp;·&nbsp; iPhone only
               </span>
             </div>
           </div>
@@ -325,8 +323,8 @@ export default function BrikLandingPage() {
       <div className="hairline max-w-7xl mx-auto"></div>
 
       {/* SUPPORTING BAND */}
-      <section className="min-h-screen flex items-center">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-16 sm:py-20 w-full">
+      <section>
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-20 sm:py-28 w-full">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6">
             <div>
               <p className="text-[11px] font-bold tracking-[0.3em] text-amber-500 uppercase mb-2">

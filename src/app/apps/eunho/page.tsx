@@ -319,7 +319,7 @@ export default function EunhoLandingPage() {
                 lineHeight: 1.1,
               }}
             >
-              One habit. Held daily.
+              Stop tracking 12 habits. Hold one.
             </p>
 
             <div className="mt-6 flex flex-wrap items-center justify-center md:justify-start gap-x-3 gap-y-2">
@@ -340,27 +340,28 @@ export default function EunhoLandingPage() {
                 href="https://apps.apple.com/app/id6761335497"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center gap-3 rounded-full bg-black border hair-strong px-4 h-12 hover:border-white/30 transition-colors"
+                className="group inline-flex items-center gap-3 rounded-full bg-[#F5F5F5] text-[#0A0A0A] px-5 h-12 hover:bg-white hover:shadow-[0_0_24px_-4px_rgba(var(--ring-rgb),0.65)] transition-all"
               >
                 <svg
                   viewBox="0 0 24 24"
-                  className="w-5 h-5 text-[#F5F5F5]"
+                  className="w-5 h-5"
                   fill="currentColor"
                   aria-hidden="true"
                 >
                   <path d="M16.365 1.43c0 1.14-.42 2.22-1.12 3.04-.79.92-2.08 1.64-3.13 1.55-.13-1.1.45-2.27 1.13-3.06.78-.91 2.13-1.59 3.12-1.53zM20.5 17.06c-.51 1.18-.75 1.71-1.4 2.76-.91 1.46-2.19 3.28-3.78 3.3-1.41.01-1.78-.92-3.7-.91-1.92.01-2.33.93-3.74.91-1.59-.02-2.8-1.66-3.71-3.12C1.74 16.04 1.46 11.4 3.05 9c1.12-1.7 2.9-2.69 4.57-2.69 1.7 0 2.77.93 4.18.93 1.36 0 2.19-.94 4.16-.94 1.49 0 3.07.81 4.19 2.21-3.68 2.01-3.08 7.27.35 8.55z" />
                 </svg>
                 <span className="flex flex-col items-start leading-none">
-                  <span className="text-[9px] uppercase tracking-[0.18em] text-[#8B8B8B]">
+                  <span className="text-[9px] uppercase tracking-[0.18em] text-[#4B4B4B]">
                     Download on the
                   </span>
-                  <span className="text-[16px] font-serif font-medium text-[#F5F5F5] mt-0.5">
+                  <span className="text-[16px] font-serif font-medium mt-0.5">
                     App Store
                   </span>
                 </span>
               </a>
               <span className="text-[12px] tracking-wide text-[#8B8B8B]">
-                7-day free trial<span className="dot-cyan">.</span>
+                iOS 17+ &nbsp;·&nbsp; 7-day trial
+                <span className="dot-cyan">.</span>
               </span>
             </div>
 

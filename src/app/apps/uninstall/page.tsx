@@ -58,7 +58,7 @@ const UNINSTALL_CSS = `
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 60;
+  z-index: 1;
   background: repeating-linear-gradient(
     to bottom,
     rgba(255, 255, 255, 0.025) 0px,
@@ -72,10 +72,10 @@ const UNINSTALL_CSS = `
   position: fixed;
   left: 0; right: 0;
   height: 2px;
-  background: rgba(0, 255, 102, 0.18);
-  box-shadow: 0 0 12px rgba(0, 255, 102, 0.35);
+  background: rgba(0, 255, 102, 0.14);
+  box-shadow: 0 0 12px rgba(0, 255, 102, 0.28);
   pointer-events: none;
-  z-index: 61;
+  z-index: 2;
   animation: uninstallDrift 8s linear infinite;
 }
 @keyframes uninstallDrift {
@@ -101,11 +101,13 @@ const UNINSTALL_CSS = `
   justify-content: center;
   border: 2px solid #ffffff;
   color: #ffffff;
-  background: transparent;
+  background: #000;
+  position: relative;
+  z-index: 10;
   padding: 0.7rem 1.25rem;
   font-weight: 700;
   letter-spacing: 0.02em;
-  transition: background-color 80ms linear, color 80ms linear;
+  transition: background-color 80ms linear, color 80ms linear, box-shadow 200ms ease;
   text-transform: uppercase;
   cursor: pointer;
 }
@@ -404,7 +406,7 @@ export default function UninstallLandingPage() {
                 <IPhoneFrame
                   src="/uninstall/assets/setblock-onetime.png"
                   alt="SELECT APPS"
-                  width={140}
+                  width={160}
                 />
               </div>
             </article>
@@ -416,7 +418,7 @@ export default function UninstallLandingPage() {
                 <IPhoneFrame
                   src="/uninstall/assets/setblock-schedule.png"
                   alt="SET DURATION"
-                  width={140}
+                  width={160}
                 />
               </div>
             </article>
@@ -430,7 +432,7 @@ export default function UninstallLandingPage() {
                 <IPhoneFrame
                   src="/uninstall/assets/setblock-activated.png"
                   alt="LOCK ACTIVE"
-                  width={140}
+                  width={160}
                 />
               </div>
             </article>
@@ -444,7 +446,7 @@ export default function UninstallLandingPage() {
                 <IPhoneFrame
                   src="/uninstall/assets/hold-to-break.png"
                   alt="HOLD TO BREAK"
-                  width={140}
+                  width={160}
                 />
               </div>
             </article>
