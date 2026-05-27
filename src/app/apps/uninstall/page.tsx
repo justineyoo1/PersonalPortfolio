@@ -158,9 +158,10 @@ const UNINSTALL_CSS = `
 .uninstall-root .meta-strip {
   color: var(--gray-600);
   font-size: 0.7rem;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.14em;
   line-height: 1.7;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 .uninstall-root .text-balance { text-wrap: balance; }
 .uninstall-root .iphone {
@@ -364,11 +365,22 @@ export default function UninstallLandingPage() {
       {/* PROTOCOL */}
       <section className="border-b border-gray-800">
         <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-20 sm:py-24">
-          <div className="mb-14 sm:mb-16">
-            <p className="marker mb-4">&gt; PROTOCOL</p>
-            <h2 className="text-balance text-white font-bold uppercase tracking-tight leading-[1] text-3xl sm:text-4xl md:text-5xl max-w-[18ch]">
-              THE WALL STAYS A WALL.
-            </h2>
+          <div className="mb-14 sm:mb-16 grid sm:grid-cols-12 gap-6 sm:gap-10 items-end">
+            <div className="sm:col-span-7">
+              <p className="marker mb-4">&gt; PROTOCOL</p>
+              <h2 className="text-balance text-white font-bold uppercase tracking-tight leading-[1] text-3xl sm:text-4xl md:text-5xl max-w-[18ch]">
+                THE WALL STAYS A WALL.
+              </h2>
+            </div>
+            <div className="sm:col-span-5 sm:pb-2">
+              <p className="meta-strip">
+                Apple Family Controls &nbsp;·&nbsp; DeviceActivity &nbsp;·&nbsp;
+                On-device
+              </p>
+              <p className="meta-strip mt-1.5">
+                No server &nbsp;·&nbsp; No tracking &nbsp;·&nbsp; No accounts
+              </p>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-gray-800 border border-gray-800">
@@ -428,15 +440,6 @@ export default function UninstallLandingPage() {
             </article>
           </div>
 
-          <div className="mt-10 sm:mt-12 pt-6 border-t border-gray-800 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-            <p className="meta-strip">
-              Apple Family Controls &nbsp;·&nbsp; DeviceActivity &nbsp;·&nbsp;
-              On-device
-            </p>
-            <p className="meta-strip">
-              No server &nbsp;·&nbsp; No tracking &nbsp;·&nbsp; No accounts
-            </p>
-          </div>
         </div>
       </section>
 
