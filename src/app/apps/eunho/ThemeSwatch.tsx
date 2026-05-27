@@ -6,12 +6,21 @@ import { useEffect, useState } from "react";
 // preview maps 1:1 to what the user would see in the shipping app.
 type AccentKey = "cyan" | "amber" | "violet" | "rose" | "emerald";
 
-const ACCENTS: Record<AccentKey, { hex: string; rgb: string; soft: string }> = {
-  cyan:    { hex: "#00E5FF", rgb: "0, 229, 255", soft: "#BEEFF6" },
-  amber:   { hex: "#FFB800", rgb: "255, 184, 0", soft: "#FFE5B0" },
-  violet:  { hex: "#BB86FC", rgb: "187, 134, 252", soft: "#E0CCFF" },
-  rose:    { hex: "#FF4466", rgb: "255, 68, 102", soft: "#FFB3C0" },
-  emerald: { hex: "#00E676", rgb: "0, 230, 118", soft: "#B0F5C8" },
+// `hueRotate` is the CSS filter rotation applied to the in-bezel iPhone
+// screenshot. The screenshot is the cyan-default app, so cyan = 0deg and
+// every other accent is the angular delta in HSL space from cyan (~187deg)
+// to the target hue. The iPhone screenshot's near-black background has
+// saturation=0 so it stays black under any rotation — only the cyan ring,
+// glow, and accent-colored UI elements shift.
+const ACCENTS: Record<
+  AccentKey,
+  { hex: string; rgb: string; soft: string; hueRotate: string }
+> = {
+  cyan:    { hex: "#00E5FF", rgb: "0, 229, 255",   soft: "#BEEFF6", hueRotate: "0deg"    },
+  amber:   { hex: "#FFB800", rgb: "255, 184, 0",   soft: "#FFE5B0", hueRotate: "-144deg" },
+  violet:  { hex: "#BB86FC", rgb: "187, 134, 252", soft: "#E0CCFF", hueRotate: "78deg"   },
+  rose:    { hex: "#FF4466", rgb: "255, 68, 102",  soft: "#FFB3C0", hueRotate: "163deg"  },
+  emerald: { hex: "#00E676", rgb: "0, 230, 118",   soft: "#B0F5C8", hueRotate: "-41deg"  },
 };
 
 const STORAGE_KEY = "eunho-accent";
@@ -25,6 +34,17 @@ function applyAccent(key: AccentKey) {
   root.style.setProperty("--eunho-ring", a.hex);
   root.style.setProperty("--eunho-ring-rgb", a.rgb);
   root.style.setProperty("--eunho-ring-soft", a.soft);
+  root.style.setProperty("--eunho-hue-rotate", a.hueRotate);
+
+  // Chrome quirk: `filter: hue-rotate(var(--x))` does not re-resolve when
+  // --x changes (verified in Chrome 13x with both inline-style and
+  // stylesheet rules — the variable updates everywhere except inside the
+  // filter property). Belt-and-suspenders: also set the filter directly
+  // on the screen-recolor element. This is the source of truth; the CSS
+  // rule is just the initial-paint fallback for SSR.
+  document.querySelectorAll<HTMLElement>(".eunho-screen-recolor").forEach((el) => {
+    el.style.filter = `hue-rotate(${a.hueRotate})`;
+  });
 }
 
 export function ThemeSwatch() {

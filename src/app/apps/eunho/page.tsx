@@ -137,6 +137,16 @@ const EUNHO_CSS = `
 .eunho-root ::selection { background: rgba(var(--ring-rgb), 0.35); color: #fff; }
 .eunho-root { padding-bottom: 96px; }
 
+/* Live recolor for the in-bezel screenshot. The screenshot is the cyan
+   default; hue-rotate shifts the cyan ring + accent UI without touching
+   the near-black background (saturation=0). Applied via stylesheet
+   (not inline) because Chrome has a quirk where var() inside an inline
+   filter does not always re-resolve on var-only updates. */
+.eunho-root .eunho-screen-recolor {
+  filter: hue-rotate(var(--eunho-hue-rotate, 0deg));
+  transition: filter 280ms ease;
+}
+
 .eunho-root .phone-device {
   position: relative;
   border-radius: 50px;
@@ -373,6 +383,7 @@ export default function EunhoLandingPage() {
               alt="eunho. Hold the ring to check in. Day 19 of 21 on the MEDITATE habit."
               width={320}
               className="mx-auto block"
+              imgClassName="eunho-screen-recolor"
             />
           </div>
         </div>

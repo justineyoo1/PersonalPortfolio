@@ -28,6 +28,14 @@ type Props =
       className?: string;
       style?: CSSProperties;
       objectPosition?: string;
+      /** Optional style merged into the inner screenshot `<img>` (e.g. for
+          a filter that recolors the screen content from outside). */
+      imgStyle?: CSSProperties;
+      /** Optional className applied to the inner screenshot `<img>` — use
+          this for CSS rules that need to read CSS custom properties (Chrome
+          has a quirk where `var()` inside an inline `filter` doesn't always
+          re-resolve when the var changes, but stylesheet rules do). */
+      imgClassName?: string;
       priority?: boolean;
     }
   | {
@@ -38,6 +46,8 @@ type Props =
       className?: string;
       style?: CSSProperties;
       objectPosition?: string;
+      imgStyle?: CSSProperties;
+      imgClassName?: string;
       priority?: boolean;
     };
 
@@ -62,6 +72,8 @@ export function IPhoneFrame({
   className,
   style,
   objectPosition = "center top",
+  imgStyle,
+  imgClassName,
 }: Props) {
   return (
     <div
@@ -95,12 +107,14 @@ export function IPhoneFrame({
           <img
             src={src}
             alt={alt}
+            className={imgClassName}
             style={{
               display: "block",
               width: "100%",
               height: "100%",
               objectFit: "cover",
               objectPosition,
+              ...imgStyle,
             }}
           />
         ) : (
