@@ -464,45 +464,6 @@ export default function UninstallLandingPage() {
         </div>
       </section>
 
-      {/* PRICING */}
-      <section id="pricing" className="border-b border-gray-800">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-8 sm:py-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <p className="marker mb-5">
-              &gt; UPGRADE TO PRO · ROUTINES · UNLIMITED APPS · FULL STATS
-            </p>
-
-            <h2 className="font-bold uppercase tracking-tight leading-[0.9] text-3xl sm:text-5xl md:text-6xl">
-              <span className="text-white">FREE FOR</span>{" "}
-              <span className="crt-glow" style={{ color: "var(--green)" }}>
-                7 DAYS.
-              </span>
-            </h2>
-
-            <p className="mt-4 text-gray-400 uppercase text-[11px] tracking-wide">
-              &gt; THEN $29.99/YR · CANCEL BEFORE DAY 7
-            </p>
-
-            <div className="mt-5">
-              <a
-                href="https://apps.apple.com/app/id6761068093?platform=iphone&app=jstnyoo-uninstall"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-bracket text-sm sm:text-base"
-              >
-                [ START 7 DAYS FREE ]
-              </a>
-            </div>
-
-            <p
-              className="mt-4 uppercase text-[10px] tracking-wide"
-              style={{ color: "var(--gray-600)" }}
-            >
-              &gt; AUTO-RENEWS AT $29.99 UNTIL CANCELED
-            </p>
-          </div>
-        </div>
-      </section>
 
       <AppPageFooter currentSlug="uninstall" supportUrl="https://jstnyoo.com/app/support" />
       <ThemedAppsBottomNav />

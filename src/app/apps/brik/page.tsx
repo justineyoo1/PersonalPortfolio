@@ -498,69 +498,6 @@ export default function BrikLandingPage() {
         </div>
       </section>
 
-      {/* PRICING */}
-      <section id="pricing" className="min-h-screen flex items-center">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-16 sm:py-20 w-full">
-          <div className="max-w-5xl mx-auto">
-            <div className="grid sm:grid-cols-2 gap-4">
-              <article className="ring-card rounded-2xl p-5 sm:p-6 relative">
-                <header className="flex items-center justify-between gap-3 mb-3">
-                  <h3 className="text-lg font-extrabold tracking-tight">Monthly</h3>
-                  <span className="chip rounded-full px-2.5 py-0.5 text-[10px] font-bold tracking-wider text-amber-500 uppercase">
-                    3 day free trial
-                  </span>
-                </header>
-                <div className="flex items-baseline gap-1 mb-3">
-                  <span className="text-3xl font-extrabold">$9.99</span>
-                  <span className="text-[#9CA3AF] text-sm font-medium">/ month</span>
-                </div>
-                <a
-                  href="https://apps.apple.com/app/id6761065846?platform=iphone&app=jstnyoo-brik"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex w-full items-center justify-center rounded-xl border border-white/15 px-4 py-2.5 text-sm font-extrabold text-white hover:border-amber-500 hover:text-amber-500 transition-colors"
-                >
-                  Start free trial
-                </a>
-              </article>
-
-              <article
-                className="ring-card rounded-2xl p-5 sm:p-6 relative overflow-hidden"
-                style={{
-                  borderColor: "rgba(245,158,11,0.35)",
-                  background:
-                    "linear-gradient(180deg, rgba(245,158,11,0.06), rgba(255,255,255,0.005))",
-                }}
-              >
-                <div className="ribbon">BEST VALUE</div>
-                <header className="flex items-center justify-between gap-3 mb-3">
-                  <h3 className="text-lg font-extrabold tracking-tight">Yearly</h3>
-                </header>
-                <div className="flex items-baseline gap-1 mb-3">
-                  <span className="text-3xl font-extrabold">$29.99</span>
-                  <span className="text-[#9CA3AF] text-sm font-medium">
-                    / year. $2.50 / mo.
-                  </span>
-                </div>
-                <a
-                  href="https://apps.apple.com/app/id6761065846?platform=iphone&app=jstnyoo-brik"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex w-full items-center justify-center rounded-xl bg-white text-[#0A0605] px-4 py-2.5 text-sm font-extrabold hover:bg-amber-500 transition-colors"
-                >
-                  Start free trial
-                </a>
-              </article>
-            </div>
-
-            <p className="mt-4 text-[11px] text-[#9CA3AF] text-center font-medium">
-              Auto renews at the price above until canceled. Cancel anytime in
-              Settings.
-            </p>
-          </div>
-        </div>
-      </section>
-
       <AppPageFooter currentSlug="brik" supportUrl="https://jstnyoo.com/app/support" />
       <ThemedAppsBottomNav />
     </main>
