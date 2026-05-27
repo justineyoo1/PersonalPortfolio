@@ -146,15 +146,13 @@ export const AppsCollapsed = ({
       <div className={`px-4 pb-3 ${isDark ? "pt-0" : "pt-0"}`}>
         <a
           href="/apps"
-          target="_blank"
-          rel="noopener noreferrer"
           className={`flex items-center justify-center w-full py-2.5 text-sm font-semibold transition-all duration-200 ${
             isDark
               ? "font-mono rounded-lg bg-[#60A5FA]/10 text-[#60A5FA] border border-[#60A5FA]/25 hover:bg-[#60A5FA]/20"
               : "rounded-full bg-[#E8E8ED]/80 text-[#515154] hover:bg-[#DDDDE3] hover:text-[#1D1D1F] text-[13px]"
           }`}
         >
-          {isDark ? "$ open ~/apps ↗" : "View All Apps ↗"}
+          {isDark ? "$ open ~/apps" : "View All Apps"}
         </a>
       </div>
     </div>

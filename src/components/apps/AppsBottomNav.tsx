@@ -41,7 +41,7 @@ export const AppsBottomNav: React.FC<AppsBottomNavProps> = ({
   return (
     <div
       className={cn(
-        "fixed bottom-3 z-50 flex items-center gap-2 px-3 py-2 rounded-[20px]",
+        "fixed bottom-3 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 px-3 py-2 rounded-[20px]",
         isDark
           ? "shadow-xl border border-gray-700 bg-gray-950"
           : "bg-white/70 backdrop-blur-2xl border border-white/50 shadow-[0_4px_30px_rgba(0,0,0,0.08)]",

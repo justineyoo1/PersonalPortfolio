@@ -220,11 +220,6 @@ const BRIK_CSS = `
   border-radius: 2px 0 0 2px;
   box-shadow: 0 6%/0 6% 0 #3a2c25;
 }
-.brik-root .phone-float { animation: brikPhoneFloat 7s ease-in-out infinite; }
-@keyframes brikPhoneFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
 @media (prefers-reduced-motion: reduce) {
   .brik-root *, .brik-root *::before, .brik-root *::after {
     animation-duration: 0s !important;
@@ -233,7 +228,6 @@ const BRIK_CSS = `
     scroll-behavior: auto !important;
   }
   .brik-root .hero-glow::before { display: none; }
-  .brik-root .phone-frame::before { display: none; }
   .brik-root { background-attachment: scroll; }
 }
 `;

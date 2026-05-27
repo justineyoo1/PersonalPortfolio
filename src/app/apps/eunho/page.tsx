@@ -360,12 +360,9 @@ export default function EunhoLandingPage() {
                   </span>
                 </span>
               </a>
-              <a
-                href="#pricing"
-                className="text-[12px] tracking-wide text-[#8B8B8B] hover:text-[#F5F5F5] transition-colors"
-              >
+              <span className="text-[12px] tracking-wide text-[#8B8B8B]">
                 7-day free trial<span className="dot-cyan">.</span>
-              </a>
+              </span>
             </div>
           </div>
 

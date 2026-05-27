@@ -119,6 +119,7 @@ const UNINSTALL_CSS = `
   padding: 0.4rem 0.75rem;
   border-width: 1px;
   font-size: 0.7rem;
+  white-space: nowrap;
 }
 .uninstall-root .marker {
   color: var(--gray-500);
@@ -270,7 +271,7 @@ export default function UninstallLandingPage() {
               href="/apps"
               className="text-[11px] tracking-[0.2em] uppercase text-gray-500 hover:text-white transition-colors"
             >
-              ← APPS
+              ← ALL APPS
             </a>
             <a
               href="#top"
