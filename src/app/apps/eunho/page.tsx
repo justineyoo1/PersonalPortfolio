@@ -373,8 +373,8 @@ export default function EunhoLandingPage() {
             <div className="absolute -inset-14 radial-cyan opacity-80 pointer-events-none"></div>
 
             <IPhoneFrame
-              src="/img/apps/eunho/4-hold.png"
-              alt="eunho. Hold the ring for 2.5 seconds."
+              src="/img/apps/eunho/screen-intro.png"
+              alt="eunho. Hold the ring to check in. Day 19 of 21 on the MEDITATE habit."
               width={320}
               className="mx-auto block"
             />
