@@ -250,7 +250,7 @@ export default function EunhoLandingPage() {
       {/* NAV */}
       <nav className="fixed top-0 inset-x-0 z-50">
         <div className="backdrop-blur-md bg-[#0A0A0A]/60 border-b hair">
-          <div className="max-w-6xl mx-auto px-6 h-12 flex items-center justify-between">
+          <div className="px-5 sm:px-8 lg:px-12 h-12 flex items-center justify-between">
             <div className="flex items-center gap-5">
               <a
                 href="/apps"
@@ -278,13 +278,13 @@ export default function EunhoLandingPage() {
       {/* HERO */}
       <section
         id="top"
-        className="relative pt-20 pb-10 min-h-[100vh] flex items-center"
+        className="relative pt-20 pb-10 min-h-screen flex items-center"
       >
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute left-1/2 -translate-x-1/2 top-12 w-[820px] h-[820px] radial-cyan-lg opacity-70"></div>
         </div>
 
-        <div className="relative max-w-6xl mx-auto px-6 w-full grid md:grid-cols-[1.1fr_0.9fr] gap-10 items-center">
+        <div className="relative max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 w-full grid md:grid-cols-[1.1fr_0.9fr] gap-10 items-center">
           <div className="text-center md:text-left">
             <div className="flex items-center gap-3 justify-center md:justify-start mb-6">
               <div className="relative w-9 h-9">
@@ -380,8 +380,7 @@ export default function EunhoLandingPage() {
 
           {/* RIGHT: iPhone */}
           <div
-            className="phone-stage relative mx-auto"
-            style={{ maxWidth: "290px", width: "100%" }}
+            className="phone-stage relative mx-auto w-full max-w-[290px] lg:max-w-[340px] xl:max-w-[380px]"
           >
             <div className="absolute -inset-14 radial-cyan opacity-80 pointer-events-none"></div>
 
@@ -448,8 +447,8 @@ export default function EunhoLandingPage() {
       </section>
 
       {/* SUPPORTING BAND */}
-      <section className="relative border-t hair py-12">
-        <div className="max-w-6xl mx-auto px-6">
+      <section className="relative border-t hair">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-12">
           <div className="grid md:grid-cols-2 gap-6 items-end pb-10 border-b hair">
             <div>
               <p className="eyebrow text-[#8B8B8B]">The ritual</p>
@@ -679,8 +678,9 @@ export default function EunhoLandingPage() {
       </section>
 
       {/* PRICING */}
-      <section id="pricing" className="relative border-t hair py-14">
-        <div className="max-w-5xl mx-auto px-6">
+      <section id="pricing" className="relative border-t hair">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-14">
+          <div className="max-w-5xl mx-auto">
           <div className="flex items-end justify-between gap-6 flex-wrap">
             <div>
               <p className="eyebrow text-[#8B8B8B]">Pricing</p>
@@ -776,6 +776,7 @@ export default function EunhoLandingPage() {
                 Start Trial
               </a>
             </div>
+          </div>
           </div>
         </div>
       </section>

@@ -262,7 +262,7 @@ export default function UninstallLandingPage() {
 
       {/* NAV */}
       <header className="sticky top-0 z-50 bg-black border-b border-gray-800">
-        <nav className="max-w-7xl mx-auto px-5 sm:px-8 h-12 flex items-center justify-between">
+        <nav className="px-5 sm:px-8 lg:px-12 h-12 flex items-center justify-between">
           <div className="flex items-center gap-5">
             <a
               href="/apps"
@@ -290,8 +290,8 @@ export default function UninstallLandingPage() {
       </header>
 
       {/* HERO */}
-      <section id="top" className="border-b border-gray-800">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 pt-6 sm:pt-8 pb-8 sm:pb-10 grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+      <section id="top" className="border-b border-gray-800 min-h-screen flex items-center">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 w-full pt-6 sm:pt-8 pb-8 sm:pb-10 grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           <div className="lg:col-span-7 order-2 lg:order-1">
             <div className="flex items-center gap-3 mb-5">
               <img
@@ -344,11 +344,11 @@ export default function UninstallLandingPage() {
           </div>
 
           <div className="lg:col-span-5 order-1 lg:order-2 flex justify-center lg:justify-end">
-            <div className="phone-glow w-[200px] sm:w-[240px] md:w-[260px]">
+            <div className="phone-glow w-[200px] sm:w-[240px] md:w-[260px] lg:w-[300px] xl:w-[340px]">
               <div className="iphone">
                 <div className="iphone-screen">
                   <img
-                    src="/uninstall/assets/home-idle.svg"
+                    src="/uninstall/assets/home-idle.png"
                     alt="UNINSTALL HOME · IDLE"
                   />
                   <div className="iphone-gloss"></div>
@@ -362,7 +362,7 @@ export default function UninstallLandingPage() {
 
       {/* PROTOCOL */}
       <section className="border-b border-gray-800">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 py-8 sm:py-10">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-8 sm:py-10">
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-7">
             <div>
               <p className="marker mb-2">&gt; PROTOCOL</p>
@@ -387,7 +387,7 @@ export default function UninstallLandingPage() {
                   <div className="iphone">
                     <div className="iphone-screen">
                       <img
-                        src="/uninstall/assets/setblock-onetime.svg"
+                        src="/uninstall/assets/setblock-onetime.png"
                         alt="SELECT APPS"
                       />
                       <div className="iphone-gloss"></div>
@@ -407,7 +407,7 @@ export default function UninstallLandingPage() {
                   <div className="iphone">
                     <div className="iphone-screen">
                       <img
-                        src="/uninstall/assets/setblock-schedule.svg"
+                        src="/uninstall/assets/setblock-schedule.png"
                         alt="SET DURATION"
                       />
                       <div className="iphone-gloss"></div>
@@ -429,7 +429,7 @@ export default function UninstallLandingPage() {
                   <div className="iphone">
                     <div className="iphone-screen">
                       <img
-                        src="/uninstall/assets/setblock-activated.svg"
+                        src="/uninstall/assets/setblock-activated.png"
                         alt="LOCK ACTIVE"
                       />
                       <div className="iphone-gloss"></div>
@@ -449,7 +449,7 @@ export default function UninstallLandingPage() {
                   <div className="iphone">
                     <div className="iphone-screen">
                       <img
-                        src="/uninstall/assets/hold-to-break.svg"
+                        src="/uninstall/assets/hold-to-break.png"
                         alt="HOLD TO BREAK"
                       />
                       <div className="iphone-gloss"></div>
@@ -465,39 +465,41 @@ export default function UninstallLandingPage() {
 
       {/* PRICING */}
       <section id="pricing" className="border-b border-gray-800">
-        <div className="max-w-4xl mx-auto px-5 sm:px-8 py-8 sm:py-10 text-center">
-          <p className="marker mb-5">
-            &gt; UPGRADE TO PRO · ROUTINES · UNLIMITED APPS · FULL STATS
-          </p>
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-8 sm:py-10">
+          <div className="max-w-4xl mx-auto text-center">
+            <p className="marker mb-5">
+              &gt; UPGRADE TO PRO · ROUTINES · UNLIMITED APPS · FULL STATS
+            </p>
 
-          <h2 className="font-bold uppercase tracking-tight leading-[0.9] text-3xl sm:text-5xl md:text-6xl">
-            <span className="text-white">FREE FOR</span>{" "}
-            <span className="crt-glow" style={{ color: "var(--green)" }}>
-              7 DAYS.
-            </span>
-          </h2>
+            <h2 className="font-bold uppercase tracking-tight leading-[0.9] text-3xl sm:text-5xl md:text-6xl">
+              <span className="text-white">FREE FOR</span>{" "}
+              <span className="crt-glow" style={{ color: "var(--green)" }}>
+                7 DAYS.
+              </span>
+            </h2>
 
-          <p className="mt-4 text-gray-400 uppercase text-[11px] tracking-wide">
-            &gt; THEN $29.99/YR · CANCEL BEFORE DAY 7
-          </p>
+            <p className="mt-4 text-gray-400 uppercase text-[11px] tracking-wide">
+              &gt; THEN $29.99/YR · CANCEL BEFORE DAY 7
+            </p>
 
-          <div className="mt-5">
-            <a
-              href="https://apps.apple.com/app/id6761068093?platform=iphone&app=jstnyoo-uninstall"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-bracket text-sm sm:text-base"
+            <div className="mt-5">
+              <a
+                href="https://apps.apple.com/app/id6761068093?platform=iphone&app=jstnyoo-uninstall"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-bracket text-sm sm:text-base"
+              >
+                [ START 7 DAYS FREE ]
+              </a>
+            </div>
+
+            <p
+              className="mt-4 uppercase text-[10px] tracking-wide"
+              style={{ color: "var(--gray-600)" }}
             >
-              [ START 7 DAYS FREE ]
-            </a>
+              &gt; AUTO-RENEWS AT $29.99 UNTIL CANCELED
+            </p>
           </div>
-
-          <p
-            className="mt-4 uppercase text-[10px] tracking-wide"
-            style={{ color: "var(--gray-600)" }}
-          >
-            &gt; AUTO-RENEWS AT $29.99 UNTIL CANCELED
-          </p>
         </div>
       </section>
 

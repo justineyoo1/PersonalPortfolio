@@ -245,7 +245,7 @@ export default function BrikLandingPage() {
 
       {/* NAV */}
       <nav className="nav-blur fixed top-0 inset-x-0 z-50">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 h-14 flex items-center justify-between">
+        <div className="px-5 sm:px-8 lg:px-12 h-14 flex items-center justify-between">
           <div className="flex items-center gap-5">
             <a
               href="/apps"
@@ -269,8 +269,8 @@ export default function BrikLandingPage() {
       </nav>
 
       {/* HERO */}
-      <header id="top" className="pt-16 pb-8 px-5 sm:px-8">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-[1.1fr_1fr] gap-8 md:gap-12 items-center">
+      <header id="top" className="min-h-screen flex items-center pt-16 pb-8">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 w-full grid md:grid-cols-[1.1fr_1fr] gap-8 md:gap-12 items-center">
           <div className="text-center md:text-left">
             <div className="relative inline-block hero-glow mb-5">
               <img
@@ -336,7 +336,7 @@ export default function BrikLandingPage() {
           <div className="flex justify-center md:justify-end">
             <div
               className="phone phone-float"
-              style={{ ["--pw" as string]: "clamp(200px, 30vw, 280px)" }}
+              style={{ ["--pw" as string]: "clamp(220px, 28vw, 360px)" }}
             >
               <div className="phone-frame">
                 <div className="phone-screen">
@@ -369,11 +369,11 @@ export default function BrikLandingPage() {
         </div>
       </header>
 
-      <div className="hairline max-w-6xl mx-auto"></div>
+      <div className="hairline max-w-7xl mx-auto"></div>
 
       {/* SUPPORTING BAND */}
-      <section className="py-8 sm:py-10 px-5 sm:px-8">
-        <div className="max-w-7xl mx-auto">
+      <section>
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-8 sm:py-10">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6">
             <div>
               <p className="text-[11px] font-bold tracking-[0.3em] text-amber-500 uppercase mb-2">
@@ -498,63 +498,65 @@ export default function BrikLandingPage() {
       </section>
 
       {/* PRICING */}
-      <section id="pricing" className="py-8 sm:py-10 px-5 sm:px-8">
-        <div className="max-w-5xl mx-auto">
-          <div className="grid sm:grid-cols-2 gap-4">
-            <article className="ring-card rounded-2xl p-5 sm:p-6 relative">
-              <header className="flex items-center justify-between gap-3 mb-3">
-                <h3 className="text-lg font-extrabold tracking-tight">Monthly</h3>
-                <span className="chip rounded-full px-2.5 py-0.5 text-[10px] font-bold tracking-wider text-amber-500 uppercase">
-                  3 day free trial
-                </span>
-              </header>
-              <div className="flex items-baseline gap-1 mb-3">
-                <span className="text-3xl font-extrabold">$9.99</span>
-                <span className="text-[#9CA3AF] text-sm font-medium">/ month</span>
-              </div>
-              <a
-                href="https://apps.apple.com/app/id6761065846?platform=iphone&app=jstnyoo-brik"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex w-full items-center justify-center rounded-xl border border-white/15 px-4 py-2.5 text-sm font-extrabold text-white hover:border-amber-500 hover:text-amber-500 transition-colors"
-              >
-                Start free trial
-              </a>
-            </article>
+      <section id="pricing">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-8 sm:py-10">
+          <div className="max-w-5xl mx-auto">
+            <div className="grid sm:grid-cols-2 gap-4">
+              <article className="ring-card rounded-2xl p-5 sm:p-6 relative">
+                <header className="flex items-center justify-between gap-3 mb-3">
+                  <h3 className="text-lg font-extrabold tracking-tight">Monthly</h3>
+                  <span className="chip rounded-full px-2.5 py-0.5 text-[10px] font-bold tracking-wider text-amber-500 uppercase">
+                    3 day free trial
+                  </span>
+                </header>
+                <div className="flex items-baseline gap-1 mb-3">
+                  <span className="text-3xl font-extrabold">$9.99</span>
+                  <span className="text-[#9CA3AF] text-sm font-medium">/ month</span>
+                </div>
+                <a
+                  href="https://apps.apple.com/app/id6761065846?platform=iphone&app=jstnyoo-brik"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex w-full items-center justify-center rounded-xl border border-white/15 px-4 py-2.5 text-sm font-extrabold text-white hover:border-amber-500 hover:text-amber-500 transition-colors"
+                >
+                  Start free trial
+                </a>
+              </article>
 
-            <article
-              className="ring-card rounded-2xl p-5 sm:p-6 relative overflow-hidden"
-              style={{
-                borderColor: "rgba(245,158,11,0.35)",
-                background:
-                  "linear-gradient(180deg, rgba(245,158,11,0.06), rgba(255,255,255,0.005))",
-              }}
-            >
-              <div className="ribbon">BEST VALUE</div>
-              <header className="flex items-center justify-between gap-3 mb-3">
-                <h3 className="text-lg font-extrabold tracking-tight">Yearly</h3>
-              </header>
-              <div className="flex items-baseline gap-1 mb-3">
-                <span className="text-3xl font-extrabold">$29.99</span>
-                <span className="text-[#9CA3AF] text-sm font-medium">
-                  / year. $2.50 / mo.
-                </span>
-              </div>
-              <a
-                href="https://apps.apple.com/app/id6761065846?platform=iphone&app=jstnyoo-brik"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex w-full items-center justify-center rounded-xl bg-white text-[#0A0605] px-4 py-2.5 text-sm font-extrabold hover:bg-amber-500 transition-colors"
+              <article
+                className="ring-card rounded-2xl p-5 sm:p-6 relative overflow-hidden"
+                style={{
+                  borderColor: "rgba(245,158,11,0.35)",
+                  background:
+                    "linear-gradient(180deg, rgba(245,158,11,0.06), rgba(255,255,255,0.005))",
+                }}
               >
-                Start free trial
-              </a>
-            </article>
+                <div className="ribbon">BEST VALUE</div>
+                <header className="flex items-center justify-between gap-3 mb-3">
+                  <h3 className="text-lg font-extrabold tracking-tight">Yearly</h3>
+                </header>
+                <div className="flex items-baseline gap-1 mb-3">
+                  <span className="text-3xl font-extrabold">$29.99</span>
+                  <span className="text-[#9CA3AF] text-sm font-medium">
+                    / year. $2.50 / mo.
+                  </span>
+                </div>
+                <a
+                  href="https://apps.apple.com/app/id6761065846?platform=iphone&app=jstnyoo-brik"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex w-full items-center justify-center rounded-xl bg-white text-[#0A0605] px-4 py-2.5 text-sm font-extrabold hover:bg-amber-500 transition-colors"
+                >
+                  Start free trial
+                </a>
+              </article>
+            </div>
+
+            <p className="mt-4 text-[11px] text-[#9CA3AF] text-center font-medium">
+              Auto renews at the price above until canceled. Cancel anytime in
+              Settings.
+            </p>
           </div>
-
-          <p className="mt-4 text-[11px] text-[#9CA3AF] text-center font-medium">
-            Auto renews at the price above until canceled. Cancel anytime in
-            Settings.
-          </p>
         </div>
       </section>
 

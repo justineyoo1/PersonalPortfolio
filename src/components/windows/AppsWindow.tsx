@@ -40,86 +40,105 @@ export const AppsCollapsed = ({
 
       <div className={`grid grid-cols-2 lg:grid-cols-4 ${isDark ? "gap-3 p-4" : "gap-1.5 px-3 pt-2 pb-1"}`}>
         {apps.map((app) => (
-          <a
-            key={app.slug}
-            href={
-              app.status === "available" && app.appStoreUrl
-                ? app.appStoreUrl
-                : app.status === "waitlist"
-                  ? "/apps"
-                  : (app.waitlistUrl ?? "/apps")
-            }
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`group flex items-center gap-3 ${isDark ? "rounded-lg p-3" : "rounded-xl px-3 py-2"} transition-all duration-200 ${
-              isDark
-                ? "hover:bg-white/5"
-                : "hover:bg-[#E8E8ED] apple-transition hover:shadow-sm"
-            }`}
-          >
-            {/* App icon */}
-            {app.icon ? (
-              <img
-                src={app.icon}
-                alt={app.name}
-                width={48}
-                height={48}
-                className={`${isDark ? "w-14 h-14" : "w-10 h-10"} rounded-xl shrink-0 object-cover ${
-                  app.iconBg === "dark"
-                    ? "bg-gray-900"
-                    : isDark
-                      ? app.iconBg === "light"
-                        ? "bg-white p-1.5"
-                        : ""
-                      : app.iconBg === "light"
-                        ? ""
-                        : "bg-gray-900 p-1"
-                }`}
-              />
-            ) : (
-              <div
-                className={`${isDark ? "w-12 h-12 text-lg" : "w-10 h-10 text-sm"} rounded-xl shrink-0 flex items-center justify-center font-bold ${
-                  isDark ? "border" : ""
-                }`}
-                style={{
-                  backgroundColor: isDark ? `${app.accentColor}15` : "#111827",
-                  color: isDark ? app.accentColor : "#ffffff",
-                  borderColor: isDark ? `${app.accentColor}40` : undefined,
-                }}
-              >
-                {app.name[0]}
-              </div>
-            )}
-
-            {/* Info */}
-            <div className="min-w-0">
-              <p
-                className={`${isDark ? "text-sm" : "text-[13px]"} font-bold truncate ${isDark ? "font-mono text-gray-100" : "text-[#1D1D1F]"}`}
-              >
-                {app.name}
-              </p>
-              <p
-                className={`${isDark ? "text-xs" : "text-[11px]"} truncate ${isDark ? "font-mono text-gray-400" : "text-[#86868B]"}`}
-              >
-                {app.tagline}
-              </p>
-              {isDark && (
-                <span
-                  className="inline-block mt-1 px-1.5 py-0.5 rounded text-[10px] font-mono"
+          <div key={app.slug} className="relative">
+            <a
+              href={`/apps/${app.slug}`}
+              className={`group flex items-center gap-3 ${isDark ? "rounded-lg p-3" : "rounded-xl px-3 py-2"} transition-all duration-200 ${
+                isDark
+                  ? "hover:bg-white/5"
+                  : "hover:bg-[#E8E8ED] apple-transition hover:shadow-sm"
+              }`}
+            >
+              {/* App icon */}
+              {app.icon ? (
+                <img
+                  src={app.icon}
+                  alt={app.name}
+                  width={48}
+                  height={48}
+                  className={`${isDark ? "w-14 h-14" : "w-10 h-10"} rounded-xl shrink-0 object-cover ${
+                    app.iconBg === "dark"
+                      ? "bg-gray-900"
+                      : isDark
+                        ? app.iconBg === "light"
+                          ? "bg-white p-1.5"
+                          : ""
+                        : app.iconBg === "light"
+                          ? ""
+                          : "bg-gray-900 p-1"
+                  }`}
+                />
+              ) : (
+                <div
+                  className={`${isDark ? "w-12 h-12 text-lg" : "w-10 h-10 text-sm"} rounded-xl shrink-0 flex items-center justify-center font-bold ${
+                    isDark ? "border" : ""
+                  }`}
                   style={{
-                    backgroundColor: `${app.accentColor}15`,
-                    color: app.accentColor,
+                    backgroundColor: isDark ? `${app.accentColor}15` : "#111827",
+                    color: isDark ? app.accentColor : "#ffffff",
+                    borderColor: isDark ? `${app.accentColor}40` : undefined,
                   }}
                 >
-                  {app.status === "available"
-                    ? "$ download"
-                    : app.status === "waitlist"
-                      ? "$ coming soon"
-                      : "$ waitlist"}
-                </span>
+                  {app.name[0]}
+                </div>
               )}
-            </div>
-          </a>
+
+              {/* Info */}
+              <div className="min-w-0">
+                <p
+                  className={`${isDark ? "text-sm" : "text-[13px]"} font-bold truncate ${isDark ? "font-mono text-gray-100" : "text-[#1D1D1F]"}`}
+                >
+                  {app.name}
+                </p>
+                <p
+                  className={`${isDark ? "text-xs" : "text-[11px]"} truncate ${isDark ? "font-mono text-gray-400" : "text-[#86868B]"}`}
+                >
+                  {app.tagline}
+                </p>
+                {isDark && app.status !== "available" && (
+                  <span
+                    className="inline-block mt-1 px-1.5 py-0.5 rounded text-[10px] font-mono"
+                    style={{
+                      backgroundColor: `${app.accentColor}15`,
+                      color: app.accentColor,
+                    }}
+                  >
+                    {app.status === "waitlist" ? "$ coming soon" : "$ waitlist"}
+                  </span>
+                )}
+              </div>
+            </a>
+
+            {/* Secondary App Store mini-link for live apps */}
+            {app.status === "available" && app.appStoreUrl && (
+              <a
+                href={app.appStoreUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className={`absolute z-10 ${
+                  isDark
+                    ? "bottom-2 right-2 px-1.5 py-0.5 rounded text-[10px] font-mono"
+                    : "top-1.5 right-2 px-1.5 py-0.5 rounded-full text-[10px]"
+                } transition-opacity ${
+                  isDark
+                    ? "hover:opacity-80"
+                    : "bg-[#E8E8ED]/80 text-[#515154] hover:bg-[#DDDDE3] hover:text-[#1D1D1F]"
+                }`}
+                style={
+                  isDark
+                    ? {
+                        backgroundColor: `${app.accentColor}15`,
+                        color: app.accentColor,
+                      }
+                    : undefined
+                }
+                aria-label={`Download ${app.name} on the App Store`}
+              >
+                {isDark ? "$ download ↗" : "Download ↗"}
+              </a>
+            )}
+          </div>
         ))}
       </div>
 
