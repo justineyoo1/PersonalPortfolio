@@ -1,5 +1,7 @@
 import { ImageResponse } from "next/og";
 
+// 32x32 favicon. Terminal-cursor aesthetic to match the OS-style
+// home page (zsh windows, $ prompts in the apps dock chip).
 export const size = { width: 32, height: 32 };
 export const contentType = "image/png";
 
@@ -13,15 +15,20 @@ export default function Icon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "linear-gradient(135deg, #0A0605 0%, #1A0F0A 100%)",
-          color: "#F59E0B",
-          fontSize: 18,
+          background: "#000000",
+          color: "#00FF66",
+          fontSize: 22,
           fontWeight: 700,
+          fontFamily:
+            "ui-monospace, SFMono-Regular, 'JetBrains Mono', Menlo, monospace",
           letterSpacing: "-0.04em",
-          borderRadius: 6,
+          // Slight nudge so the optical baseline reads centered: the `>` is
+          // a triangle with its centroid below the geometric center, and
+          // the underscore sits at the descender line.
+          paddingBottom: 2,
         }}
       >
-        JY
+        {">_"}
       </div>
     ),
     { ...size },
