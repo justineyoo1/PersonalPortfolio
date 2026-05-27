@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter, Cormorant_Garamond } from "next/font/google";
 import { AppPageFooter } from "@/components/apps/AppPageFooter";
 import { ThemedAppsBottomNav } from "@/components/apps/ThemedAppsBottomNav";
-import { HoldRing } from "./HoldRing";
 import { IPhoneFrame } from "@/components/IPhoneFrame";
 
 const inter = Inter({
@@ -376,9 +375,12 @@ export default function EunhoLandingPage() {
           >
             <div className="absolute -inset-14 radial-cyan opacity-80 pointer-events-none"></div>
 
-            <IPhoneFrame width={320} className="mx-auto block">
-              <HoldRing />
-            </IPhoneFrame>
+            <IPhoneFrame
+              src="/img/apps/eunho/4-hold.png"
+              alt="eunho. Hold the ring for 2.5 seconds."
+              width={320}
+              className="mx-auto block"
+            />
           </div>
         </div>
       </section>
