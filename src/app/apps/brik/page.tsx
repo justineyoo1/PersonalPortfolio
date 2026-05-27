@@ -115,13 +115,14 @@ const BRIK_CSS = `
   position: absolute;
   inset: 0;
   border-radius: 13.2%;
-  padding: 1.6%;
-  background: linear-gradient(135deg, #6c5a52 0%, #2a1f1a 25%, #4a3a32 50%, #1a1310 75%, #5a4840 100%);
+  padding: 2.2%;
+  background: linear-gradient(135deg, #6e6a66 0%, #2c2825 25%, #141210 50%, #2c2825 75%, #6e6a66 100%);
   box-shadow:
-    0 30px 60px -10px rgba(0,0,0,0.7),
+    0 30px 60px -10px rgba(0,0,0,0.75),
     0 20px 30px -10px rgba(234,88,12,0.18),
-    inset 0 1px 0 rgba(255,255,255,0.10),
-    inset 0 -1px 0 rgba(0,0,0,0.6);
+    inset 0 0 0 1px rgba(255,255,255,0.06),
+    inset 0 1px 0 rgba(255,255,255,0.18),
+    inset 0 -1px 0 rgba(0,0,0,0.7);
 }
 .brik-root .phone-frame::before {
   content: "";
@@ -372,8 +373,8 @@ export default function BrikLandingPage() {
       <div className="hairline max-w-7xl mx-auto"></div>
 
       {/* SUPPORTING BAND */}
-      <section>
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-8 sm:py-10">
+      <section className="min-h-screen flex items-center">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-16 sm:py-20 w-full">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6">
             <div>
               <p className="text-[11px] font-bold tracking-[0.3em] text-amber-500 uppercase mb-2">
@@ -498,8 +499,8 @@ export default function BrikLandingPage() {
       </section>
 
       {/* PRICING */}
-      <section id="pricing">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-8 sm:py-10">
+      <section id="pricing" className="min-h-screen flex items-center">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-16 sm:py-20 w-full">
           <div className="max-w-5xl mx-auto">
             <div className="grid sm:grid-cols-2 gap-4">
               <article className="ring-card rounded-2xl p-5 sm:p-6 relative">

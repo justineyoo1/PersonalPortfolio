@@ -129,14 +129,15 @@ const UNINSTALL_CSS = `
   position: relative;
   aspect-ratio: 380 / 780;
   background:
-    linear-gradient(145deg, #2a2a2c 0%, #1a1a1c 35%, #0d0d0e 60%, #1f1f21 100%);
-  padding: 6px;
-  border-radius: 48px;
+    linear-gradient(135deg, #5e5e62 0%, #1c1c1e 25%, #0a0a0c 50%, #1c1c1e 75%, #5e5e62 100%);
+  padding: 8px;
+  border-radius: 52px;
   box-shadow:
     0 40px 60px -28px rgba(0,0,0,0.95),
     0 18px 28px -16px rgba(0,0,0,0.7),
-    0 0 0 1px rgba(255,255,255,0.05) inset,
-    0 1px 0 rgba(255,255,255,0.18) inset;
+    0 0 0 1px rgba(255,255,255,0.06) inset,
+    0 1px 0 rgba(255,255,255,0.22) inset,
+    0 -1px 0 rgba(0,0,0,0.7) inset;
 }
 .uninstall-root .iphone::before {
   content: '';
@@ -274,7 +275,7 @@ export default function UninstallLandingPage() {
               href="#top"
               className="flex items-center gap-2 text-white font-bold tracking-tight text-sm"
             >
-              <img src="/uninstall/assets/logo.svg" alt="" className="w-4 h-4" />
+              <img src="/uninstall/assets/icon-white.png" alt="" className="w-4 h-4" />
               <span>UNINSTALL</span>
             </a>
           </div>
@@ -295,7 +296,7 @@ export default function UninstallLandingPage() {
           <div className="lg:col-span-7 order-2 lg:order-1">
             <div className="flex items-center gap-3 mb-5">
               <img
-                src="/uninstall/assets/logo.svg"
+                src="/uninstall/assets/icon-white.png"
                 alt="UNINSTALL LOGO"
                 className="w-12 h-12"
               />
