@@ -295,8 +295,11 @@ export default function EunhoLandingPage() {
                 height={40}
                 className="w-10 h-10"
                 style={{
-                  filter:
-                    "brightness(0) saturate(100%) invert(80%) sepia(60%) saturate(2500%) hue-rotate(140deg) brightness(105%) contrast(95%) drop-shadow(0 0 6px rgba(0,229,255,0.55))",
+                  // Black silhouette PNG -> white silhouette via the canonical
+                  // "brightness(0) + invert(1)" trick. Preserves the alpha
+                  // channel (transparent background) and lands the mark in
+                  // pure white on the near-black hero.
+                  filter: "brightness(0) invert(1)",
                 }}
               />
               <p className="eyebrow text-[#8B8B8B]">The single-habit tracker</p>
