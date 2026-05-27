@@ -248,33 +248,13 @@ export default function EunhoLandingPage() {
     >
       <style dangerouslySetInnerHTML={{ __html: EUNHO_CSS }} />
 
-      {/* NAV */}
-      <nav className="fixed top-0 inset-x-0 z-50">
-        <div className="backdrop-blur-md bg-[#0A0A0A]/60 border-b hair">
-          <div className="px-5 sm:px-8 lg:px-12 h-12 flex items-center justify-between">
-            <div className="flex items-center gap-5">
-              <a
-                href="/apps"
-                className="text-[11px] tracking-[0.18em] uppercase text-[#8B8B8B] hover:text-[#F5F5F5] transition-colors font-medium"
-              >
-                ← All apps
-              </a>
-              <a
-                href="#top"
-                className="font-serif text-[18px] leading-none tracking-tight text-[#F5F5F5]"
-              >
-                eunho<span className="dot-cyan">.</span>
-              </a>
-            </div>
-            <a
-              href="#download"
-              className="pill-cta inline-flex items-center gap-2 rounded-full border hair-strong px-3.5 h-8 text-[11px] font-medium tracking-wide text-[#F5F5F5]"
-            >
-              Download
-            </a>
-          </div>
-        </div>
-      </nav>
+      {/* Tiny back link — no nav bar; hero owns the top of the page. */}
+      <a
+        href="/apps"
+        className="fixed top-5 left-5 z-50 text-[11px] tracking-[0.18em] uppercase text-[#8B8B8B] hover:text-[#F5F5F5] transition-colors font-medium"
+      >
+        ← All apps
+      </a>
 
       {/* HERO */}
       <section

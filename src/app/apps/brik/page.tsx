@@ -239,33 +239,16 @@ export default function BrikLandingPage() {
     >
       <style dangerouslySetInnerHTML={{ __html: BRIK_CSS }} />
 
-      {/* NAV */}
-      <nav className="nav-blur fixed top-0 inset-x-0 z-50">
-        <div className="px-5 sm:px-8 lg:px-12 h-14 flex items-center justify-between">
-          <div className="flex items-center gap-5">
-            <a
-              href="/apps"
-              className="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] hover:text-amber-500 transition-colors font-medium"
-            >
-              ← All apps
-            </a>
-            <a href="#top" className="flex items-center gap-2">
-              <span className="text-xl font-extrabold tracking-tight">
-                Brik<span className="wordmark-period">.</span>
-              </span>
-            </a>
-          </div>
-          <a
-            href="#download"
-            className="inline-flex items-center gap-2 rounded-full bg-white text-[#0A0605] font-bold text-sm px-4 py-1.5 hover:bg-amber-500 transition-colors"
-          >
-            Download
-          </a>
-        </div>
-      </nav>
+      {/* Tiny back link — no nav bar; hero owns the top of the page. */}
+      <a
+        href="/apps"
+        className="fixed top-5 left-5 z-50 text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] hover:text-amber-500 transition-colors font-medium"
+      >
+        ← All apps
+      </a>
 
       {/* HERO */}
-      <header id="top" className="min-h-screen flex items-center pt-16 pb-8">
+      <header id="top" className="min-h-screen flex items-center pb-8">
         <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 w-full grid md:grid-cols-[1.1fr_1fr] gap-8 md:gap-12 items-center">
           <div className="text-center md:text-left">
             <div className="relative inline-block hero-glow mb-5">

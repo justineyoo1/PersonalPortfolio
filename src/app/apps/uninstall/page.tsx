@@ -263,34 +263,13 @@ export default function UninstallLandingPage() {
       <div className="scanlines" aria-hidden="true"></div>
       <div className="scanline-drift" aria-hidden="true"></div>
 
-      {/* NAV */}
-      <header className="sticky top-0 z-50 bg-black border-b border-gray-800">
-        <nav className="px-5 sm:px-8 lg:px-12 h-12 flex items-center justify-between">
-          <div className="flex items-center gap-5">
-            <a
-              href="/apps"
-              className="text-[11px] tracking-[0.2em] uppercase text-gray-500 hover:text-white transition-colors"
-            >
-              ← ALL APPS
-            </a>
-            <a
-              href="#top"
-              className="flex items-center gap-2 text-white font-bold tracking-tight text-sm"
-            >
-              <img src="/uninstall/assets/icon-white.png" alt="" className="w-4 h-4" />
-              <span>UNINSTALL</span>
-            </a>
-          </div>
-          <a
-            href="https://apps.apple.com/app/id6761068093?platform=iphone&app=jstnyoo-uninstall"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-bracket btn-bracket-sm"
-          >
-            [ DOWNLOAD ]
-          </a>
-        </nav>
-      </header>
+      {/* Tiny back link — no nav bar; hero owns the top of the page. */}
+      <a
+        href="/apps"
+        className="fixed top-5 left-5 z-50 text-[11px] tracking-[0.2em] uppercase text-gray-500 hover:text-white transition-colors font-mono"
+      >
+        ← ALL APPS
+      </a>
 
       {/* HERO */}
       <section id="top" className="border-b border-gray-800 min-h-screen flex items-center">
