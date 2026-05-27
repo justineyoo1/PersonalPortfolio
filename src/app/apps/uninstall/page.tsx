@@ -121,6 +121,16 @@ const UNINSTALL_CSS = `
   font-size: 0.7rem;
   white-space: nowrap;
 }
+.uninstall-root .btn-bracket-lg {
+  padding: 1.1rem 3rem;
+  border-width: 2px;
+  font-size: 1rem;
+  letter-spacing: 0.06em;
+}
+.uninstall-root .btn-bracket-lg:hover,
+.uninstall-root .btn-bracket-lg:focus-visible {
+  box-shadow: 0 0 0 6px rgba(0, 255, 102, 0.18), 0 0 30px rgba(0, 255, 102, 0.35);
+}
 .uninstall-root .marker {
   color: var(--gray-500);
   font-size: 0.72rem;
@@ -449,20 +459,18 @@ export default function UninstallLandingPage() {
         <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-24 sm:py-32 text-center">
           <p className="marker mb-10">&gt; END OF PROTOCOL</p>
 
-          <h2 className="text-white font-bold uppercase tracking-tight leading-[0.98] text-3xl sm:text-5xl md:text-6xl lg:text-[3.25rem]">
+          <h2 className="text-white font-bold uppercase tracking-tight leading-[0.98] text-3xl sm:text-5xl md:text-6xl lg:text-[3.5rem]">
             I&apos;LL BE YOUR MOST
             <br />
             UNINSTALLED APP.
-            <br />
-            THAT MEANS IT&apos;S WORKING.
           </h2>
 
-          <div className="mt-12 sm:mt-14 flex flex-col sm:flex-row items-center justify-center gap-5">
+          <div className="mt-14 sm:mt-16 flex flex-col items-center gap-5">
             <a
               href="https://apps.apple.com/app/id6761068093?platform=iphone&app=jstnyoo-uninstall"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-bracket text-sm sm:text-base cursor-blink"
+              className="btn-bracket btn-bracket-lg cursor-blink"
             >
               [ DOWNLOAD ]
             </a>
