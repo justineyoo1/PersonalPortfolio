@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Cormorant_Garamond } from "next/font/google";
 import { AppPageFooter } from "@/components/apps/AppPageFooter";
 import { ThemedAppsBottomNav } from "@/components/apps/ThemedAppsBottomNav";
+import { HoldRing } from "./HoldRing";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -287,29 +288,16 @@ export default function EunhoLandingPage() {
         <div className="relative max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 w-full grid md:grid-cols-[1.1fr_0.9fr] gap-10 items-center">
           <div className="text-center md:text-left">
             <div className="flex items-center gap-3 justify-center md:justify-start mb-6">
-              <div className="relative w-9 h-9">
+              <div className="relative w-10 h-10">
                 <div className="absolute inset-0 -m-3 radial-cyan rounded-full"></div>
-                <div className="relative w-9 h-9 rounded-full bg-[#F5F5F5] grid place-items-center ring-glow-soft">
-                  <svg viewBox="0 0 64 64" className="w-5 h-5" aria-hidden="true">
-                    <defs>
-                      <mask id="eunho-notch">
-                        <rect width="64" height="64" fill="white" />
-                        <rect x="44" y="29" width="22" height="6" rx="3" fill="black" />
-                      </mask>
-                    </defs>
-                    <g mask="url(#eunho-notch)">
-                      <circle
-                        cx="32"
-                        cy="32"
-                        r="22"
-                        fill="none"
-                        stroke="#0A0A0A"
-                        strokeWidth="8"
-                      />
-                    </g>
-                    <rect x="32" y="29" width="14" height="6" rx="2" fill="#0A0A0A" />
-                  </svg>
-                </div>
+                <img
+                  src="/img/apps/eunho/icon-1024-dark.png"
+                  alt="eunho app icon"
+                  width={40}
+                  height={40}
+                  className="relative w-10 h-10 ring-1 ring-white/10"
+                  style={{ borderRadius: "22.37%" }}
+                />
               </div>
               <p className="eyebrow text-[#8B8B8B]">The single-habit tracker</p>
             </div>
@@ -431,13 +419,10 @@ export default function EunhoLandingPage() {
                   </span>
                 </div>
 
-                {/* Screen content: real screenshot, edge-to-edge */}
-                <img
-                  src="/img/apps/eunho/4-hold.png"
-                  alt="eunho. Hold the ring for 2.5 seconds."
-                  className="absolute inset-0 w-full h-full object-cover"
-                  style={{ zIndex: 1 }}
-                />
+                {/* Interactive: hold the ring. Replaces the static screenshot with the actual app behavior. */}
+                <div className="absolute inset-0" style={{ zIndex: 1 }}>
+                  <HoldRing />
+                </div>
 
                 <div className="phone-reflection"></div>
               </div>
@@ -471,192 +456,28 @@ export default function EunhoLandingPage() {
             </p>
           </div>
 
-          <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-10">
-            {/* 1. One habit */}
-            <div>
-              <div className="mb-4 h-16 flex items-center">
-                <div className="grid grid-cols-7 gap-1 w-full">
-                  <span className="aspect-square rounded-[2px] bg-white/[0.08]"></span>
-                  <span
-                    className="aspect-square rounded-[2px]"
-                    style={{
-                      background: "#00E5FF",
-                      boxShadow: "0 0 4px rgba(0,229,255,0.5)",
-                    }}
-                  ></span>
-                  <span
-                    className="aspect-square rounded-[2px]"
-                    style={{ background: "#00E5FF" }}
-                  ></span>
-                  <span
-                    className="aspect-square rounded-[2px]"
-                    style={{ background: "#00E5FF" }}
-                  ></span>
-                  <span className="aspect-square rounded-[2px] bg-white/[0.08]"></span>
-                  <span
-                    className="aspect-square rounded-[2px]"
-                    style={{ background: "#00E5FF" }}
-                  ></span>
-                  <span
-                    className="aspect-square rounded-[2px]"
-                    style={{ background: "#00E5FF" }}
-                  ></span>
-                  <span
-                    className="aspect-square rounded-[2px]"
-                    style={{ background: "#00E5FF" }}
-                  ></span>
-                  <span
-                    className="aspect-square rounded-[2px]"
-                    style={{ background: "#00E5FF" }}
-                  ></span>
-                  <span
-                    className="aspect-square rounded-[2px]"
-                    style={{ background: "#00E5FF" }}
-                  ></span>
-                  <span
-                    className="aspect-square rounded-[2px]"
-                    style={{ background: "#00E5FF" }}
-                  ></span>
-                  <span
-                    className="aspect-square rounded-[2px]"
-                    style={{ background: "#00E5FF" }}
-                  ></span>
-                  <span
-                    className="aspect-square rounded-[2px]"
-                    style={{ background: "#00E5FF" }}
-                  ></span>
-                  <span
-                    className="aspect-square rounded-[2px] border"
-                    style={{
-                      borderColor: "#00E5FF",
-                      boxShadow: "0 0 6px rgba(0,229,255,0.6)",
-                    }}
-                  ></span>
-                </div>
-              </div>
-              <p className="eyebrow text-[#8B8B8B]">Focus</p>
-              <h3
-                className="font-serif text-[#F5F5F5] mt-1.5 leading-tight"
-                style={{ fontSize: "22px" }}
+          {/* Real App Store screenshots in a row */}
+          <div className="mt-12 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-5">
+            {[
+              { src: "/img/apps/eunho/1-intro.png", alt: "eunho intro: hold the ring to check in for the day" },
+              { src: "/img/apps/eunho/2-100days.png", alt: "100 days, visible on one screen" },
+              { src: "/img/apps/eunho/3-widgets.png", alt: "Lock Screen, Home Screen, and StandBy widgets" },
+              { src: "/img/apps/eunho/5-insights.png", alt: "Patterns, not pressure: heatmap and weekday trends" },
+              { src: "/img/apps/eunho/6-quiet.png", alt: "Quiet proof. Day 21. Quiet, but it counts." },
+            ].map((shot) => (
+              <div
+                key={shot.src}
+                className="rounded-[20px] overflow-hidden border hair bg-black"
+                style={{ aspectRatio: "1320 / 2868" }}
               >
-                One habit. One focus<span className="dot-cyan">.</span>
-              </h3>
-              <p className="font-serif italic text-[#BEEFF6] mt-1 text-[14px]">
-                Not a dashboard.
-              </p>
-              <p className="text-[#8B8B8B] mt-3 text-[12.5px] leading-relaxed">
-                Finish your goal, start the next. The previous habit moves to
-                history.
-              </p>
-            </div>
-
-            {/* 2. Widgets */}
-            <div>
-              <div className="mb-4 h-16 flex items-center gap-2">
                 <img
-                  src="/img/apps/eunho/widget-small.png"
-                  alt="Small Eunho widget showing the daily ring on the home screen"
-                  className="h-full w-auto object-contain rounded-lg"
-                  width={600}
-                  height={600}
-                />
-                <img
-                  src="/img/apps/eunho/widget-medium.png"
-                  alt="Medium Eunho widget showing the daily ring and history grid"
-                  className="h-full w-auto object-contain rounded-lg"
-                  width={1300}
-                  height={620}
+                  src={shot.src}
+                  alt={shot.alt}
+                  loading="lazy"
+                  className="block w-full h-auto"
                 />
               </div>
-              <p className="eyebrow text-[#8B8B8B]">Widgets &amp; Lock Screen</p>
-              <h3
-                className="font-serif text-[#F5F5F5] mt-1.5 leading-tight"
-                style={{ fontSize: "22px" }}
-              >
-                Always on the surface<span className="dot-cyan">.</span>
-              </h3>
-              <p className="text-[#8B8B8B] mt-3 text-[12.5px] leading-relaxed">
-                Small, medium, large. Lock screen complication. The ring is one
-                tap away.
-              </p>
-            </div>
-
-            {/* 3. Premium / Insights */}
-            <div>
-              <div className="mb-4 h-16 flex items-end gap-1">
-                <div
-                  className="flex-1 rounded-sm bg-white/15"
-                  style={{ height: "40%" }}
-                ></div>
-                <div
-                  className="flex-1 rounded-sm bg-white/25"
-                  style={{ height: "60%" }}
-                ></div>
-                <div
-                  className="flex-1 rounded-sm"
-                  style={{
-                    height: "95%",
-                    background: "#00E5FF",
-                    boxShadow: "0 0 8px rgba(0,229,255,0.55)",
-                  }}
-                ></div>
-                <div
-                  className="flex-1 rounded-sm bg-white/25"
-                  style={{ height: "58%" }}
-                ></div>
-                <div
-                  className="flex-1 rounded-sm bg-white/20"
-                  style={{ height: "48%" }}
-                ></div>
-                <div
-                  className="flex-1 rounded-sm bg-white/[0.12]"
-                  style={{ height: "30%" }}
-                ></div>
-                <div
-                  className="flex-1 rounded-sm bg-white/[0.12]"
-                  style={{ height: "28%" }}
-                ></div>
-              </div>
-              <p className="eyebrow text-[#8B8B8B]">For daily keepers</p>
-              <h3
-                className="font-serif italic text-[#F5F5F5] mt-1.5 leading-tight"
-                style={{ fontSize: "22px" }}
-              >
-                Patterns, not pressure.
-              </h3>
-              <p className="text-[#8B8B8B] mt-3 text-[12.5px] leading-relaxed">
-                Day-of-week trends. Streak freeze. Retroactive check-ins. Share
-                card.
-              </p>
-            </div>
-
-            {/* 4. Privacy */}
-            <div>
-              <div className="mb-4 h-16 flex items-center justify-start">
-                <div className="relative">
-                  <div className="w-12 h-12 rounded-full border hair-strong grid place-items-center">
-                    <div
-                      className="w-6 h-6 rounded-full"
-                      style={{
-                        background: "#00E5FF",
-                        boxShadow: "0 0 12px rgba(0,229,255,0.6)",
-                      }}
-                    ></div>
-                  </div>
-                </div>
-              </div>
-              <p className="eyebrow text-[#8B8B8B]">Privacy</p>
-              <h3
-                className="font-serif text-[#F5F5F5] mt-1.5 leading-tight"
-                style={{ fontSize: "22px" }}
-              >
-                Stays on your phone<span className="dot-cyan">.</span>
-              </h3>
-              <p className="text-[#8B8B8B] mt-3 text-[12.5px] leading-relaxed">
-                No accounts. No sync. No cloud. Habit data never leaves the
-                device.
-              </p>
-            </div>
+            ))}
           </div>
 
           {/* Social proof inline */}
