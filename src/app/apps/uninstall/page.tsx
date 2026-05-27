@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { JetBrains_Mono } from "next/font/google";
 import { AppPageFooter } from "@/components/apps/AppPageFooter";
 import { ThemedAppsBottomNav } from "@/components/apps/ThemedAppsBottomNav";
+import { IPhoneFrame } from "@/components/IPhoneFrame";
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -345,18 +346,11 @@ export default function UninstallLandingPage() {
           </div>
 
           <div className="lg:col-span-5 order-1 lg:order-2 flex justify-center lg:justify-end">
-            <div className="phone-glow w-[200px] sm:w-[240px] md:w-[260px] lg:w-[300px] xl:w-[340px]">
-              <div className="iphone">
-                <div className="iphone-screen">
-                  <img
-                    src="/uninstall/assets/home-idle.png"
-                    alt="UNINSTALL HOME · IDLE"
-                  />
-                  <div className="iphone-gloss"></div>
-                  <div className="iphone-island"></div>
-                </div>
-              </div>
-            </div>
+            <IPhoneFrame
+              src="/uninstall/assets/home-idle.png"
+              alt="UNINSTALL HOME · IDLE"
+              width={320}
+            />
           </div>
         </div>
       </section>
@@ -384,18 +378,11 @@ export default function UninstallLandingPage() {
                 CHOOSE TARGETS. ONE OR FIFTY.
               </p>
               <div className="mt-auto flex justify-center">
-                <div className="phone-glow w-full max-w-[130px]">
-                  <div className="iphone">
-                    <div className="iphone-screen">
-                      <img
-                        src="/uninstall/assets/setblock-onetime.png"
-                        alt="SELECT APPS"
-                      />
-                      <div className="iphone-gloss"></div>
-                      <div className="iphone-island"></div>
-                    </div>
-                  </div>
-                </div>
+                <IPhoneFrame
+                  src="/uninstall/assets/setblock-onetime.png"
+                  alt="SELECT APPS"
+                  width={130}
+                />
               </div>
             </article>
             <article className="bg-black p-4 flex flex-col">
@@ -404,18 +391,11 @@ export default function UninstallLandingPage() {
                 MINUTES TO MONTHS.
               </p>
               <div className="mt-auto flex justify-center">
-                <div className="phone-glow w-full max-w-[130px]">
-                  <div className="iphone">
-                    <div className="iphone-screen">
-                      <img
-                        src="/uninstall/assets/setblock-schedule.png"
-                        alt="SET DURATION"
-                      />
-                      <div className="iphone-gloss"></div>
-                      <div className="iphone-island"></div>
-                    </div>
-                  </div>
-                </div>
+                <IPhoneFrame
+                  src="/uninstall/assets/setblock-schedule.png"
+                  alt="SET DURATION"
+                  width={130}
+                />
               </div>
             </article>
             <article className="bg-black p-4 flex flex-col">
@@ -426,18 +406,11 @@ export default function UninstallLandingPage() {
                 CANCEL · PAUSE · BYPASS DISABLED.
               </p>
               <div className="mt-auto flex justify-center">
-                <div className="phone-glow w-full max-w-[130px]">
-                  <div className="iphone">
-                    <div className="iphone-screen">
-                      <img
-                        src="/uninstall/assets/setblock-activated.png"
-                        alt="LOCK ACTIVE"
-                      />
-                      <div className="iphone-gloss"></div>
-                      <div className="iphone-island"></div>
-                    </div>
-                  </div>
-                </div>
+                <IPhoneFrame
+                  src="/uninstall/assets/setblock-activated.png"
+                  alt="LOCK ACTIVE"
+                  width={130}
+                />
               </div>
             </article>
             <article className="bg-black p-4 flex flex-col">
@@ -446,18 +419,11 @@ export default function UninstallLandingPage() {
                 HOLD 10 SECONDS. OR DELETE THE APP.
               </p>
               <div className="mt-auto flex justify-center">
-                <div className="phone-glow w-full max-w-[130px]">
-                  <div className="iphone">
-                    <div className="iphone-screen">
-                      <img
-                        src="/uninstall/assets/hold-to-break.png"
-                        alt="HOLD TO BREAK"
-                      />
-                      <div className="iphone-gloss"></div>
-                      <div className="iphone-island"></div>
-                    </div>
-                  </div>
-                </div>
+                <IPhoneFrame
+                  src="/uninstall/assets/hold-to-break.png"
+                  alt="HOLD TO BREAK"
+                  width={130}
+                />
               </div>
             </article>
           </div>

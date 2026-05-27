@@ -3,6 +3,7 @@ import { Inter, Cormorant_Garamond } from "next/font/google";
 import { AppPageFooter } from "@/components/apps/AppPageFooter";
 import { ThemedAppsBottomNav } from "@/components/apps/ThemedAppsBottomNav";
 import { HoldRing } from "./HoldRing";
+import { IPhoneFrame } from "@/components/IPhoneFrame";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -375,61 +376,9 @@ export default function EunhoLandingPage() {
           >
             <div className="absolute -inset-14 radial-cyan opacity-80 pointer-events-none"></div>
 
-            <div className="phone-device mx-auto">
-              <div className="phone-screen">
-                <div className="dynamic-island"></div>
-                <div className="status-bar">
-                  <span className="status-time">9:41</span>
-                  <span className="status-icons" aria-hidden="true">
-                    <svg viewBox="0 0 18 12" width="17" height="11" fill="#F5F5F5">
-                      <rect x="0" y="8" width="3" height="4" rx="0.6" />
-                      <rect x="5" y="6" width="3" height="6" rx="0.6" />
-                      <rect x="10" y="3" width="3" height="9" rx="0.6" />
-                      <rect x="15" y="0" width="3" height="12" rx="0.6" />
-                    </svg>
-                    <svg viewBox="0 0 16 12" width="15" height="11" fill="#F5F5F5">
-                      <path d="M8 11.2a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm-3.1-3.7a4.4 4.4 0 0 1 6.2 0l1-1a5.8 5.8 0 0 0-8.2 0l1 1Zm-2.4-2.4a7.8 7.8 0 0 1 11 0l1-1a9.2 9.2 0 0 0-13 0l1 1Z" />
-                    </svg>
-                    <svg viewBox="0 0 26 12" width="24" height="11">
-                      <rect
-                        x="0.5"
-                        y="0.5"
-                        width="22"
-                        height="11"
-                        rx="3"
-                        fill="none"
-                        stroke="#F5F5F5"
-                        strokeOpacity="0.45"
-                      />
-                      <rect
-                        x="23.5"
-                        y="3.5"
-                        width="1.5"
-                        height="5"
-                        rx="0.6"
-                        fill="#F5F5F5"
-                        fillOpacity="0.45"
-                      />
-                      <rect
-                        x="2"
-                        y="2"
-                        width="18"
-                        height="8"
-                        rx="1.5"
-                        fill="#F5F5F5"
-                      />
-                    </svg>
-                  </span>
-                </div>
-
-                {/* Interactive: hold the ring. Replaces the static screenshot with the actual app behavior. */}
-                <div className="absolute inset-0" style={{ zIndex: 1 }}>
-                  <HoldRing />
-                </div>
-
-                <div className="phone-reflection"></div>
-              </div>
-            </div>
+            <IPhoneFrame width={320} className="mx-auto block">
+              <HoldRing />
+            </IPhoneFrame>
           </div>
         </div>
       </section>

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { AppPageFooter } from "@/components/apps/AppPageFooter";
 import { ThemedAppsBottomNav } from "@/components/apps/ThemedAppsBottomNav";
+import { IPhoneFrame } from "@/components/IPhoneFrame";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -335,37 +336,11 @@ export default function BrikLandingPage() {
 
           {/* RIGHT: hero phone */}
           <div className="flex justify-center md:justify-end">
-            <div
-              className="phone phone-float"
-              style={{ ["--pw" as string]: "clamp(220px, 28vw, 360px)" }}
-            >
-              <div className="phone-frame">
-                <div className="phone-screen">
-                  <img
-                    src="/brik/assets/hero.png"
-                    alt="Brik lock screen mid mission, alarm ringing, two of three pushups complete."
-                  />
-                  <div className="phone-island"></div>
-                  <div className="phone-status">
-                    <span className="time">9:41</span>
-                    <span className="icons" aria-hidden="true">
-                      <svg width="16" height="11" viewBox="0 0 16 11" fill="currentColor">
-                        <path d="M1 9h2v2H1zM4 7h2v4H4zM7 5h2v6H7zM10 3h2v8H10zM13 1h2v10h-2z" />
-                      </svg>
-                      <svg width="14" height="10" viewBox="0 0 14 10" fill="currentColor">
-                        <path d="M7 9.5a1 1 0 100-2 1 1 0 000 2zM4 6.5l1.4 1.4a2 2 0 013.2 0L10 6.5a4 4 0 00-6 0zM1 3.5l1.4 1.4a6 6 0 018.2 0L12 3.5a8 8 0 00-11 0z" />
-                      </svg>
-                      <svg width="24" height="11" viewBox="0 0 24 11" fill="none">
-                        <rect x="0.5" y="0.5" width="20" height="10" rx="2.5" stroke="currentColor" opacity="0.6" />
-                        <rect x="2" y="2" width="14" height="7" rx="1.2" fill="currentColor" />
-                        <rect x="21" y="3.5" width="1.5" height="4" rx="0.5" fill="currentColor" opacity="0.6" />
-                      </svg>
-                    </span>
-                  </div>
-                  <div className="phone-home"></div>
-                </div>
-              </div>
-            </div>
+            <IPhoneFrame
+              src="/brik/assets/hero.png"
+              alt="Brik lock screen mid mission, alarm ringing, two of three pushups complete."
+              width={340}
+            />
           </div>
         </div>
       </header>
@@ -409,21 +384,12 @@ export default function BrikLandingPage() {
 
           <ol className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
             <li className="flex items-center gap-4 sm:gap-5">
-              <div
-                className="phone shrink-0"
-                style={{ ["--pw" as string]: "clamp(96px, 14vw, 130px)" }}
-              >
-                <div className="phone-frame">
-                  <div className="phone-screen">
-                    <img
-                      src="/brik/assets/proof.png"
-                      alt="Alarm setup with mission picker."
-                    />
-                    <div className="phone-island"></div>
-                    <div className="phone-home"></div>
-                  </div>
-                </div>
-              </div>
+              <IPhoneFrame
+                src="/brik/assets/proof.png"
+                alt="Alarm setup with mission picker."
+                width={130}
+                className="shrink-0"
+              />
               <div className="min-w-0">
                 <div className="text-2xl font-extrabold num-badge leading-none">
                   01
@@ -438,21 +404,12 @@ export default function BrikLandingPage() {
             </li>
 
             <li className="flex items-center gap-4 sm:gap-5">
-              <div
-                className="phone shrink-0"
-                style={{ ["--pw" as string]: "clamp(96px, 14vw, 130px)" }}
-              >
-                <div className="phone-frame">
-                  <div className="phone-screen">
-                    <img
-                      src="/brik/assets/mission-math.png"
-                      alt="Math problem running while the alarm rings."
-                    />
-                    <div className="phone-island"></div>
-                    <div className="phone-home"></div>
-                  </div>
-                </div>
-              </div>
+              <IPhoneFrame
+                src="/brik/assets/mission-math.png"
+                alt="Math problem running while the alarm rings."
+                width={130}
+                className="shrink-0"
+              />
               <div className="min-w-0">
                 <div className="text-2xl font-extrabold num-badge leading-none">
                   02
@@ -467,21 +424,12 @@ export default function BrikLandingPage() {
             </li>
 
             <li className="flex items-center gap-4 sm:gap-5">
-              <div
-                className="phone shrink-0"
-                style={{ ["--pw" as string]: "clamp(96px, 14vw, 130px)" }}
-              >
-                <div className="phone-frame">
-                  <div className="phone-screen">
-                    <img
-                      src="/brik/assets/win.png"
-                      alt="Mission complete screen, alarm silenced."
-                    />
-                    <div className="phone-island"></div>
-                    <div className="phone-home"></div>
-                  </div>
-                </div>
-              </div>
+              <IPhoneFrame
+                src="/brik/assets/win.png"
+                alt="Mission complete screen, alarm silenced."
+                width={130}
+                className="shrink-0"
+              />
               <div className="min-w-0">
                 <div className="text-2xl font-extrabold num-badge leading-none">
                   03
