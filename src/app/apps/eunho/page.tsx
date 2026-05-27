@@ -3,6 +3,7 @@ import { Inter, Cormorant_Garamond } from "next/font/google";
 import { AppPageFooter } from "@/components/apps/AppPageFooter";
 import { ThemedAppsBottomNav } from "@/components/apps/ThemedAppsBottomNav";
 import { IPhoneFrame } from "@/components/IPhoneFrame";
+import { ThemeSwatch } from "./ThemeSwatch";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -36,11 +37,19 @@ export const metadata: Metadata = {
 };
 
 const EUNHO_CSS = `
+/* --eunho-ring / --eunho-ring-rgb / --eunho-ring-soft can be overridden
+   at :root by the ThemeSwatch client component to live-recolor the page. */
+:root {
+  --eunho-ring: #00E5FF;
+  --eunho-ring-rgb: 0, 229, 255;
+  --eunho-ring-soft: #BEEFF6;
+}
 .eunho-root {
   --ink: #0A0A0A;
   --paper: #F5F5F5;
   --mute: #8B8B8B;
-  --ring: #00E5FF;
+  --ring: var(--eunho-ring);
+  --ring-rgb: var(--eunho-ring-rgb);
   --magenta: #FF3B7A;
   background: var(--ink);
   color: var(--paper);
@@ -67,22 +76,22 @@ const EUNHO_CSS = `
 .eunho-root .chip-sep { color: #3a3a3a; }
 .eunho-root .ring-glow {
   box-shadow:
-    0 0 14px 1px rgba(0, 229, 255, 0.85),
-    0 0 38px 6px rgba(0, 229, 255, 0.45),
-    0 0 90px 18px rgba(0, 229, 255, 0.22),
-    0 0 180px 40px rgba(0, 229, 255, 0.10);
+    0 0 14px 1px rgba(var(--ring-rgb), 0.85),
+    0 0 38px 6px rgba(var(--ring-rgb), 0.45),
+    0 0 90px 18px rgba(var(--ring-rgb), 0.22),
+    0 0 180px 40px rgba(var(--ring-rgb), 0.10);
 }
 .eunho-root .ring-glow-soft {
   box-shadow:
-    0 0 8px 1px rgba(0, 229, 255, 0.55),
-    0 0 22px 4px rgba(0, 229, 255, 0.28),
-    0 0 50px 12px rgba(0, 229, 255, 0.12);
+    0 0 8px 1px rgba(var(--ring-rgb), 0.55),
+    0 0 22px 4px rgba(var(--ring-rgb), 0.28),
+    0 0 50px 12px rgba(var(--ring-rgb), 0.12);
 }
 .eunho-root .radial-cyan {
-  background: radial-gradient(closest-side, rgba(0,229,255,0.30), rgba(0,229,255,0.08) 55%, transparent 75%);
+  background: radial-gradient(closest-side, rgba(var(--ring-rgb), 0.30), rgba(var(--ring-rgb), 0.08) 55%, transparent 75%);
 }
 .eunho-root .radial-cyan-lg {
-  background: radial-gradient(closest-side, rgba(0,229,255,0.22), rgba(0,229,255,0.06) 55%, transparent 78%);
+  background: radial-gradient(closest-side, rgba(var(--ring-rgb), 0.22), rgba(var(--ring-rgb), 0.06) 55%, transparent 78%);
 }
 .eunho-root .hair { border-color: rgba(255,255,255,0.08); }
 .eunho-root .hair-strong { border-color: rgba(255,255,255,0.14); }
@@ -96,15 +105,15 @@ const EUNHO_CSS = `
 @keyframes eunhoRingPulse {
   0%, 100% {
     box-shadow:
-      0 0 14px 1px rgba(0, 229, 255, 0.85),
-      0 0 38px 6px rgba(0, 229, 255, 0.45),
-      0 0 90px 18px rgba(0, 229, 255, 0.22);
+      0 0 14px 1px rgba(var(--ring-rgb), 0.85),
+      0 0 38px 6px rgba(var(--ring-rgb), 0.45),
+      0 0 90px 18px rgba(var(--ring-rgb), 0.22);
   }
   50% {
     box-shadow:
-      0 0 18px 2px rgba(0, 229, 255, 0.95),
-      0 0 56px 10px rgba(0, 229, 255, 0.55),
-      0 0 120px 28px rgba(0, 229, 255, 0.28);
+      0 0 18px 2px rgba(var(--ring-rgb), 0.95),
+      0 0 56px 10px rgba(var(--ring-rgb), 0.55),
+      0 0 120px 28px rgba(var(--ring-rgb), 0.28);
   }
 }
 .eunho-root .ring-pulse { animation: eunhoRingPulse 3.6s ease-in-out infinite; }
@@ -125,7 +134,7 @@ const EUNHO_CSS = `
   color: #8B8B8B;
 }
 .eunho-root .footlink:hover { color: #F5F5F5; }
-.eunho-root ::selection { background: rgba(0,229,255,0.35); color: #fff; }
+.eunho-root ::selection { background: rgba(var(--ring-rgb), 0.35); color: #fff; }
 .eunho-root { padding-bottom: 96px; }
 
 .eunho-root .phone-device {
@@ -139,7 +148,7 @@ const EUNHO_CSS = `
     0 1px 0 rgba(255,255,255,0.06) inset,
     0 40px 60px -20px rgba(0,0,0,0.75),
     0 80px 120px -40px rgba(0,0,0,0.6),
-    0 0 50px -10px rgba(0, 229, 255, 0.18);
+    0 0 50px -10px rgba(var(--ring-rgb), 0.18);
   overflow: visible;
 }
 .eunho-root .phone-device::before {
@@ -344,6 +353,13 @@ export default function EunhoLandingPage() {
                 7-day free trial<span className="dot-cyan">.</span>
               </span>
             </div>
+
+            {/* Live color picker — mirrors the iOS app's Glow Color setting.
+                Updates --eunho-ring / --eunho-ring-rgb / --eunho-ring-soft at
+                :root, which propagates through every cyan element on the page. */}
+            <div className="mt-7 flex justify-center md:justify-start">
+              <ThemeSwatch />
+            </div>
           </div>
 
           {/* RIGHT: iPhone */}
@@ -376,7 +392,7 @@ export default function EunhoLandingPage() {
               </h2>
               <p
                 className="font-serif italic mt-2"
-                style={{ fontSize: "clamp(18px,2.2vw,24px)", color: "#BEEFF6" }}
+                style={{ fontSize: "clamp(18px,2.2vw,24px)", color: "var(--eunho-ring-soft, #BEEFF6)" }}
               >
                 2.5 seconds. No accidents.
               </p>
