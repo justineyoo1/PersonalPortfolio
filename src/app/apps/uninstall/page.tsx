@@ -123,10 +123,46 @@ const UNINSTALL_CSS = `
 }
 .uninstall-root .marker {
   color: var(--gray-500);
-  font-size: 0.65rem;
-  letter-spacing: 0.18em;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
 }
+.uninstall-root .marker-num {
+  color: var(--gray-600);
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+.uninstall-root .card-title {
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+}
+.uninstall-root .card-desc {
+  color: #9CA3AF;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  line-height: 1.65;
+  text-transform: uppercase;
+}
+.uninstall-root .body-line {
+  color: #D1D5DB;
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+  line-height: 1.75;
+  text-transform: uppercase;
+}
+.uninstall-root .meta-strip {
+  color: var(--gray-600);
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  line-height: 1.7;
+  text-transform: uppercase;
+}
+.uninstall-root .text-balance { text-wrap: balance; }
 .uninstall-root .iphone {
   position: relative;
   aspect-ratio: 380 / 780;
@@ -273,37 +309,33 @@ export default function UninstallLandingPage() {
 
       {/* HERO */}
       <section id="top" className="border-b border-gray-800 min-h-screen flex items-center">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 w-full pt-6 sm:pt-8 pb-8 sm:pb-10 grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 w-full py-16 sm:py-20 grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
           <div className="lg:col-span-7 order-2 lg:order-1">
-            <div className="flex items-center gap-3 mb-5">
+            <div className="flex items-center gap-4 mb-10">
               <img
                 src="/uninstall/assets/icon-white.png"
                 alt="UNINSTALL LOGO"
-                className="w-12 h-12"
+                className="w-11 h-11"
               />
               <p className="marker">&gt; SYSTEM ONLINE</p>
             </div>
 
-            <h1 className="text-white font-bold uppercase tracking-tight leading-[0.92] text-3xl sm:text-5xl md:text-6xl lg:text-[3.75rem]">
-              THE APP BLOCKER<br />THAT REFUSES<br />YOUR ESCAPE.
+            <h1 className="text-balance text-white font-bold uppercase tracking-tight leading-[0.95] text-4xl sm:text-5xl md:text-6xl lg:text-[3.5rem] max-w-[22ch]">
+              THE APP BLOCKER THAT REFUSES YOUR ESCAPE.
             </h1>
 
-            <p className="mt-5 text-gray-500 uppercase text-[11px] sm:text-xs leading-relaxed tracking-wide max-w-2xl">
-              &gt; PICK APPS. SET DURATION. LOCK. NO CANCEL. NO PAUSE. NO BYPASS.
-              THE ONLY EXIT IS UNINSTALLING THIS APP.
-            </p>
-
-            <p className="mt-4 uppercase text-[11px] sm:text-xs leading-relaxed tracking-wide max-w-2xl">
-              <span className="text-gray-400">
-                &gt; AVERAGE iOS USER LOSES 4H 27M/DAY IN APPS THEY REGRET.
-              </span>
-              <span className="block mt-1 text-white font-bold">
-                THAT&apos;S 8.4 DAYS OF YOUR LIFE.{" "}
-                <span style={{ color: "var(--red)" }}>GONE.</span>
+            <p className="mt-8 body-line max-w-xl">
+              Average iOS user loses{" "}
+              <span className="text-white font-bold">4H 27M</span> a day in apps
+              they regret. That&apos;s{" "}
+              <span className="text-white font-bold">8.4 days</span> of your
+              life every month.{" "}
+              <span style={{ color: "var(--red)" }} className="font-bold">
+                Gone.
               </span>
             </p>
 
-            <div className="mt-6 sm:mt-7 flex flex-col sm:flex-row sm:items-center gap-4">
+            <div className="mt-10 flex flex-col sm:flex-row sm:items-center gap-5">
               <a
                 id="download"
                 href="https://apps.apple.com/app/id6761068093?platform=iphone&app=jstnyoo-uninstall"
@@ -314,14 +346,8 @@ export default function UninstallLandingPage() {
                 [ DOWNLOAD ]
               </a>
               <span className="marker">
-                &gt; iOS 16+ · 14 MB · FREE 7 DAYS
+                iOS 16+ &nbsp;·&nbsp; 14 MB &nbsp;·&nbsp; 7-day trial
               </span>
-            </div>
-
-            <div className="mt-7 border-t border-gray-800 pt-4">
-              <p className="text-gray-500 uppercase text-[10px] sm:text-[11px] tracking-wider">
-                &gt; 312H 20M RECLAIMED · 73 BLOCKS · 4 UNINSTALLS
-              </p>
             </div>
           </div>
 
@@ -337,75 +363,79 @@ export default function UninstallLandingPage() {
 
       {/* PROTOCOL */}
       <section className="border-b border-gray-800">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-8 sm:py-10">
-          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-7">
-            <div>
-              <p className="marker mb-2">&gt; PROTOCOL</p>
-              <h2 className="text-white font-bold uppercase tracking-tight leading-[1] text-2xl sm:text-3xl md:text-4xl">
-                THE WALL STAYS A WALL.
-              </h2>
-            </div>
-            <p className="text-gray-500 uppercase text-[11px] tracking-wide max-w-md">
-              &gt; APPLE FAMILY CONTROLS · DEVICEACTIVITY · ON-DEVICE · NO
-              SERVER · NO TRACKING · NO ACCOUNTS
-            </p>
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-20 sm:py-24">
+          <div className="mb-14 sm:mb-16">
+            <p className="marker mb-4">&gt; PROTOCOL</p>
+            <h2 className="text-balance text-white font-bold uppercase tracking-tight leading-[1] text-3xl sm:text-4xl md:text-5xl max-w-[18ch]">
+              THE WALL STAYS A WALL.
+            </h2>
           </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-gray-800 border border-gray-800">
-            <article className="bg-black p-4 flex flex-col">
-              <p className="marker text-white mb-1">&gt; 01 · SELECT APPS</p>
-              <p className="text-gray-500 uppercase text-[10px] leading-snug mb-3">
-                CHOOSE TARGETS. ONE OR FIFTY.
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-gray-800 border border-gray-800">
+            <article className="bg-black p-7 sm:p-8 flex flex-col">
+              <p className="marker-num mb-3">&gt; 01</p>
+              <p className="card-title mb-3">SELECT APPS</p>
+              <p className="card-desc mb-7">
+                Choose targets. One or fifty.
               </p>
               <div className="mt-auto flex justify-center">
                 <IPhoneFrame
                   src="/uninstall/assets/setblock-onetime.png"
                   alt="SELECT APPS"
-                  width={130}
+                  width={140}
                 />
               </div>
             </article>
-            <article className="bg-black p-4 flex flex-col">
-              <p className="marker text-white mb-1">&gt; 02 · SET DURATION</p>
-              <p className="text-gray-500 uppercase text-[10px] leading-snug mb-3">
-                MINUTES TO MONTHS.
-              </p>
+            <article className="bg-black p-7 sm:p-8 flex flex-col">
+              <p className="marker-num mb-3">&gt; 02</p>
+              <p className="card-title mb-3">SET DURATION</p>
+              <p className="card-desc mb-7">Minutes to months.</p>
               <div className="mt-auto flex justify-center">
                 <IPhoneFrame
                   src="/uninstall/assets/setblock-schedule.png"
                   alt="SET DURATION"
-                  width={130}
+                  width={140}
                 />
               </div>
             </article>
-            <article className="bg-black p-4 flex flex-col">
-              <p className="marker text-white mb-1">
-                &gt; 03 · INITIALIZE LOCK
-              </p>
-              <p className="text-gray-500 uppercase text-[10px] leading-snug mb-3">
-                CANCEL · PAUSE · BYPASS DISABLED.
+            <article className="bg-black p-7 sm:p-8 flex flex-col">
+              <p className="marker-num mb-3">&gt; 03</p>
+              <p className="card-title mb-3">INITIALIZE LOCK</p>
+              <p className="card-desc mb-7">
+                Cancel, pause, bypass disabled.
               </p>
               <div className="mt-auto flex justify-center">
                 <IPhoneFrame
                   src="/uninstall/assets/setblock-activated.png"
                   alt="LOCK ACTIVE"
-                  width={130}
+                  width={140}
                 />
               </div>
             </article>
-            <article className="bg-black p-4 flex flex-col">
-              <p className="marker text-white mb-1">&gt; 04 · NO ESCAPE</p>
-              <p className="text-gray-500 uppercase text-[10px] leading-snug mb-3">
-                HOLD 10 SECONDS. OR DELETE THE APP.
+            <article className="bg-black p-7 sm:p-8 flex flex-col">
+              <p className="marker-num mb-3">&gt; 04</p>
+              <p className="card-title mb-3">NO ESCAPE</p>
+              <p className="card-desc mb-7">
+                Hold 10 seconds. Or delete the app.
               </p>
               <div className="mt-auto flex justify-center">
                 <IPhoneFrame
                   src="/uninstall/assets/hold-to-break.png"
                   alt="HOLD TO BREAK"
-                  width={130}
+                  width={140}
                 />
               </div>
             </article>
+          </div>
+
+          <div className="mt-10 sm:mt-12 pt-6 border-t border-gray-800 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <p className="meta-strip">
+              Apple Family Controls &nbsp;·&nbsp; DeviceActivity &nbsp;·&nbsp;
+              On-device
+            </p>
+            <p className="meta-strip">
+              No server &nbsp;·&nbsp; No tracking &nbsp;·&nbsp; No accounts
+            </p>
           </div>
         </div>
       </section>
