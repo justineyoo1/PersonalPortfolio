@@ -553,25 +553,20 @@ export default function EunhoLandingPage() {
             {/* 2. Widgets */}
             <div>
               <div className="mb-4 h-16 flex items-center gap-2">
-                <div className="aspect-square h-full rounded-md bg-[#141414] border hair grid place-items-center">
-                  <div
-                    className="w-5 h-5 rounded-full border-[2px]"
-                    style={{
-                      borderColor: "#00E5FF",
-                      boxShadow: "0 0 6px rgba(0,229,255,0.55)",
-                    }}
-                  ></div>
-                </div>
-                <div className="h-full flex-1 rounded-md bg-[#141414] border hair px-2 flex items-center gap-2">
-                  <div
-                    className="w-5 h-5 rounded-full border-[2px]"
-                    style={{ borderColor: "#00E5FF" }}
-                  ></div>
-                  <div className="flex-1 space-y-1">
-                    <div className="h-1 rounded-full bg-white/15 w-2/3"></div>
-                    <div className="h-1 rounded-full bg-white/10 w-1/2"></div>
-                  </div>
-                </div>
+                <img
+                  src="/img/apps/eunho/widget-small.png"
+                  alt="Small Eunho widget showing the daily ring on the home screen"
+                  className="h-full w-auto object-contain rounded-lg"
+                  width={600}
+                  height={600}
+                />
+                <img
+                  src="/img/apps/eunho/widget-medium.png"
+                  alt="Medium Eunho widget showing the daily ring and history grid"
+                  className="h-full w-auto object-contain rounded-lg"
+                  width={1300}
+                  height={620}
+                />
               </div>
               <p className="eyebrow text-[#8B8B8B]">Widgets &amp; Lock Screen</p>
               <h3
