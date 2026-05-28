@@ -124,8 +124,11 @@ export const apps: AppInfo[] = [
     ],
     icon: null,
     status: "building",
+    // No liveUrl: the deployed Whistle is an auth-walled assignor dashboard
+    // (Clerk sign-in, root path 404s), not a public marketing page. Linking
+    // it would drop a visitor on a login box. Add a liveUrl back only once a
+    // real public landing page exists.
     buildingNote: "Pre-launch · Building toward launch",
-    liveUrl: "https://whistle-web-six.vercel.app",
     accentColor: "#5A8C6D",
     iconBg: "light",
   },
