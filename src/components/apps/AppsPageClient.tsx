@@ -248,22 +248,47 @@ const BuildingAppCard: React.FC<{
       {app.description}
     </p>
 
-    {/* Status note slot. No App Store link / no landing page yet — these
-        products aren't shipped. The note carries stage info instead. */}
-    {app.buildingNote && (
-      <div
-        className={cn(
-          "flex items-center gap-2 pt-1 mt-auto text-[11px] tracking-wide",
-          isDark ? "text-gray-500" : "text-[#86868B]",
-        )}
-      >
-        <span
-          className="inline-block w-1 h-1 rounded-full"
-          style={{ backgroundColor: app.accentColor }}
-        />
-        {app.buildingNote}
-      </div>
-    )}
+    {/* Footer slot. No App Store link yet — these products aren't shipped.
+        Left: stage note. Right: "Visit landing" link when a live preview
+        URL exists, so a curious visitor can see the actual product. */}
+    <div className="flex items-center justify-between gap-3 pt-1 mt-auto">
+      {app.buildingNote ? (
+        <div
+          className={cn(
+            "flex items-center gap-2 text-[11px] tracking-wide",
+            isDark ? "text-gray-500" : "text-[#86868B]",
+          )}
+        >
+          <span
+            className="inline-block w-1 h-1 rounded-full"
+            style={{ backgroundColor: app.accentColor }}
+          />
+          {app.buildingNote}
+        </div>
+      ) : (
+        <span />
+      )}
+      {app.liveUrl && (
+        <a
+          href={app.liveUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Visit the ${app.name} landing page`}
+          className={cn(
+            "group/link inline-flex items-center gap-1.5 text-[13px] font-semibold transition-colors shrink-0",
+          )}
+          style={{ color: app.accentColor }}
+        >
+          Visit landing
+          <span
+            aria-hidden
+            className="transition-transform duration-200 ease-out group-hover/link:translate-x-0.5"
+          >
+            ↗
+          </span>
+        </a>
+      )}
+    </div>
   </article>
 );
 

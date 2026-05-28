@@ -14,6 +14,9 @@ export type AppInfo = {
   /** Short status note shown on cards when status === "building". Use for
       stage / availability framing (e.g. "Closed beta · By invitation"). */
   buildingNote?: string;
+  /** Public landing URL for "building" products that have a live preview
+      deployed (no App Store link yet). Rendered as a "Visit landing" link. */
+  liveUrl?: string;
   accentColor: string;
   iconBg?: "light" | "dark";
 };
@@ -104,6 +107,7 @@ export const apps: AppInfo[] = [
     icon: null,
     status: "building",
     buildingNote: "Closed beta · By invitation",
+    liveUrl: "https://web-zeta-pink-31.vercel.app",
     accentColor: "#5DE5B5",
     iconBg: "dark",
   },
@@ -121,6 +125,7 @@ export const apps: AppInfo[] = [
     icon: null,
     status: "building",
     buildingNote: "Pre-launch · Building toward launch",
+    liveUrl: "https://whistle-web-six.vercel.app",
     accentColor: "#5A8C6D",
     iconBg: "light",
   },
