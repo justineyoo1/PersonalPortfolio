@@ -1,4 +1,4 @@
-export type AppStatus = "waitlist" | "available";
+export type AppStatus = "waitlist" | "available" | "building";
 
 export type AppInfo = {
   slug: string;
@@ -11,6 +11,9 @@ export type AppInfo = {
   appStoreUrl?: string;
   appStoreId?: string;
   waitlistUrl?: string;
+  /** Short status note shown on cards when status === "building". Use for
+      stage / availability framing (e.g. "Closed beta · By invitation"). */
+  buildingNote?: string;
   accentColor: string;
   iconBg?: "light" | "dark";
 };
@@ -85,6 +88,40 @@ export const apps: AppInfo[] = [
     status: "waitlist",
     waitlistUrl: "#",
     accentColor: "#34D399",
+    iconBg: "light",
+  },
+  {
+    slug: "bord",
+    name: "Bord",
+    tagline: "Finance takes. Every side. You call it.",
+    description:
+      "A board of AI specialist voices — CFO, Strategist, Risk, Markets — debating your real money in a Threads-style feed. Plaid-linked. Multi-voice. Never auto-trades.",
+    features: [
+      "A board of specialist voices, each with their own argument",
+      "Plaid-linked spending, portfolio, and goals trigger the feed",
+      "Type a money question, watch the debate stream",
+    ],
+    icon: null,
+    status: "building",
+    buildingNote: "Closed beta · By invitation",
+    accentColor: "#5DE5B5",
+    iconBg: "dark",
+  },
+  {
+    slug: "whistle",
+    name: "Whistle",
+    tagline: "Run your leagues by talking to an agent.",
+    description:
+      "AI-native referee assigning and payments. The agent drafts the weekend; the assignor commits; officials get paid the next day via Stripe.",
+    features: [
+      "Natural-language assigning with conflict + fairness reasoning",
+      "Stripe Connect rails — payouts next day, no subscription",
+      "Officials iOS app: schedule, availability, earnings, auto-1099",
+    ],
+    icon: null,
+    status: "building",
+    buildingNote: "Pre-launch · Building toward launch",
+    accentColor: "#5A8C6D",
     iconBg: "light",
   },
 ];

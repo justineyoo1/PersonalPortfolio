@@ -15,7 +15,7 @@ const Header: React.FC<{ isDark: boolean }> = ({ isDark }) => (
         isDark ? "text-white" : "text-[#1D1D1F]",
       )}
     >
-      Apps by Justin Yoo
+      Built by Justin Yoo
     </h1>
     <p
       className={cn(
@@ -23,10 +23,37 @@ const Header: React.FC<{ isDark: boolean }> = ({ isDark }) => (
         isDark ? "text-gray-400" : "text-[#515154]",
       )}
     >
-      Three apps about friction beating willpower. One that ships at the morning alarm,
-      one at the daily ritual, one in the moment you reach for the wrong app.
+      Three iOS apps about friction beating willpower. Plus two products in
+      private beta — a fintech debate feed and an AI-native referee platform.
     </p>
   </header>
+);
+
+const BuildingHeader: React.FC<{ isDark: boolean; delayMs: number }> = ({
+  isDark,
+  delayMs,
+}) => (
+  <div
+    className="mt-14 mb-6 opacity-0 animate-[fade-in-up_0.4s_ease-out_both]"
+    style={{ animationDelay: `${delayMs}ms` }}
+  >
+    <div className="flex items-center gap-3">
+      <h2
+        className={cn(
+          "text-[11px] font-semibold tracking-[0.22em] uppercase",
+          isDark ? "text-gray-400" : "text-[#515154]",
+        )}
+      >
+        Building now
+      </h2>
+      <div
+        className={cn(
+          "flex-1 h-px",
+          isDark ? "bg-white/10" : "bg-[#E5E5EA]",
+        )}
+      />
+    </div>
+  </div>
 );
 
 const LiveBadge: React.FC<{ isDark: boolean }> = ({ isDark }) => (
@@ -40,6 +67,20 @@ const LiveBadge: React.FC<{ isDark: boolean }> = ({ isDark }) => (
   >
     <span className="w-1.5 h-1.5 rounded-full bg-current" />
     Live on App Store
+  </span>
+);
+
+const BuildingBadge: React.FC<{ isDark: boolean }> = ({ isDark }) => (
+  <span
+    className={cn(
+      "inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-medium",
+      isDark
+        ? "bg-amber-400/10 text-amber-300 border border-amber-400/20"
+        : "bg-[#FF9F0A]/10 text-[#A85B00]",
+    )}
+  >
+    <span className="w-1.5 h-1.5 rounded-full bg-current animate-pulse" />
+    In private beta
   </span>
 );
 
@@ -158,6 +199,74 @@ const LiveAppCard: React.FC<{ app: AppInfo; index: number; isDark: boolean }> = 
   </article>
 );
 
+const BuildingAppCard: React.FC<{
+  app: AppInfo;
+  index: number;
+  isDark: boolean;
+  delayMs: number;
+}> = ({ app, index, isDark, delayMs }) => (
+  <article
+    className={cn(
+      "rounded-2xl p-5 sm:p-6 flex flex-col gap-4 opacity-0 animate-[fade-in-up_0.4s_ease-out_both] transition-all duration-200",
+      isDark
+        ? "bg-white/[0.02] border border-white/[0.08] hover:border-white/15"
+        : "bg-white/70 border border-[#E5E5EA] hover:border-[#D1D1D6]",
+    )}
+    style={{ animationDelay: `${delayMs + index * 80}ms` }}
+  >
+    <div className="flex items-start gap-4">
+      <AppIcon app={app} size={56} />
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center gap-2 mb-1 flex-wrap">
+          <h3
+            className={cn(
+              "text-lg font-semibold tracking-tight",
+              isDark ? "text-white" : "text-[#1D1D1F]",
+            )}
+          >
+            {app.name}
+          </h3>
+          <BuildingBadge isDark={isDark} />
+        </div>
+        <p
+          className={cn(
+            "text-sm",
+            isDark ? "text-gray-300" : "text-[#1D1D1F]",
+          )}
+        >
+          {app.tagline}
+        </p>
+      </div>
+    </div>
+
+    <p
+      className={cn(
+        "text-sm leading-relaxed",
+        isDark ? "text-gray-400" : "text-[#515154]",
+      )}
+    >
+      {app.description}
+    </p>
+
+    {/* Status note slot. No App Store link / no landing page yet — these
+        products aren't shipped. The note carries stage info instead. */}
+    {app.buildingNote && (
+      <div
+        className={cn(
+          "flex items-center gap-2 pt-1 mt-auto text-[11px] tracking-wide",
+          isDark ? "text-gray-500" : "text-[#86868B]",
+        )}
+      >
+        <span
+          className="inline-block w-1 h-1 rounded-full"
+          style={{ backgroundColor: app.accentColor }}
+        />
+        {app.buildingNote}
+      </div>
+    )}
+  </article>
+);
+
 const LegalFooter: React.FC<{ isDark: boolean }> = ({ isDark }) => {
   const linkClasses = cn(
     "text-xs transition-colors",
@@ -205,10 +314,17 @@ export function AppsPageClient() {
     );
   }
 
-  // Only show live apps on the public index. Waitlist apps (Shwup) stay
-  // visible inside the home page's "apps" window but don't merit their own
-  // card with an inline email form here.
+  // Shipped: visible on /apps as the primary grid with App Store CTAs.
+  // Building: visible on /apps as a second section below, with status notes
+  //   instead of App Store links (Bord, Whistle).
+  // Waitlist: stays hidden from /apps — Shwup lives only in the home page's
+  //   apps window and doesn't merit a card with an inline email form here.
   const liveApps = apps.filter((a) => a.status === "available");
+  const buildingApps = apps.filter((a) => a.status === "building");
+
+  // Stagger the building section animation to land just after the live grid.
+  const buildingHeaderDelay = 100 + liveApps.length * 80 + 120;
+  const buildingCardsDelay = buildingHeaderDelay + 100;
 
   return (
     <main
@@ -225,6 +341,23 @@ export function AppsPageClient() {
             <LiveAppCard key={app.slug} app={app} index={i} isDark={isDark} />
           ))}
         </section>
+
+        {buildingApps.length > 0 && (
+          <>
+            <BuildingHeader isDark={isDark} delayMs={buildingHeaderDelay} />
+            <section className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {buildingApps.map((app, i) => (
+                <BuildingAppCard
+                  key={app.slug}
+                  app={app}
+                  index={i}
+                  isDark={isDark}
+                  delayMs={buildingCardsDelay}
+                />
+              ))}
+            </section>
+          </>
+        )}
       </div>
 
       <LegalFooter isDark={isDark} />

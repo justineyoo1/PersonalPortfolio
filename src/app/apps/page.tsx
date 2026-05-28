@@ -2,13 +2,13 @@ import { Metadata } from "next";
 import { AppsPageClient } from "@/components/apps/AppsPageClient";
 
 export const metadata: Metadata = {
-  title: "Apps by Justin Yoo",
+  title: "Built by Justin Yoo",
   description:
-    "Three iOS apps about friction beating willpower. Brik, Eunho, and Uninstall. Plus Shwup, coming soon.",
+    "Three iOS apps about friction beating willpower — Brik, Eunho, Uninstall. Plus two products in private beta: Bord and Whistle.",
   openGraph: {
-    title: "Apps by Justin Yoo",
+    title: "Built by Justin Yoo",
     description:
-      "Three iOS apps about friction beating willpower. Brik, Eunho, and Uninstall.",
+      "Three iOS apps about friction beating willpower. Plus Bord and Whistle in private beta.",
     url: "https://jstnyoo.com/apps",
     type: "website",
     images: [
@@ -16,15 +16,15 @@ export const metadata: Metadata = {
         url: "/img/apps/eunho/1-intro.png",
         width: 1320,
         height: 2868,
-        alt: "Apps by Justin Yoo",
+        alt: "Built by Justin Yoo",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Apps by Justin Yoo",
+    title: "Built by Justin Yoo",
     description:
-      "Three iOS apps about friction beating willpower.",
+      "Three iOS apps about friction beating willpower. Plus Bord and Whistle in private beta.",
     images: ["/img/apps/eunho/1-intro.png"],
   },
 };
