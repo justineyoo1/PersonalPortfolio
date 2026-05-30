@@ -2,6 +2,7 @@ import React from "react";
 import { WindowHeader } from "./WindowHeader";
 import { BackFooter } from "./BackFooter";
 import MathBlob from "../MathBlob";
+import AsciiDonut from "../AsciiDonut";
 
 type PersonalInfo = {
   name: string;
@@ -62,9 +63,11 @@ export const MeCollapsed = ({
       <div className={`flex-1 min-h-0 overflow-hidden px-5 py-4 grid grid-cols-2 gap-5 ${isDark ? "font-mono" : "bg-gradient-to-br from-white/60 to-[#F0F4FF]/40"}`}>
         <div className="min-h-0 overflow-hidden flex items-center justify-center">
           {isDark ? (
-            <p className="text-[5px] leading-[1] sm:text-[6px] md:text-[7px] font-mono whitespace-pre text-center text-blue-100">
-              {selectedAscii}
-            </p>
+            <AsciiDonut
+              cols={30}
+              rows={16}
+              className="font-mono whitespace-pre text-[#56D364] text-[5px] leading-[1] sm:text-[6px]"
+            />
           ) : (
             <MathBlob />
           )}
@@ -143,10 +146,9 @@ const Palette = () => (
 );
 
 const TerminalAbout: React.FC<{
-  selectedAscii: string;
   personalInfo: PersonalInfo;
   time: Date | null;
-}> = ({ selectedAscii, personalInfo, time }) => {
+}> = ({ personalInfo, time }) => {
   const { socialLinks, resumeFileName } = personalInfo;
   const linkClass =
     "text-[#3FB950] hover:text-[#56D364] hover:underline underline-offset-2 transition-colors";
@@ -156,9 +158,11 @@ const TerminalAbout: React.FC<{
       <section className="space-y-4">
         <Prompt cmd="neofetch" />
         <div className="grid grid-cols-1 sm:grid-cols-[auto_1fr] gap-x-9 gap-y-5 sm:items-center pl-1">
-          <pre className="ascii-glow text-[6px] leading-[1.05] sm:text-[7px] text-[#7FB2F0] whitespace-pre overflow-hidden">
-            {selectedAscii}
-          </pre>
+          <AsciiDonut
+            cols={40}
+            rows={20}
+            className="font-mono whitespace-pre text-[#56D364] text-[6px] leading-[1.05] sm:text-[7px] overflow-hidden"
+          />
           <div className="space-y-1.5">
             <div className="font-bold">
               <span className="text-[#58A6FF]">justin</span>
@@ -255,11 +259,7 @@ export const MeExpanded = ({
       />
       <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain">
         {isDark ? (
-          <TerminalAbout
-            selectedAscii={selectedAscii}
-            personalInfo={personalInfo}
-            time={time}
-          />
+          <TerminalAbout personalInfo={personalInfo} time={time} />
         ) : (
           <>
             <div className="flex flex-col max-w-3xl mx-auto mt-4 mb-8 px-4">
