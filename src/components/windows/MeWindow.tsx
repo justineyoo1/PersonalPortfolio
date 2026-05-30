@@ -64,6 +64,7 @@ export const MeCollapsed = ({
         <div className="min-h-0 overflow-hidden flex items-center justify-center">
           {isDark ? (
             <AsciiDonut
+              animate={false}
               cols={30}
               rows={16}
               className="font-mono whitespace-pre text-[#56D364] text-[5px] leading-[1] sm:text-[6px]"

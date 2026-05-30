@@ -16,13 +16,18 @@ export function useFitScale(active: boolean) {
   const [naturalH, setNaturalH] = useState(0);
 
   useEffect(() => {
+    let debounce = 0;
+
     const compute = () => {
       const el = ref.current;
       if (!el) return;
       const nat = el.offsetHeight; // layout height, unaffected by CSS transform
+      // Ignore transient zero-height reads (pre-layout) instead of resetting
+      // the scale back to 1, which left it stuck unscaled on first paint.
+      if (nat === 0) return;
       setNaturalH(nat);
       const lg = window.innerWidth >= 1024;
-      if (!lg || !active || nat === 0) {
+      if (!lg || !active) {
         setScale(1);
         return;
       }
@@ -30,15 +35,31 @@ export function useFitScale(active: boolean) {
       setScale(Math.max(0.62, Math.min(1, avail / nat)));
     };
 
+    // setTimeout (not rAF — rAF is paused on hidden/background tabs, which left
+    // the scale unapplied until a resize). Debounced so the ResizeObserver
+    // can't trip its loop warning.
+    const debounced = () => {
+      clearTimeout(debounce);
+      debounce = window.setTimeout(compute, 60);
+    };
+
+    // Apply immediately, then re-apply after first paint and after
+    // fonts/async data settle — the first measurement can be premature.
     compute();
-    window.addEventListener("resize", compute);
+    const t1 = setTimeout(compute, 150);
+    const t2 = setTimeout(compute, 600);
+
+    window.addEventListener("resize", debounced);
     let ro: ResizeObserver | null = null;
     if (typeof ResizeObserver !== "undefined" && ref.current) {
-      ro = new ResizeObserver(compute);
+      ro = new ResizeObserver(debounced);
       ro.observe(ref.current);
     }
     return () => {
-      window.removeEventListener("resize", compute);
+      clearTimeout(debounce);
+      clearTimeout(t1);
+      clearTimeout(t2);
+      window.removeEventListener("resize", debounced);
       ro?.disconnect();
     };
   }, [active]);
