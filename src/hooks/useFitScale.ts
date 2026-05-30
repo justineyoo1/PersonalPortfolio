@@ -35,38 +35,31 @@ export function useFitScale(active: boolean) {
       setScale(Math.max(0.62, Math.min(1, avail / nat)));
     };
 
-    const run = () => {
+    // setTimeout (not rAF — rAF is paused on hidden/background tabs, which left
+    // the scale unapplied until a resize). Debounced so the ResizeObserver
+    // can't trip its loop warning.
+    const debounced = () => {
       clearTimeout(debounce);
-      debounce = window.setTimeout(compute, 50);
+      debounce = window.setTimeout(compute, 60);
     };
 
-    run();
-    window.addEventListener("resize", run);
-    window.addEventListener("orientationchange", run);
-    window.addEventListener("load", run);
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(run).catch(() => {});
-    }
+    // Apply immediately, then re-apply after first paint and after
+    // fonts/async data settle — the first measurement can be premature.
+    compute();
+    const t1 = setTimeout(compute, 150);
+    const t2 = setTimeout(compute, 600);
 
+    window.addEventListener("resize", debounced);
     let ro: ResizeObserver | null = null;
     if (typeof ResizeObserver !== "undefined" && ref.current) {
-      ro = new ResizeObserver(run);
+      ro = new ResizeObserver(debounced);
       ro.observe(ref.current);
     }
-
-    // On cold production loads the initial compute sometimes doesn't apply
-    // (only a later resize did). A dispatched resize reliably re-triggers it,
-    // so kick a few times after mount to guarantee the fit lands.
-    const kicks = [200, 600, 1200, 2000].map((d) =>
-      window.setTimeout(() => window.dispatchEvent(new Event("resize")), d),
-    );
-
     return () => {
       clearTimeout(debounce);
-      kicks.forEach(clearTimeout);
-      window.removeEventListener("resize", run);
-      window.removeEventListener("orientationchange", run);
-      window.removeEventListener("load", run);
+      clearTimeout(t1);
+      clearTimeout(t2);
+      window.removeEventListener("resize", debounced);
       ro?.disconnect();
     };
   }, [active]);

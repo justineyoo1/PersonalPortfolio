@@ -69,6 +69,7 @@ const App = () => {
 
   const { isResumeOpen, setIsResumeOpen } = useResumeOverlay();
   const isExpanded = Boolean(expandWindow);
+  useBodyScrollLock(isExpanded);
 
   // Shrink the whole desktop to fit the viewport so nothing needs scrolling
   // (desktop only; disabled while a window is expanded full-screen).
@@ -78,8 +79,6 @@ const App = () => {
   // expanded full-screen (its overlay must render at 1:1, and a transformed
   // ancestor would break the fixed/absolute positioning).
   const applyFit = !isExpanded && fitScale < 1;
-
-  useBodyScrollLock(isExpanded);
 
   const cli = useCli({
     isDark,
