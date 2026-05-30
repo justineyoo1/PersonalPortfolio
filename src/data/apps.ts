@@ -104,7 +104,7 @@ export const apps: AppInfo[] = [
       "Plaid-linked spending, portfolio, and goals trigger the feed",
       "Type a money question, watch the debate stream",
     ],
-    icon: null,
+    icon: "/img/apps/bord/icon-1024.png",
     status: "building",
     buildingNote: "Closed beta · By invitation",
     liveUrl: "https://web-zeta-pink-31.vercel.app",
@@ -122,7 +122,7 @@ export const apps: AppInfo[] = [
       "Stripe Connect rails — payouts next day, no subscription",
       "Officials iOS app: schedule, availability, earnings, auto-1099",
     ],
-    icon: null,
+    icon: "/img/apps/whistle/icon-1024.png",
     status: "building",
     // No liveUrl: the deployed Whistle is an auth-walled assignor dashboard
     // (Clerk sign-in, root path 404s), not a public marketing page. Linking
