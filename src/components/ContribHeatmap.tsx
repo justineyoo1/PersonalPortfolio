@@ -7,6 +7,7 @@ type Props = {
   weeks?: number;
   cell?: number;
   gap?: number;
+  showLegend?: boolean;
 };
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -31,6 +32,7 @@ const ContribHeatmap: React.FC<Props> = ({
   weeks = 20,
   cell = 12,
   gap = 3,
+  showLegend = true,
 }) => {
   const palette = isDark ? DARK : LIGHT;
 
@@ -66,14 +68,20 @@ const ContribHeatmap: React.FC<Props> = ({
       columns.push(col);
     }
 
-    // Month label appears on the first column whose first day starts a new month.
+    // Month label appears on the first column of a new month, but skip labels
+    // that would sit too close to the previous one (avoids "FeMar" overlap when
+    // the window starts mid-month).
     const monthLabels: { col: number; label: string }[] = [];
     let prevMonth = -1;
+    let lastLabelCol = -10;
     columns.forEach((col, i) => {
       const m = col[0].getMonth();
       if (m !== prevMonth) {
-        monthLabels.push({ col: i, label: MONTHS[m] });
         prevMonth = m;
+        if (i - lastLabelCol >= 3) {
+          monthLabels.push({ col: i, label: MONTHS[m] });
+          lastLabelCol = i;
+        }
       }
     });
 
@@ -135,6 +143,7 @@ const ContribHeatmap: React.FC<Props> = ({
       </div>
 
       {/* legend */}
+      {showLegend && (
       <div
         className={`flex items-center gap-1 mt-2 text-[10px] ${isDark ? "text-gray-500" : "text-[#86868B]"}`}
       >
@@ -153,6 +162,7 @@ const ContribHeatmap: React.FC<Props> = ({
         ))}
         <span>more</span>
       </div>
+      )}
     </div>
   );
 };

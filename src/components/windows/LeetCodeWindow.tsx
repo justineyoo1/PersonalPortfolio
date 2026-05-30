@@ -152,7 +152,7 @@ const NeetCodeBody = ({
     <div className={`w-full ${expanded ? "max-w-[600px]" : "max-w-[300px]"} mx-auto`}>
       {/* header: mark + total */}
       <div className="flex items-center gap-3.5">
-        <NeetCodeMark size={expanded ? 56 : 46} />
+        <NeetCodeMark size={expanded ? 56 : 40} />
         <div className="min-w-0">
           <div className="flex items-baseline gap-2">
             <span
@@ -177,12 +177,22 @@ const NeetCodeBody = ({
         </div>
       </div>
 
-      {/* difficulty bars */}
-      <div className={`flex flex-col gap-2 ${expanded ? "mt-5" : "mt-3"}`}>
-        <DiffRow label="easy" count={leetCode.easySolved} total={total} color="#3FB950" isDark={isDark} big={expanded} />
-        <DiffRow label="medium" count={leetCode.mediumSolved} total={total} color="#E3B341" isDark={isDark} big={expanded} />
-        <DiffRow label="hard" count={leetCode.hardSolved} total={total} color="#F85149" isDark={isDark} big={expanded} />
-      </div>
+      {/* difficulty — bars when expanded, compact inline line when collapsed */}
+      {expanded ? (
+        <div className="flex flex-col gap-2 mt-5">
+          <DiffRow label="easy" count={leetCode.easySolved} total={total} color="#3FB950" isDark={isDark} big />
+          <DiffRow label="medium" count={leetCode.mediumSolved} total={total} color="#E3B341" isDark={isDark} big />
+          <DiffRow label="hard" count={leetCode.hardSolved} total={total} color="#F85149" isDark={isDark} big />
+        </div>
+      ) : (
+        <div className="flex items-center gap-2.5 mt-3 text-xs font-mono">
+          <span style={{ color: "#3FB950" }}>easy {leetCode.easySolved}</span>
+          <span className={isDark ? "text-gray-600" : "text-[#C7C7CC]"}>·</span>
+          <span style={{ color: "#E3B341" }}>med {leetCode.mediumSolved}</span>
+          <span className={isDark ? "text-gray-600" : "text-[#C7C7CC]"}>·</span>
+          <span style={{ color: "#F85149" }}>hard {leetCode.hardSolved}</span>
+        </div>
+      )}
 
       {/* streak stats (expanded only) */}
       {expanded && (
@@ -194,16 +204,19 @@ const NeetCodeBody = ({
       )}
 
       {/* activity heatmap */}
-      <div className={`${expanded ? "mt-6" : "mt-4"} overflow-x-auto`}>
-        <p className={`text-[11px] mb-2 font-mono ${isDark ? "text-gray-500" : "text-[#86868B]"}`}>
-          submission activity
-        </p>
+      <div className={`${expanded ? "mt-6" : "mt-3"} overflow-x-auto`}>
+        {expanded && (
+          <p className={`text-[11px] mb-2 font-mono ${isDark ? "text-gray-500" : "text-[#86868B]"}`}>
+            submission activity
+          </p>
+        )}
         <ContribHeatmap
           submissionCalendar={leetCode.submissionCalendar}
           isDark={isDark}
-          weeks={expanded ? 30 : 14}
-          cell={expanded ? 15 : 9}
+          weeks={expanded ? 30 : 13}
+          cell={expanded ? 15 : 8}
           gap={expanded ? 3 : 2}
+          showLegend={expanded === true}
         />
       </div>
 
@@ -250,7 +263,7 @@ export const LeetCodeCollapsed = ({
         headerClass={headerClass}
         onMaximize={() => setExpandWindow("leetcode")}
       />
-      <div className="w-full flex-1 min-h-0 overflow-hidden flex flex-col items-center justify-center px-3 py-2">
+      <div className="w-full flex-1 min-h-0 overflow-hidden flex flex-col items-center justify-start px-3 pt-3 pb-2">
         <NeetCodeBody
           isDark={isDark}
           leetCode={leetCode}
