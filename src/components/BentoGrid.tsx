@@ -137,6 +137,26 @@ export const BentoGrid: React.FC<BentoGridProps> = ({
     windowSelection;
   const isExpanded = Boolean(expandWindow);
 
+  // Closing choreography: when an expanded window is dismissed we keep it
+  // mounted briefly so the backdrop + window can play their exit animation,
+  // then actually clear the state. Re-maximizing (non-empty value) passes
+  // straight through. Esc (handled in useWindowNavigation) closes instantly.
+  const [closing, setClosing] = React.useState(false);
+  const requestClose = React.useCallback(
+    (value: string) => {
+      if (value === "") {
+        setClosing(true);
+        window.setTimeout(() => {
+          setClosing(false);
+          setExpandWindow("");
+        }, 200);
+      } else {
+        setExpandWindow(value);
+      }
+    },
+    [setExpandWindow],
+  );
+
   return (
     <div
       className={cn(
@@ -153,7 +173,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({
         selectedAscii={selectedAscii}
         personalInfo={personalInfo}
         time={time}
-        setExpandWindow={setExpandWindow}
+        setExpandWindow={requestClose}
         setSelectedWindow={setSelectedWindow}
         isHidden={isExpanded}
       />
@@ -170,7 +190,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({
         hoveredToolboxIndex={toolbox.hoveredToolboxIndex}
         setHoveredToolboxIndex={toolbox.setHoveredToolboxIndex}
         setSelectedWindow={setSelectedWindow}
-        setExpandWindow={setExpandWindow}
+        setExpandWindow={requestClose}
         skillsCoursesCerts={toolbox.skillsCoursesCerts}
       />
 
@@ -179,7 +199,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({
         selectedWindow={selectedWindow}
         windowThemeClass={windowThemeClass}
         headerClass={headerClass}
-        setExpandWindow={setExpandWindow}
+        setExpandWindow={requestClose}
         socialLeetCodeUrl={personalInfo.socialLinks.leetcode}
         leetCode={leetCode}
         leetCodeError={leetCodeError}
@@ -192,7 +212,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({
         selectedWindow={selectedWindow}
         windowThemeClass={windowThemeClass}
         headerClass={headerClass}
-        setExpandWindow={setExpandWindow}
+        setExpandWindow={requestClose}
         command={cli.command}
         setCommand={cli.setCommand}
         lastCommand={cli.lastCommand}
@@ -220,7 +240,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({
         hoveredExperienceIndex={experience.hoveredExperienceIndex}
         setHoveredExperienceIndex={experience.setHoveredExperienceIndex}
         filteredExperiences={experience.filteredExperiences}
-        setExpandWindow={setExpandWindow}
+        setExpandWindow={requestClose}
         setSelectedWindow={setSelectedWindow}
         setSelectExperience={experience.setSelectExperience}
         experienceFilterCounts={experience.experienceFilterCounts}
@@ -239,7 +259,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({
         hoveredProjectIndex={project.hoveredProjectIndex}
         setHoveredProjectIndex={project.setHoveredProjectIndex}
         filteredProjects={project.filteredProjects}
-        setExpandWindow={setExpandWindow}
+        setExpandWindow={requestClose}
         setSelectedWindow={setSelectedWindow}
         setSelectProject={project.setSelectProject}
         projectFilterCounts={project.projectFilterCounts}
@@ -250,17 +270,27 @@ export const BentoGrid: React.FC<BentoGridProps> = ({
         selectedWindow={selectedWindow}
         windowThemeClass={windowThemeClass}
         headerClass={headerClass}
-        setExpandWindow={setExpandWindow}
+        setExpandWindow={requestClose}
         setSelectedWindow={setSelectedWindow}
         isHidden={isExpanded}
       />
 
       {isExpanded && (
-        <div
+        <>
+          {/* Full-viewport scrim: blurs + dims the particles and grid so the
+              expanded window reads as floating above the page. Click to close. */}
+          <div
+            className={cn("fixed inset-0 z-20 overlay-backdrop cursor-pointer", closing && "is-closing")}
+            onClick={() => requestClose("")}
+            aria-hidden
+          />
+          <div
+          onClick={(e) => {
+            if (e.target === e.currentTarget) requestClose("");
+          }}
           className={cn(
-            "lg:absolute lg:inset-0 fixed inset-0 z-20 transition-opacity duration-300 lg:h-full h-screen max-h-screen overflow-hidden flex items-center justify-center lg:items-stretch lg:justify-stretch",
-            !isDark &&
-              "animate-[apple-sheet-in_0.3s_cubic-bezier(0.25,0.1,0.25,1)_forwards]",
+            "expanded-stage z-30 lg:absolute lg:inset-0 fixed inset-0 lg:h-full h-screen max-h-screen flex items-center justify-center lg:items-stretch lg:justify-stretch p-3 sm:p-5 lg:p-6 2xl:p-8",
+            closing && "is-closing",
           )}
         >
           {expandWindow === "me" && (
@@ -272,7 +302,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({
               selectedAscii={selectedAscii}
               personalInfo={personalInfo}
               time={time}
-              setExpandWindow={setExpandWindow}
+              setExpandWindow={requestClose}
               meWindowRef={meWindowRef}
             />
           )}
@@ -294,7 +324,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({
               selectExperience={experience.selectExperience}
               setSelectExperience={experience.setSelectExperience}
               selectedExperienceLinkIndex={experience.selectedExperienceLinkIndex}
-              setExpandWindow={setExpandWindow}
+              setExpandWindow={requestClose}
               setSelectedWindow={setSelectedWindow}
               experienceViewMode={experience.experienceViewMode}
               setExperienceViewMode={experience.setExperienceViewMode}
@@ -319,7 +349,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({
               selectProject={project.selectProject}
               setSelectProject={project.setSelectProject}
               selectedLinkIndex={project.selectedLinkIndex}
-              setExpandWindow={setExpandWindow}
+              setExpandWindow={requestClose}
               setSelectedWindow={setSelectedWindow}
               projectFilterCounts={project.projectFilterCounts}
             />
@@ -336,7 +366,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({
               hoveredToolboxIndex={toolbox.hoveredToolboxIndex}
               setHoveredToolboxIndex={toolbox.setHoveredToolboxIndex}
               setSelectedWindow={setSelectedWindow}
-              setExpandWindow={setExpandWindow}
+              setExpandWindow={requestClose}
               skillsCoursesCerts={toolbox.skillsCoursesCerts}
             />
           )}
@@ -346,7 +376,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({
               selectedWindow={selectedWindow}
               windowThemeClass={windowThemeClass}
               headerClass={headerClass}
-              setExpandWindow={setExpandWindow}
+              setExpandWindow={requestClose}
               socialLeetCodeUrl={personalInfo.socialLinks.leetcode}
               leetCode={leetCode}
               leetCodeError={leetCodeError}
@@ -358,7 +388,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({
               selectedWindow={selectedWindow}
               windowThemeClass={windowThemeClass}
               headerClass={headerClass}
-              setExpandWindow={setExpandWindow}
+              setExpandWindow={requestClose}
               command={cli.command}
               setCommand={cli.setCommand}
               lastCommand={cli.lastCommand}
@@ -371,7 +401,8 @@ export const BentoGrid: React.FC<BentoGridProps> = ({
               handleCommand={cli.handleCommand}
             />
           )}
-        </div>
+          </div>
+        </>
       )}
     </div>
   );
