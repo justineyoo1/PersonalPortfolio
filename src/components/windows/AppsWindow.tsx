@@ -39,7 +39,9 @@ export const AppsCollapsed = ({
       />
 
       <div className={`grid grid-cols-2 lg:grid-cols-4 ${isDark ? "gap-3 p-4" : "gap-1.5 px-3 pt-2 pb-1"}`}>
-        {apps.map((app) => (
+        {apps.map((app) => {
+          const iconSrc = isDark ? app.icon : app.iconLight ?? app.icon;
+          return (
           <div key={app.slug} className="relative">
             <a
               href={`/apps/${app.slug}`}
@@ -50,9 +52,9 @@ export const AppsCollapsed = ({
               }`}
             >
               {/* App icon */}
-              {app.icon ? (
+              {iconSrc ? (
                 <img
-                  src={app.icon}
+                  src={iconSrc}
                   alt={app.name}
                   width={48}
                   height={48}
@@ -139,7 +141,8 @@ export const AppsCollapsed = ({
               </a>
             )}
           </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* CTA to open /apps page */}

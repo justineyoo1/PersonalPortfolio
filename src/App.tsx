@@ -16,6 +16,7 @@ import { useWindowNavigation } from "./hooks/useWindowNavigation";
 import { useLeetCode } from "./hooks/useLeetCode";
 import { useResumeOverlay } from "./hooks/useResumeOverlay";
 import { useBodyScrollLock } from "./hooks/useBodyScrollLock";
+import { useFitScale } from "./hooks/useFitScale";
 import { cn } from "./lib/cn";
 import type {
   ExperienceFilter,
@@ -67,7 +68,17 @@ const App = () => {
   const meWindowRef = useRef<HTMLDivElement>(null);
 
   const { isResumeOpen, setIsResumeOpen } = useResumeOverlay();
-  useBodyScrollLock(Boolean(expandWindow));
+  const isExpanded = Boolean(expandWindow);
+  useBodyScrollLock(isExpanded);
+
+  // Shrink the whole desktop to fit the viewport so nothing needs scrolling
+  // (desktop only; disabled while a window is expanded full-screen).
+  const { ref: fitRef, scale: fitScale, naturalH: fitNaturalH } =
+    useFitScale(true);
+  // Apply the shrink only on the collapsed desktop — never while a window is
+  // expanded full-screen (its overlay must render at 1:1, and a transformed
+  // ancestor would break the fixed/absolute positioning).
+  const applyFit = !isExpanded && fitScale < 1;
 
   const cli = useCli({
     isDark,
@@ -173,6 +184,17 @@ const App = () => {
           : "bg-transparent text-[#1D1D1F] font-sans",
       )}
     >
+      <div
+        className="w-full flex justify-center"
+        style={{ height: applyFit ? fitNaturalH * fitScale : undefined }}
+      >
+        <div
+          ref={fitRef}
+          style={{
+            transform: applyFit ? `scale(${fitScale})` : undefined,
+            transformOrigin: "top center",
+          }}
+        >
       <BentoGrid
         theme={{
           isDark,
@@ -230,6 +252,8 @@ const App = () => {
           setHoveredToolboxIndex,
         }}
       />
+        </div>
+      </div>
 
       <ResumeWindow
         isDark={isDark}

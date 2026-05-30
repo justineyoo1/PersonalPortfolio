@@ -84,8 +84,13 @@ const BuildingBadge: React.FC<{ isDark: boolean }> = ({ isDark }) => (
   </span>
 );
 
-const AppIcon: React.FC<{ app: AppInfo; size?: number }> = ({ app, size = 56 }) => {
-  if (!app.icon) {
+const AppIcon: React.FC<{ app: AppInfo; size?: number; isDark?: boolean }> = ({
+  app,
+  size = 56,
+  isDark = true,
+}) => {
+  const iconSrc = isDark ? app.icon : app.iconLight ?? app.icon;
+  if (!iconSrc) {
     return (
       <div
         className="rounded-2xl shrink-0 flex items-center justify-center font-bold"
@@ -102,7 +107,7 @@ const AppIcon: React.FC<{ app: AppInfo; size?: number }> = ({ app, size = 56 }) 
   }
   return (
     <img
-      src={app.icon}
+      src={iconSrc}
       alt={`${app.name} app icon`}
       width={size}
       height={size}
@@ -127,7 +132,7 @@ const LiveAppCard: React.FC<{ app: AppInfo; index: number; isDark: boolean }> = 
     style={{ animationDelay: `${index * 80 + 100}ms` }}
   >
     <div className="flex items-start gap-4">
-      <AppIcon app={app} size={56} />
+      <AppIcon app={app} size={56} isDark={isDark} />
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 mb-1">
           <h2
@@ -215,7 +220,7 @@ const BuildingAppCard: React.FC<{
     style={{ animationDelay: `${delayMs + index * 80}ms` }}
   >
     <div className="flex items-start gap-4">
-      <AppIcon app={app} size={56} />
+      <AppIcon app={app} size={56} isDark={isDark} />
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 mb-1 flex-wrap">
           <h3

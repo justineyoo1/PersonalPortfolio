@@ -6,7 +6,10 @@ export type AppInfo = {
   tagline: string;
   description: string;
   features: string[];
+  /** Default icon (also used in dark mode). */
   icon: string | null;
+  /** Optional light-mode icon variant; falls back to `icon` when absent. */
+  iconLight?: string;
   status: AppStatus;
   appStoreUrl?: string;
   appStoreId?: string;
@@ -34,6 +37,7 @@ export const apps: AppInfo[] = [
       "Lock Screen, Home Screen, StandBy widgets",
     ],
     icon: "/img/apps/eunho/icon-1024-dark.png",
+    iconLight: "/img/apps/eunho/icon-1024-light.png",
     status: "available",
     appStoreUrl: "https://apps.apple.com/app/id6761335497",
     appStoreId: "6761335497",
@@ -104,7 +108,8 @@ export const apps: AppInfo[] = [
       "Plaid-linked spending, portfolio, and goals trigger the feed",
       "Type a money question, watch the debate stream",
     ],
-    icon: "/img/apps/bord/icon-1024.png",
+    icon: "/img/apps/bord/icon-1024-dark.png",
+    iconLight: "/img/apps/bord/icon-1024-light.png",
     status: "building",
     buildingNote: "Closed beta · By invitation",
     liveUrl: "https://web-zeta-pink-31.vercel.app",
@@ -122,7 +127,8 @@ export const apps: AppInfo[] = [
       "Stripe Connect rails — payouts next day, no subscription",
       "Officials iOS app: schedule, availability, earnings, auto-1099",
     ],
-    icon: "/img/apps/whistle/icon-1024.png",
+    icon: "/img/apps/whistle/icon-1024-dark.png",
+    iconLight: "/img/apps/whistle/icon-1024-light.png",
     status: "building",
     // No liveUrl: the deployed Whistle is an auth-walled assignor dashboard
     // (Clerk sign-in, root path 404s), not a public marketing page. Linking
@@ -130,6 +136,6 @@ export const apps: AppInfo[] = [
     // real public landing page exists.
     buildingNote: "Pre-launch · Building toward launch",
     accentColor: "#5A8C6D",
-    iconBg: "light",
+    iconBg: "dark",
   },
 ];
