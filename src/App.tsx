@@ -185,8 +185,15 @@ const App = () => {
       )}
     >
       <div
-        className="w-full flex justify-center"
-        style={{ height: applyFit ? fitNaturalH * fitScale : undefined }}
+        className="w-full flex justify-center items-start"
+        style={{
+          height: applyFit ? fitNaturalH * fitScale : undefined,
+          // items-start keeps the child at its natural height so the measured
+          // height can't feed back from align-items: stretch (which caused the
+          // scale to oscillate). overflow clips the empty layout space left
+          // below the visually-scaled grid.
+          overflow: applyFit ? "hidden" : undefined,
+        }}
       >
         <div
           ref={fitRef}
