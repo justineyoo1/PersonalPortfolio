@@ -25,6 +25,13 @@
   scrollbar-width: none;
 }
 
+/* Kill elastic overscroll (rubber-band) so scroll gestures don't bounce the
+   scaled desktop against the fixed background/dock. */
+html,
+body {
+  overscroll-behavior: none;
+}
+
 @layer base {
   :root {
     --light-blue: 206 100% 95.3%;
