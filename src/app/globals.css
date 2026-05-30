@@ -253,6 +253,55 @@
   }
 }
 
+/* ============================================================
+   Home desktop — staggered "boot up" entrance + dark hover lift
+   ============================================================ */
+@keyframes window-rise-in {
+  from { opacity: 0; transform: translateY(16px) scale(0.985); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+/* backwards fill: holds the hidden first frame during the stagger delay, then
+   reverts to the natural (Tailwind-controlled) opacity once done — so the
+   hide-on-expand opacity-0 still works after the intro. */
+.home-grid-enter > * {
+  animation: window-rise-in 0.55s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+.home-grid-enter > *:nth-child(1) { animation-delay: 0.04s; }
+.home-grid-enter > *:nth-child(2) { animation-delay: 0.10s; }
+.home-grid-enter > *:nth-child(3) { animation-delay: 0.16s; }
+.home-grid-enter > *:nth-child(4) { animation-delay: 0.22s; }
+.home-grid-enter > *:nth-child(5) { animation-delay: 0.28s; }
+.home-grid-enter > *:nth-child(6) { animation-delay: 0.34s; }
+.home-grid-enter > *:nth-child(7) { animation-delay: 0.40s; }
+/* If a window is expanded during the intro window, keep the overlay on its own
+   choreography rather than the grid entrance. */
+.home-grid-enter > .overlay-backdrop {
+  animation: overlay-fade-in 0.34s ease-out both;
+}
+.home-grid-enter > .expanded-stage {
+  animation: none;
+}
+
+/* Dark collapsed windows lift on hover (light already lifts via apple-card-lift).
+   opacity stays in the transition list so the hide-on-expand fade is preserved. */
+.dark .home-grid > .terminal-window {
+  transition:
+    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.5s ease;
+}
+.dark .home-grid > .terminal-window:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 18px 42px rgba(0, 0, 0, 0.36);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-grid-enter > * { animation-duration: 0.001s; }
+  .dark .home-grid > .terminal-window { transition: none; }
+}
+
 /* macOS traffic-light controls — glyphs reveal on group hover */
 .traffic-light {
   box-shadow: inset 0 0 0 0.5px rgba(0, 0, 0, 0.22);

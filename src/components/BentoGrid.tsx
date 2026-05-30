@@ -142,6 +142,15 @@ export const BentoGrid: React.FC<BentoGridProps> = ({
   // then actually clear the state. Re-maximizing (non-empty value) passes
   // straight through. Esc (handled in useWindowNavigation) closes instantly.
   const [closing, setClosing] = React.useState(false);
+
+  // One-shot "boot up" entrance: the grid plays a staggered rise-in on mount,
+  // then we drop the class so it never replays (and never touches the overlay).
+  const [introDone, setIntroDone] = React.useState(false);
+  React.useEffect(() => {
+    const t = window.setTimeout(() => setIntroDone(true), 1300);
+    return () => window.clearTimeout(t);
+  }, []);
+
   const requestClose = React.useCallback(
     (value: string) => {
       if (value === "") {
@@ -160,9 +169,10 @@ export const BentoGrid: React.FC<BentoGridProps> = ({
   return (
     <div
       className={cn(
-        "relative grid grid-cols-2 lg:grid-cols-4 lg:row-span-4 w-full mx-1 rounded-2xl max-w-6xl 2xl:max-w-7xl",
+        "home-grid relative grid grid-cols-2 lg:grid-cols-4 lg:row-span-4 w-full mx-1 rounded-2xl max-w-6xl 2xl:max-w-7xl",
         gridThemeClass,
         isDark ? "gap-2 p-1.5 shadow-xl 2xl:gap-3" : "gap-4 p-4 2xl:gap-5",
+        !introDone && "home-grid-enter",
       )}
     >
       <MeCollapsed
