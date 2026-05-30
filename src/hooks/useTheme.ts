@@ -52,8 +52,10 @@ export const useTheme = () => {
   const headerClass = useMemo(
     () => (selected: boolean) =>
       isDark
-        ? `py-0.5 text-[12px] leading-none tracking-[0.01em] ${
-            selected ? "bg-white text-black" : "bg-gray-500 text-black"
+        ? `py-1.5 text-[12px] leading-none tracking-[0.01em] border-b ${
+            selected
+              ? "bg-[#1B2230]/95 text-gray-100 border-white/10"
+              : "bg-[#0E141B]/90 text-gray-500 border-white/[0.06]"
           }`
         : `py-2.5 text-[13px] leading-none tracking-[0.02em] ${
             selected
