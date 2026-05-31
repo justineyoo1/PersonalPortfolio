@@ -1,6 +1,6 @@
 import React from "react";
-import ContribHeatmap from "../ContribHeatmap";
 import { WindowHeader } from "./WindowHeader";
+import { neetcode } from "@/data/neetcode";
 
 type LeetCodeData = {
   easySolved: number;
@@ -21,9 +21,10 @@ type BaseProps = {
   leetCodeError: string;
 };
 
-const NEETCODE_URL = "https://neetcode.io";
+const NEETCODE_URL = neetcode.url;
+const DAY_LETTERS = ["S", "M", "T", "W", "T", "F", "S"];
 
-const NeetCodeMark = ({ size = 52 }: { size?: number }) => (
+const NeetCodeMark = ({ size = 48 }: { size?: number }) => (
   <a
     href={NEETCODE_URL}
     target="_blank"
@@ -41,131 +42,161 @@ const NeetCodeMark = ({ size = 52 }: { size?: number }) => (
   </a>
 );
 
-const keyFor = (d: Date) => `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
-
-function computeStats(cal: Record<string, number>) {
-  const days = new Set<string>();
-  for (const ts of Object.keys(cal || {})) {
-    const d = new Date(parseInt(ts) * 1000);
-    const local = new Date(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate());
-    if ((Number(cal[ts]) || 0) > 0) days.add(keyFor(local));
-  }
-  // current streak: walk back from today (today not yet done is allowed)
-  let streak = 0;
-  const base = new Date();
-  base.setHours(0, 0, 0, 0);
-  for (let i = 0; ; i++) {
-    const d = new Date(base);
-    d.setDate(base.getDate() - i);
-    if (days.has(keyFor(d))) streak++;
-    else if (i === 0) continue;
-    else break;
-  }
-  return { streak, activeDays: days.size };
+/** Current week's daily submission counts (Sun–Sat) from the LeetCode calendar. */
+function useWeek(cal: Record<string, number> | undefined) {
+  return React.useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const [ts, c] of Object.entries(cal || {})) {
+      const d = new Date(parseInt(ts) * 1000);
+      const local = new Date(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate());
+      const k = `${local.getFullYear()}-${local.getMonth() + 1}-${local.getDate()}`;
+      counts.set(k, (counts.get(k) || 0) + (Number(c) || 0));
+    }
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const start = new Date(today);
+    start.setDate(today.getDate() - today.getDay()); // Sunday
+    const days: { date: Date; count: number; isToday: boolean; future: boolean }[] = [];
+    for (let i = 0; i < 7; i++) {
+      const d = new Date(start);
+      d.setDate(start.getDate() + i);
+      const k = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
+      days.push({
+        date: d,
+        count: counts.get(k) || 0,
+        isToday: d.getTime() === today.getTime(),
+        future: d.getTime() > today.getTime(),
+      });
+    }
+    return days;
+  }, [cal]);
 }
 
-const DiffRow = ({
-  label,
-  count,
+const cellColor = (count: number, isDark: boolean) => {
+  if (count <= 0) return isDark ? "#1b2230" : "#EBEDF0";
+  if (count <= 2) return isDark ? "#0e4429" : "#9BE9A8";
+  if (count <= 5) return isDark ? "#26a641" : "#40C463";
+  return isDark ? "#39d353" : "#216E39";
+};
+
+const ProgressBar = ({
+  done,
   total,
   color,
   isDark,
-  big,
+  height = 6,
 }: {
-  label: string;
-  count: number;
+  done: number;
   total: number;
   color: string;
   isDark: boolean;
-  big?: boolean;
+  height?: number;
+}) => (
+  <div
+    className="w-full rounded-full overflow-hidden"
+    style={{ height, backgroundColor: isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.07)" }}
+  >
+    <div
+      className="h-full rounded-full transition-all duration-700"
+      style={{ width: `${total > 0 ? Math.max(done > 0 ? 3 : 0, (done / total) * 100) : 0}%`, backgroundColor: color }}
+    />
+  </div>
+);
+
+const DiffRow = ({
+  label,
+  done,
+  total,
+  color,
+  isDark,
+}: {
+  label: string;
+  done: number;
+  total: number;
+  color: string;
+  isDark: boolean;
+}) => (
+  <div className="flex items-center gap-2.5 text-xs">
+    <span className="w-14 shrink-0 font-mono" style={{ color }}>
+      {label}
+    </span>
+    <div className="flex-1">
+      <ProgressBar done={done} total={total} color={color} isDark={isDark} height={5} />
+    </div>
+    <span className={`shrink-0 font-mono tabular-nums ${isDark ? "text-gray-300" : "text-[#1D1D1F]"}`}>
+      {done}
+      <span className={isDark ? "text-gray-600" : "text-[#C7C7CC]"}>/{total}</span>
+    </span>
+  </div>
+);
+
+const WeekStrip = ({
+  cal,
+  isDark,
+  cell,
+}: {
+  cal: Record<string, number> | undefined;
+  isDark: boolean;
+  cell: number;
 }) => {
-  const pct = total > 0 ? Math.max(2, Math.round((count / total) * 100)) : 0;
+  const days = useWeek(cal);
   return (
-    <div className={`flex items-center gap-2.5 ${big ? "text-sm" : "text-xs"}`}>
-      <span className="w-14 shrink-0 font-mono" style={{ color }}>
-        {label}
-      </span>
-      <div
-        className="flex-1 h-1.5 rounded-full overflow-hidden"
-        style={{ backgroundColor: isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.06)" }}
-      >
-        <div
-          className="h-full rounded-full transition-all duration-700"
-          style={{ width: `${count > 0 ? pct : 0}%`, backgroundColor: color }}
-        />
-      </div>
-      <span
-        className={`w-5 text-right tabular-nums font-mono ${isDark ? "text-gray-200" : "text-[#1D1D1F]"}`}
-      >
-        {count}
-      </span>
+    <div className="flex gap-1.5">
+      {days.map((d, i) => (
+        <div key={i} className="flex flex-col items-center gap-1">
+          <span className={`text-[10px] font-mono ${isDark ? "text-gray-500" : "text-[#86868B]"}`}>
+            {DAY_LETTERS[d.date.getDay()]}
+          </span>
+          <div
+            title={`${d.count} on ${d.date.toLocaleDateString()}`}
+            style={{
+              width: cell,
+              height: cell,
+              borderRadius: Math.max(3, Math.round(cell / 4)),
+              backgroundColor: d.future ? "transparent" : cellColor(d.count, isDark),
+              outline: d.isToday
+                ? `1.5px solid ${isDark ? "#34d399" : "#0E8B3A"}`
+                : "none",
+              outlineOffset: 1,
+            }}
+          />
+        </div>
+      ))}
     </div>
   );
 };
 
-const StatPill = ({
-  value,
-  label,
-  isDark,
-}: {
-  value: React.ReactNode;
-  label: string;
-  isDark: boolean;
-}) => (
-  <div
-    className={`flex flex-col items-center justify-center rounded-xl px-4 py-2 ${
-      isDark ? "bg-white/[0.04] border border-white/10" : "bg-white border border-[#E5E5EA]"
-    }`}
-  >
-    <span className={`font-mono font-bold ${isDark ? "text-white" : "text-[#1D1D1F]"} text-lg leading-none`}>
-      {value}
-    </span>
-    <span className={`text-[10px] mt-1 ${isDark ? "text-gray-500" : "text-[#86868B]"}`}>{label}</span>
-  </div>
-);
-
 const NeetCodeBody = ({
   isDark,
   leetCode,
-  leetCodeError,
-  socialLeetCodeUrl,
   expanded,
 }: {
   isDark: boolean;
   leetCode: LeetCodeData | null;
-  leetCodeError: string;
-  socialLeetCodeUrl: string;
   expanded?: boolean;
 }) => {
-  if (!leetCode) {
-    return (
-      <p className={`text-sm p-4 font-mono ${isDark ? "text-gray-300" : "text-gray-700"}`}>
-        {leetCodeError || "fetching neetcode stats..."}
-      </p>
-    );
-  }
-
-  const { streak, activeDays } = computeStats(leetCode.submissionCalendar || {});
-  const total = leetCode.totalSolved;
+  const { solved, total, difficulty } = neetcode;
+  const pct = Math.round((solved / total) * 100);
 
   return (
-    <div className={`w-full ${expanded ? "max-w-[600px]" : "max-w-[300px]"} mx-auto`}>
-      {/* header: mark + total */}
+    <div className={`w-full ${expanded ? "max-w-[560px]" : "max-w-[320px]"} mx-auto`}>
+      {/* header */}
       <div className="flex items-center gap-3.5">
-        <NeetCodeMark size={expanded ? 56 : 40} />
-        <div className="min-w-0">
+        <NeetCodeMark size={expanded ? 56 : 44} />
+        <div className="min-w-0 flex-1">
           <div className="flex items-baseline gap-2">
             <span
               className={`font-mono font-bold leading-none ${isDark ? "text-white" : "text-[#1D1D1F]"} ${
-                expanded ? "text-4xl" : "text-2xl"
+                expanded ? "text-3xl" : "text-2xl"
               }`}
             >
-              {total}
+              {solved}
+              <span className={isDark ? "text-gray-500" : "text-[#C7C7CC]"}>/{total}</span>
             </span>
-            <span className={`text-xs ${isDark ? "text-gray-400" : "text-[#86868B]"}`}>solved</span>
+            <span className={`text-xs ${isDark ? "text-gray-400" : "text-[#86868B]"}`}>NeetCode 150</span>
           </div>
           <a
-            href={NEETCODE_URL}
+            href={neetcode.listUrl}
             target="_blank"
             rel="noopener noreferrer"
             className={`text-[11px] font-mono transition-colors ${
@@ -177,61 +208,32 @@ const NeetCodeBody = ({
         </div>
       </div>
 
-      {/* difficulty — bars when expanded, compact inline line when collapsed */}
-      {expanded ? (
-        <div className="flex flex-col gap-2 mt-5">
-          <DiffRow label="easy" count={leetCode.easySolved} total={total} color="#3FB950" isDark={isDark} big />
-          <DiffRow label="medium" count={leetCode.mediumSolved} total={total} color="#E3B341" isDark={isDark} big />
-          <DiffRow label="hard" count={leetCode.hardSolved} total={total} color="#F85149" isDark={isDark} big />
+      {/* overall progress */}
+      <div className={`${expanded ? "mt-5" : "mt-3.5"}`}>
+        <div className={`flex justify-between mb-1.5 text-[11px] font-mono ${isDark ? "text-gray-400" : "text-[#86868B]"}`}>
+          <span>roadmap progress</span>
+          <span>{pct}%</span>
         </div>
-      ) : (
-        <div className="flex items-center gap-2.5 mt-3 text-xs font-mono">
-          <span style={{ color: "#3FB950" }}>easy {leetCode.easySolved}</span>
-          <span className={isDark ? "text-gray-600" : "text-[#C7C7CC]"}>·</span>
-          <span style={{ color: "#E3B341" }}>med {leetCode.mediumSolved}</span>
-          <span className={isDark ? "text-gray-600" : "text-[#C7C7CC]"}>·</span>
-          <span style={{ color: "#F85149" }}>hard {leetCode.hardSolved}</span>
-        </div>
-      )}
-
-      {/* streak stats (expanded only) */}
-      {expanded && (
-        <div className="flex gap-3 mt-5">
-          <StatPill value={`${streak}d`} label="current streak" isDark={isDark} />
-          <StatPill value={activeDays} label="active days" isDark={isDark} />
-          <StatPill value={total} label="total solved" isDark={isDark} />
-        </div>
-      )}
-
-      {/* activity heatmap */}
-      <div className={`${expanded ? "mt-6" : "mt-3"} overflow-x-auto`}>
-        {expanded && (
-          <p className={`text-[11px] mb-2 font-mono ${isDark ? "text-gray-500" : "text-[#86868B]"}`}>
-            submission activity
-          </p>
-        )}
-        <ContribHeatmap
-          submissionCalendar={leetCode.submissionCalendar}
-          isDark={isDark}
-          weeks={expanded ? 30 : 13}
-          cell={expanded ? 15 : 8}
-          gap={expanded ? 3 : 2}
-          showLegend={expanded === true}
-        />
+        <ProgressBar done={solved} total={total} color="#34d399" isDark={isDark} height={expanded ? 8 : 6} />
       </div>
 
-      {/* secondary: stats source */}
+      {/* difficulty */}
+      <div className={`flex flex-col gap-2 ${expanded ? "mt-5" : "mt-3.5"}`}>
+        <DiffRow label="easy" done={difficulty.easy.done} total={difficulty.easy.total} color="#3FB950" isDark={isDark} />
+        <DiffRow label="medium" done={difficulty.medium.done} total={difficulty.medium.total} color="#E3B341" isDark={isDark} />
+        <DiffRow label="hard" done={difficulty.hard.done} total={difficulty.hard.total} color="#F85149" isDark={isDark} />
+      </div>
+
+      {/* this week */}
+      <div className={`${expanded ? "mt-6" : "mt-4"}`}>
+        <p className={`text-[11px] mb-2 font-mono ${isDark ? "text-gray-500" : "text-[#86868B]"}`}>this week</p>
+        <WeekStrip cal={leetCode?.submissionCalendar} isDark={isDark} cell={expanded ? 30 : 22} />
+      </div>
+
       {expanded && (
-        <a
-          href={socialLeetCodeUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={`inline-block mt-5 text-[11px] font-mono transition-colors ${
-            isDark ? "text-gray-500 hover:text-gray-300" : "text-[#86868B] hover:text-[#1D1D1F]"
-          }`}
-        >
-          stats synced from leetcode ↗
-        </a>
+        <p className={`mt-5 text-[11px] font-mono ${isDark ? "text-gray-600" : "text-[#A1A1A6]"}`}>
+          progress synced from neetcode · activity from leetcode
+        </p>
       )}
     </div>
   );
@@ -243,9 +245,7 @@ export const LeetCodeCollapsed = ({
   windowThemeClass,
   headerClass,
   setExpandWindow,
-  socialLeetCodeUrl,
   leetCode,
-  leetCodeError,
   isHidden,
   onSelect,
 }: BaseProps & { isHidden: boolean; onSelect: () => void }) => {
@@ -264,12 +264,7 @@ export const LeetCodeCollapsed = ({
         onMaximize={() => setExpandWindow("leetcode")}
       />
       <div className="w-full flex-1 min-h-0 overflow-hidden flex flex-col items-center justify-start px-3 pt-3 pb-2">
-        <NeetCodeBody
-          isDark={isDark}
-          leetCode={leetCode}
-          leetCodeError={leetCodeError}
-          socialLeetCodeUrl={socialLeetCodeUrl}
-        />
+        <NeetCodeBody isDark={isDark} leetCode={leetCode} />
       </div>
     </div>
   );
@@ -281,9 +276,7 @@ export const LeetCodeExpanded = ({
   windowThemeClass,
   headerClass,
   setExpandWindow,
-  socialLeetCodeUrl,
   leetCode,
-  leetCodeError,
 }: BaseProps) => {
   return (
     <div
@@ -300,13 +293,7 @@ export const LeetCodeExpanded = ({
         onMaximize={() => setExpandWindow("leetcode")}
       />
       <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain flex flex-col items-center justify-center py-8 px-6">
-        <NeetCodeBody
-          isDark={isDark}
-          leetCode={leetCode}
-          leetCodeError={leetCodeError}
-          socialLeetCodeUrl={socialLeetCodeUrl}
-          expanded
-        />
+        <NeetCodeBody isDark={isDark} leetCode={leetCode} expanded />
       </div>
     </div>
   );

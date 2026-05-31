@@ -44,12 +44,6 @@ const SUPPORTED_APPS: Array<{
     icon: "/img/apps/eunho.png",
     iconBg: "dark",
   },
-  {
-    name: "Shwup",
-    tagline: "gym logging",
-    icon: "/img/Logos/shwup_app_logo.png",
-    iconBg: "light",
-  },
 ];
 
 export const metadata: Metadata = {
