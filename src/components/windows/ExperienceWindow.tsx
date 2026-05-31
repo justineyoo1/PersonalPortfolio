@@ -133,9 +133,8 @@ export const ExperienceCollapsed = ({
   );
 };
 
-type TimelineCardProps = {
+type EntryProps = {
   experience: ExperienceItem;
-  index: number;
   isDark: boolean;
   isHovered: boolean;
   onMouseEnter: () => void;
@@ -143,55 +142,106 @@ type TimelineCardProps = {
   onClick: () => void;
 };
 
-const TimelineCard: React.FC<TimelineCardProps> = ({
+/** Rich timeline entry shown on the expanded experience view — logo, role,
+    date, full blurb and a link, with a connecting rail dot. */
+const ExperienceEntry: React.FC<EntryProps> = ({
   experience,
   isDark,
   isHovered,
   onMouseEnter,
   onMouseLeave,
   onClick,
-}) => {
-  const isSelected = isHovered;
-  const excerpt = experience.description.split(".")[0].trim();
-
-  return (
-    <div
+}) => (
+  <div className="relative pl-8">
+    {/* rail dot */}
+    <span
       className={cn(
-        "relative mb-3 rounded-md cursor-pointer px-3 py-2 transition-all duration-150",
-        isSelected
-          ? isDark
-            ? "bg-gray-200 text-black"
-            : "bg-[#007AFF] text-white"
-          : isDark
-            ? "bg-gray-900/40 text-[#60A5FA] hover:bg-gray-800/55"
-            : "bg-[#F2F2F7]/60 text-[#007AFF] hover:bg-[#F2F2F7]",
+        "absolute left-[9px] top-6 h-2.5 w-2.5 rounded-full ring-4 transition-colors",
+        isDark
+          ? isHovered
+            ? "bg-[#3FB950] ring-[#0B0F14]"
+            : "bg-[#3FB950]/60 ring-[#0B0F14]"
+          : isHovered
+            ? "bg-[#007AFF] ring-white"
+            : "bg-[#C7C7CC] ring-white",
       )}
+    />
+    <div
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       onClick={onClick}
+      className={cn(
+        "group mb-3 flex gap-4 rounded-xl p-4 cursor-pointer transition-all duration-200",
+        isDark
+          ? isHovered
+            ? "bg-white/[0.06] border border-white/20"
+            : "bg-white/[0.03] border border-white/10"
+          : isHovered
+            ? "bg-white border border-transparent apple-shadow-hover"
+            : "bg-white border border-[#E5E5EA] apple-shadow",
+      )}
     >
-      <span
+      <div
         className={cn(
-          "absolute -left-5 top-3 h-3 w-3 rounded-full border",
-          isDark
-            ? "border-gray-500 bg-[#60A5FA]"
-            : "border-[#E5E5EA] bg-[#007AFF]",
+          "shrink-0 w-11 h-11 rounded-lg overflow-hidden flex items-center justify-center",
+          isDark ? "bg-white" : "bg-[#F2F2F7]",
         )}
-      />
-      <p className={isDark ? "text-gray-300" : "text-[#86868B]"}>
-        {experience.date}
-      </p>
-      <p className="font-semibold text-[13px] leading-[1.25] whitespace-nowrap overflow-hidden text-ellipsis">
-        {isSelected ? (isDark ? "▌ " : "") : "  "}
-        {experience.compactTitle ?? experience.title}
-      </p>
-      <p className={cn("mt-1", isDark ? "text-gray-300" : "text-[#515154]")}>
-        {excerpt}
-        {excerpt.length > 0 ? "..." : ""}
-      </p>
+      >
+        <img
+          src={experience.image}
+          alt=""
+          className="w-full h-full object-contain p-1.5"
+          loading="lazy"
+        />
+      </div>
+      <div className="flex-1 min-w-0">
+        <div className="flex items-baseline justify-between gap-3">
+          <h3
+            className={cn(
+              "font-semibold text-[14px] sm:text-[15px] leading-tight truncate",
+              isDark ? "text-white" : "text-[#1D1D1F]",
+            )}
+          >
+            {experience.title}
+          </h3>
+          <span
+            className={cn(
+              "shrink-0 text-[11px] font-mono",
+              isDark ? "text-[#3FB950]" : "text-[#0E8B3A]",
+            )}
+          >
+            {experience.date}
+          </span>
+        </div>
+        <p
+          className={cn(
+            "mt-1.5 text-[12.5px] sm:text-[13px] leading-relaxed",
+            isDark ? "text-gray-400" : "text-[#515154]",
+          )}
+        >
+          {experience.description}
+        </p>
+        {experience.links?.[0] && (
+          <a
+            href={experience.links[0].url}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+            className={cn(
+              "inline-flex items-center gap-1 mt-2.5 text-[12px] font-semibold transition-colors",
+              isDark
+                ? "text-[#60A5FA] hover:text-[#93c5fd]"
+                : "text-[#007AFF] hover:text-[#0066D6]",
+            )}
+          >
+            {experience.links[0].name}
+            <span aria-hidden>↗</span>
+          </a>
+        )}
+      </div>
     </div>
-  );
-};
+  </div>
+);
 
 export const ExperienceExpanded = ({
   isDark,
@@ -287,52 +337,26 @@ export const ExperienceExpanded = ({
         tabClass={tabClass}
         labelFor={isDark ? labelForFilterDark : labelForFilter}
       />
-      <div
-        className={cn(
-          "text-xs flex",
-          isDark
-            ? "px-4 pt-2 font-mono gap-1.5"
-            : "mx-4 mt-1 p-0.5 bg-[#DDDDE3] rounded-lg gap-0 w-fit",
-        )}
-      >
-        {(["list", "timeline"] as ExperienceViewMode[]).map((mode) => (
-          <button
-            key={mode}
-            onClick={() => setExperienceViewMode(mode)}
-            className={cn(tabClass(experienceViewMode === mode), !isDark && "px-4")}
-          >
-            {isDark ? `[${mode}]` : mode}
-          </button>
-        ))}
-      </div>
-      <div className="mt-2 mx-4 pb-4 overflow-y-auto overscroll-contain scroll-smooth min-h-0">
-        {experienceViewMode === "list" ? (
-          filteredExperiences.map((experience, index) => (
-            <ItemRow
-              key={experience.title}
-              index={index}
-              label={experience.title}
-              variant="expanded"
-              isDark={isDark}
-              isHovered={hoveredExperienceIndex === index}
-              onMouseEnter={() => setHoveredExperienceIndex(index)}
-              onMouseLeave={() => setHoveredExperienceIndex(null)}
-              onClick={() => setSelectExperience(experience.title)}
-            />
-          ))
-        ) : (
-          <div className="relative pl-6">
+      <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain scroll-smooth">
+        <div className="mx-auto w-full max-w-3xl px-5 sm:px-7 pt-5 pb-8">
+          {isDark && (
+            <p className="font-mono text-[12.5px] mb-5">
+              <span className="text-[#3FB950] font-semibold">justin@unc</span>
+              <span className="text-[#768390]"> ~ %</span>
+              <span className="text-[#E6EDF3] font-semibold"> cat experience/*.md</span>
+            </p>
+          )}
+          <div className="relative">
             <div
               className={cn(
-                "absolute left-2.5 top-1 bottom-2 w-px",
-                isDark ? "bg-gray-700" : "bg-[#E5E5EA]",
+                "absolute left-[13px] top-3 bottom-3 w-px",
+                isDark ? "bg-white/10" : "bg-[#E5E5EA]",
               )}
             />
             {filteredExperiences.map((experience, index) => (
-              <TimelineCard
+              <ExperienceEntry
                 key={experience.title}
                 experience={experience}
-                index={index}
                 isDark={isDark}
                 isHovered={hoveredExperienceIndex === index}
                 onMouseEnter={() => setHoveredExperienceIndex(index)}
@@ -341,10 +365,10 @@ export const ExperienceExpanded = ({
               />
             ))}
           </div>
-        )}
-        {filteredExperiences.length === 0 && (
-          <p className={emptyClasses(isDark)}>no experiences in this category</p>
-        )}
+          {filteredExperiences.length === 0 && (
+            <p className={emptyClasses(isDark)}>no experiences in this category</p>
+          )}
+        </div>
       </div>
     </div>
   );

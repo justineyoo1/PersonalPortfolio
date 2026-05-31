@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { WindowHeader } from "./WindowHeader";
+import { cn } from "@/lib/cn";
 
 type ToolboxTab = "skills" | "certs";
 
@@ -262,13 +263,99 @@ export const ToolboxExpanded = ({
           </button>
         ))}
       </div>
-      <ToolboxBody
-        isDark={isDark}
-        toolboxTab={toolboxTab}
-        hoveredToolboxIndex={hoveredToolboxIndex}
-        setHoveredToolboxIndex={setHoveredToolboxIndex}
-        skillsCoursesCerts={skillsCoursesCerts}
-      />
+      <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain scroll-smooth">
+        <div className="mx-auto w-full max-w-3xl px-5 sm:px-7 pt-5 pb-8">
+          {isDark && (
+            <p className="font-mono text-[12.5px] mb-5">
+              <span className="text-[#3FB950] font-semibold">justin@unc</span>
+              <span className="text-[#768390]"> ~ %</span>
+              <span className="text-[#E6EDF3] font-semibold">
+                {toolboxTab === "skills" ? " skills --all" : " cat certs.txt"}
+              </span>
+            </p>
+          )}
+          {toolboxTab === "skills" ? (
+            <div className="space-y-5">
+              {skillsCoursesCerts.skills.map((group) => (
+                <div key={group.group}>
+                  <div className="flex items-baseline gap-2 mb-2.5">
+                    <h3
+                      className={cn(
+                        "font-semibold text-[14px]",
+                        isDark ? "text-white" : "text-[#1D1D1F]",
+                      )}
+                    >
+                      {group.group}
+                    </h3>
+                    <span
+                      className={cn(
+                        "text-[11px] font-mono",
+                        isDark ? "text-gray-500" : "text-[#86868B]",
+                      )}
+                    >
+                      {group.items.length}
+                    </span>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {group.items.map((item) => (
+                      <span
+                        key={item}
+                        className={cn(
+                          "rounded-md px-2.5 py-1 text-[12.5px] transition-colors",
+                          isDark
+                            ? "bg-white/[0.04] border border-white/10 text-gray-300 font-mono hover:border-white/25 hover:text-white"
+                            : "bg-white border border-[#E5E5EA] text-[#1D1D1F] apple-shadow",
+                        )}
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {skillsCoursesCerts.certs.map((cert) => (
+                <div
+                  key={cert.name}
+                  className={cn(
+                    "rounded-xl p-4 transition-all duration-200",
+                    isDark
+                      ? "bg-white/[0.03] border border-white/10 hover:border-white/20"
+                      : "bg-white border border-[#E5E5EA] apple-shadow",
+                  )}
+                >
+                  <h3
+                    className={cn(
+                      "font-semibold text-[14px] leading-tight",
+                      isDark ? "text-white" : "text-[#1D1D1F]",
+                    )}
+                  >
+                    {cert.name}
+                  </h3>
+                  <p
+                    className={cn(
+                      "text-[12.5px] mt-1",
+                      isDark ? "text-gray-400" : "text-[#515154]",
+                    )}
+                  >
+                    {cert.issuer}
+                  </p>
+                  <p
+                    className={cn(
+                      "text-[11px] font-mono mt-1.5",
+                      isDark ? "text-[#3FB950]" : "text-[#0E8B3A]",
+                    )}
+                  >
+                    {cert.date}
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 };
