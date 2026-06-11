@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next';
 
 const BASE_URL = 'https://jstnyoo.com';
 
-const APP_SLUGS = ['brik', 'eunho', 'uninstall'] as const;
+const APP_SLUGS = ['brik', 'eunho', 'uninstall', 'bord', 'whistle'] as const;
 const LEGAL_PAGES = ['privacy', 'terms', 'support'] as const;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
