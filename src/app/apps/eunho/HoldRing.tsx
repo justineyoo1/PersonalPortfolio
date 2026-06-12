@@ -251,7 +251,7 @@ export function HoldRing() {
 
   return (
     <div
-      className="absolute inset-0 flex flex-col items-center justify-center select-none"
+      className="eunho-screen-recolor absolute inset-0 flex flex-col items-center justify-center select-none"
       style={{ background: "#0A0A0A", touchAction: "none" }}
     >
       {/* Top status line — fades out as hold builds, like the real app */}
@@ -450,9 +450,11 @@ export function HoldRing() {
           )}
         </svg>
 
-        {/* Center G-mark logo + status label */}
+        {/* Center G-mark logo — pinned dead-center of the ring — plus the
+            seconds label below it (absolutely placed so it never nudges the
+            logo off-center). */}
         <div
-          className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none"
+          className="absolute inset-0 pointer-events-none"
           style={{ zIndex: 3 }}
         >
           <img
@@ -461,10 +463,13 @@ export function HoldRing() {
             aria-hidden="true"
             className="block"
             style={{
+              position: "absolute",
+              left: "50%",
+              top: "50%",
               width: size * 0.32,
               height: size * 0.32,
               opacity: completed ? 0.15 : logoFade,
-              transform: `scale(${logoScale})`,
+              transform: `translate(-50%, -50%) scale(${logoScale})`,
               transition: "opacity 150ms ease-out",
               // Tint the alpha PNG cyan via a CSS filter chain.
               // The PNG is a black silhouette + alpha; this turns the silhouette
@@ -474,12 +479,17 @@ export function HoldRing() {
             }}
           />
           <p
-            className="mt-3 text-[#F5F5F5] tabular-nums"
+            className="text-[#F5F5F5] tabular-nums"
             style={{
+              position: "absolute",
+              left: "50%",
+              top: "66%",
+              transform: "translateX(-50%)",
               fontSize: "15px",
               fontFamily: "ui-monospace, SFMono-Regular, monospace",
               opacity: held && !completed ? 1 : 0,
               transition: "opacity 120ms ease-out",
+              whiteSpace: "nowrap",
             }}
           >
             {secondsRemaining}s

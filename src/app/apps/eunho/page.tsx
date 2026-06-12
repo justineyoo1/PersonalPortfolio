@@ -4,6 +4,8 @@ import { AppPageFooter } from "@/components/apps/AppPageFooter";
 import { ThemedAppsBottomNav } from "@/components/apps/ThemedAppsBottomNav";
 import { IPhoneFrame } from "@/components/IPhoneFrame";
 import { ThemeSwatch } from "./ThemeSwatch";
+import { HoldRing } from "./HoldRing";
+import { CountUp } from "@/components/apps/CountUp";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -365,60 +367,98 @@ export default function EunhoLandingPage() {
               </span>
             </div>
 
-            {/* Live color picker — mirrors the iOS app's Glow Color setting.
-                Updates --eunho-ring / --eunho-ring-rgb / --eunho-ring-soft at
-                :root, which propagates through every cyan element on the page. */}
+            {/* Live glow-color picker — recolors the ring + page, mirroring the
+                app's Glow Color setting. */}
             <div className="mt-7 flex justify-center md:justify-start">
               <ThemeSwatch />
             </div>
           </div>
 
-          {/* RIGHT: iPhone */}
-          <div
-            className="phone-stage relative mx-auto w-full max-w-[290px] lg:max-w-[340px] xl:max-w-[380px]"
-          >
-            <div className="absolute -inset-14 radial-cyan opacity-80 pointer-events-none"></div>
-
-            <IPhoneFrame
-              src="/img/apps/eunho/screen-intro.png"
-              alt="eunho. Hold the ring to check in. Day 19 of 21 on the MEDITATE habit."
-              width={320}
-              className="mx-auto block"
-              imgClassName="eunho-screen-recolor"
-            />
+          {/* RIGHT: live, interactive hold ring — the product's soul, playable */}
+          <div className="phone-stage relative mx-auto w-full max-w-[300px] lg:max-w-[330px]">
+            <div className="absolute -inset-12 radial-cyan opacity-80 pointer-events-none"></div>
+            <IPhoneFrame width={320} className="mx-auto block">
+              <HoldRing />
+            </IPhoneFrame>
+            <p className="mt-6 text-center eyebrow text-[#8B8B8B]">
+              ↑ Press &amp; hold the ring
+            </p>
           </div>
         </div>
       </section>
 
-      {/* SUPPORTING BAND */}
-      <section className="relative border-t hair">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-12">
-          <div className="grid md:grid-cols-2 gap-6 items-end pb-10 border-b hair">
-            <div>
-              <p className="eyebrow text-[#8B8B8B]">The ritual</p>
-              <h2
-                className="font-serif font-medium mt-2 leading-[1.0] tracking-tight text-[#F5F5F5]"
-                style={{ fontSize: "clamp(36px, 5vw, 56px)" }}
-              >
-                Hold. Don&apos;t tap<span className="dot-cyan">.</span>
-              </h2>
-              <p
-                className="font-serif italic mt-2"
-                style={{ fontSize: "clamp(18px,2.2vw,24px)", color: "var(--eunho-ring-soft, #BEEFF6)" }}
-              >
-                2.5 seconds. No accidents.
-              </p>
-            </div>
-            <p className="text-[#8B8B8B] text-[14px] leading-relaxed md:max-w-sm md:justify-self-end">
-              The hold is the product. Weighted. Haptic. Satisfying. Look
-              forward to doing it.
+      {/* RITUAL */}
+      <section className="relative border-t hair min-h-screen flex flex-col justify-center">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-24 sm:py-28 grid md:grid-cols-2 gap-10 lg:gap-16 items-center">
+          <div className="text-center md:text-left">
+            <p className="eyebrow text-[#8B8B8B]">The ritual</p>
+            <h2
+              className="font-serif font-medium mt-3 leading-[1.0] tracking-tight text-[#F5F5F5]"
+              style={{ fontSize: "clamp(40px, 5.4vw, 64px)" }}
+            >
+              Hold. Don&apos;t tap<span className="dot-cyan">.</span>
+            </h2>
+            <p
+              className="font-serif italic mt-3"
+              style={{ fontSize: "clamp(18px,2.4vw,26px)", color: "var(--eunho-ring-soft, #BEEFF6)" }}
+            >
+              2.5 seconds. No accidents.
             </p>
           </div>
+          <p className="text-[#9a9a9a] text-[15px] leading-relaxed md:max-w-md md:justify-self-end text-center md:text-left">
+            The hold is the product: weighted, haptic, satisfying. A careless
+            tap can&apos;t fake a day; a two-and-a-half-second hold is a small
+            promise kept. You look forward to doing it.
+          </p>
+        </div>
+      </section>
 
-          {/* Real App Store screenshots in a row */}
-          <div className="mt-12 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-5">
+      {/* THE LONG GAME — a smooth count toward one hundred days */}
+      <section className="relative border-t hair min-h-screen flex flex-col justify-center">
+        <div className="max-w-4xl mx-auto px-5 sm:px-8 lg:px-12 py-28 sm:py-36 text-center">
+          <p className="eyebrow text-[#8B8B8B] mb-7">The long game</p>
+          <div
+            className="font-serif font-medium leading-[0.92] tracking-tight text-[#F5F5F5]"
+            style={{ fontSize: "clamp(56px, 12vw, 132px)" }}
+          >
+            <span
+              className="inline-block text-right tabular-nums"
+              style={{ minWidth: "1.8em" }}
+            >
+              <CountUp to={100} durationMs={2200} />
+            </span>{" "}
+            <span>
+              days<span className="dot-cyan">.</span>
+            </span>
+          </div>
+          <p className="mt-8 text-[#9a9a9a] text-base sm:text-lg leading-relaxed max-w-xl mx-auto">
+            One habit, held daily, until it stops being a decision. No
+            twelve-habit spreadsheet, just the one thing that matters, and the
+            quiet proof you kept showing up.
+          </p>
+        </div>
+      </section>
+
+      {/* THE SYSTEM — real screens, given room */}
+      <section className="relative border-t hair min-h-screen flex flex-col justify-center">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-24 sm:py-28">
+          <div className="grid md:grid-cols-2 gap-6 items-end mb-14">
+            <div className="text-center md:text-left">
+              <p className="eyebrow text-[#8B8B8B]">Everywhere you look</p>
+              <h2
+                className="font-serif font-medium mt-3 leading-[1.0] tracking-tight text-[#F5F5F5]"
+                style={{ fontSize: "clamp(34px, 4.8vw, 56px)" }}
+              >
+                Present, never pushy<span className="dot-cyan">.</span>
+              </h2>
+            </div>
+            <p className="text-[#8B8B8B] text-[14px] leading-relaxed md:max-w-sm md:justify-self-end text-center md:text-left">
+              Lock Screen, Home Screen, and StandBy widgets keep the ring a
+              glance away. Patterns you read like a journal, not a leaderboard.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {[
-              { src: "/img/apps/eunho/1-intro.png", alt: "eunho intro: hold the ring to check in for the day" },
               { src: "/img/apps/eunho/2-100days.png", alt: "100 days, visible on one screen" },
               { src: "/img/apps/eunho/3-widgets.png", alt: "Lock Screen, Home Screen, and StandBy widgets" },
               { src: "/img/apps/eunho/5-insights.png", alt: "Patterns, not pressure: heatmap and weekday trends" },
@@ -438,16 +478,51 @@ export default function EunhoLandingPage() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
 
-          {/* Social proof inline */}
-          <div className="mt-12 pt-10 border-t hair flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-            <blockquote
-              className="font-serif italic text-[#F5F5F5] leading-[1.1]"
-              style={{ fontSize: "clamp(22px, 3.2vw, 34px)", maxWidth: "38ch" }}
+      {/* TESTIMONIAL */}
+      <section className="relative border-t hair min-h-screen flex flex-col justify-center">
+        <div className="max-w-4xl mx-auto px-5 sm:px-8 lg:px-12 py-24 sm:py-28 text-center">
+          <blockquote
+            className="font-serif italic text-[#F5F5F5] leading-[1.15] mx-auto"
+            style={{ fontSize: "clamp(26px, 4vw, 44px)", maxWidth: "26ch" }}
+          >
+            &ldquo;Day 21. Quiet, but it counts.&rdquo;
+          </blockquote>
+          <p className="footlink mt-7">App Store review</p>
+        </div>
+      </section>
+
+      {/* CLOSING */}
+      <section className="relative border-t hair min-h-screen flex flex-col justify-center">
+        <div className="max-w-4xl mx-auto px-5 sm:px-8 lg:px-12 py-28 sm:py-32 text-center">
+          <h2
+            className="font-serif font-medium leading-[1.0] tracking-tight text-[#F5F5F5]"
+            style={{ fontSize: "clamp(36px, 5.6vw, 68px)" }}
+          >
+            Hold the ring.
+            <br />
+            Keep the one promise<span className="dot-cyan">.</span>
+          </h2>
+          <div className="mt-10 flex flex-col items-center gap-4">
+            <a
+              href="https://apps.apple.com/app/id6761335497"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-3 rounded-full bg-[#F5F5F5] text-[#0A0A0A] px-6 py-3.5 hover:bg-white hover:shadow-[0_0_24px_-4px_rgba(var(--ring-rgb),0.65)] transition-all"
             >
-              &ldquo;Day 21. Quiet, but it counts.&rdquo;
-            </blockquote>
-            <p className="footlink shrink-0">App Store Review</p>
+              <svg viewBox="0 0 24 24" className="w-6 h-6" fill="currentColor" aria-hidden="true">
+                <path d="M16.365 1.43c0 1.14-.42 2.22-1.12 3.04-.79.92-2.08 1.64-3.13 1.55-.13-1.1.45-2.27 1.13-3.06.78-.91 2.13-1.59 3.12-1.53zM20.5 17.06c-.51 1.18-.75 1.71-1.4 2.76-.91 1.46-2.19 3.28-3.78 3.3-1.41.01-1.78-.92-3.7-.91-1.92.01-2.33.93-3.74.91-1.59-.02-2.8-1.66-3.71-3.12C1.74 16.04 1.46 11.4 3.05 9c1.12-1.7 2.9-2.69 4.57-2.69 1.7 0 2.77.93 4.18.93 1.36 0 2.19-.94 4.16-.94 1.49 0 3.07.81 4.19 2.21-3.68 2.01-3.08 7.27.35 8.55z" />
+              </svg>
+              <span className="flex flex-col items-start leading-none">
+                <span className="text-[9px] uppercase tracking-[0.18em] text-[#4B4B4B]">Download on the</span>
+                <span className="text-[17px] font-serif font-medium mt-0.5">App Store</span>
+              </span>
+            </a>
+            <span className="text-[12px] tracking-wide text-[#8B8B8B]">
+              iOS 17+ &nbsp;·&nbsp; 7-day trial<span className="dot-cyan">.</span>
+            </span>
           </div>
         </div>
       </section>
