@@ -1,4 +1,12 @@
-import type { CSSProperties, ReactNode } from "react";
+"use client";
+
+import {
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type ReactNode,
+} from "react";
 
 /**
  * IPhoneFrame — Apple's official iPhone 16 Pro Natural Titanium bezel.
@@ -17,39 +25,26 @@ import type { CSSProperties, ReactNode } from "react";
  *
  * Pass `src` to render a static screenshot inside, or `children` to render
  * interactive content (e.g. the eunho HoldRing).
+ *
+ * `float` (default true): the device fades + drifts up into place when it
+ * scrolls into view — a soft "float in" entrance. Honors reduced-motion and
+ * degrades to instantly-visible where IntersectionObserver is unavailable.
  */
 
+type BaseProps = {
+  width?: number;
+  className?: string;
+  style?: CSSProperties;
+  objectPosition?: string;
+  imgStyle?: CSSProperties;
+  imgClassName?: string;
+  priority?: boolean;
+  float?: boolean;
+};
+
 type Props =
-  | {
-      src: string;
-      alt: string;
-      children?: never;
-      width?: number;
-      className?: string;
-      style?: CSSProperties;
-      objectPosition?: string;
-      /** Optional style merged into the inner screenshot `<img>` (e.g. for
-          a filter that recolors the screen content from outside). */
-      imgStyle?: CSSProperties;
-      /** Optional className applied to the inner screenshot `<img>` — use
-          this for CSS rules that need to read CSS custom properties (Chrome
-          has a quirk where `var()` inside an inline `filter` doesn't always
-          re-resolve when the var changes, but stylesheet rules do). */
-      imgClassName?: string;
-      priority?: boolean;
-    }
-  | {
-      src?: never;
-      alt?: never;
-      children: ReactNode;
-      width?: number;
-      className?: string;
-      style?: CSSProperties;
-      objectPosition?: string;
-      imgStyle?: CSSProperties;
-      imgClassName?: string;
-      priority?: boolean;
-    };
+  | (BaseProps & { src: string; alt: string; children?: never })
+  | (BaseProps & { src?: never; alt?: never; children: ReactNode });
 
 // Display aspect from Apple's PNG (1350 × 2760 = 0.489)
 const ASPECT = "1350 / 2760";
@@ -64,6 +59,11 @@ const SCREEN_INSET = "2.4% 4.8%";
 // to Apple's actual continuous-curve screen radius.
 const SCREEN_RADIUS = "12.5%";
 
+// Premium, layered contact→ambient shadow. Follows the alpha silhouette of the
+// bezel PNG, so it reads like a real device resting in light.
+const DEVICE_SHADOW =
+  "drop-shadow(0 2px 4px rgba(0,0,0,0.45)) drop-shadow(0 14px 34px rgba(0,0,0,0.4)) drop-shadow(0 38px 80px rgba(0,0,0,0.45))";
+
 export function IPhoneFrame({
   src,
   alt,
@@ -74,20 +74,62 @@ export function IPhoneFrame({
   objectPosition = "center top",
   imgStyle,
   imgClassName,
+  float = true,
 }: Props) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [revealed, setRevealed] = useState(!float);
+
+  useEffect(() => {
+    if (!float) return;
+    const el = ref.current;
+    if (!el) return;
+
+    if (
+      typeof window === "undefined" ||
+      !("IntersectionObserver" in window) ||
+      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
+    ) {
+      setRevealed(true);
+      return;
+    }
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) {
+            setRevealed(true);
+            io.disconnect();
+            break;
+          }
+        }
+      },
+      { threshold: 0.15, rootMargin: "0px 0px -8% 0px" }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [float]);
+
+  const revealStyle: CSSProperties = float
+    ? {
+        opacity: revealed ? 1 : 0,
+        transform: revealed ? "none" : "translateY(48px) scale(0.985)",
+        transition:
+          "opacity 700ms cubic-bezier(.2,.7,.2,1), transform 850ms cubic-bezier(.2,.7,.2,1)",
+        willChange: "opacity, transform",
+      }
+    : {};
+
   return (
     <div
+      ref={ref}
       className={className}
       style={{
         position: "relative",
         display: "inline-block",
         width,
         aspectRatio: ASPECT,
-        // Layered drop-shadow: tight contact + ambient. Follows the alpha
-        // silhouette of the bezel PNG, so the shadow looks like a real device
-        // resting in light.
-        filter:
-          "drop-shadow(0 24px 48px rgba(0,0,0,0.28)) drop-shadow(0 8px 16px rgba(0,0,0,0.16))",
+        filter: DEVICE_SHADOW,
+        ...revealStyle,
         ...style,
       }}
     >
@@ -125,6 +167,21 @@ export function IPhoneFrame({
             {children}
           </div>
         )}
+
+        {/* Subtle glass gloss — a faint top-left sheen for a premium feel.
+            Above the screenshot, below the bezel (shows through the cutout). */}
+        <div
+          aria-hidden
+          style={{
+            position: "absolute",
+            inset: 0,
+            borderRadius: SCREEN_RADIUS,
+            pointerEvents: "none",
+            background:
+              "linear-gradient(125deg, rgba(255,255,255,0.13) 0%, rgba(255,255,255,0.04) 11%, rgba(255,255,255,0) 32%)",
+            mixBlendMode: "screen",
+          }}
+        />
       </div>
 
       {/* Apple's transparent bezel on top. Screen cutout is alpha:0 so the

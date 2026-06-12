@@ -323,7 +323,7 @@ export default function BrikLandingPage() {
       <div className="hairline max-w-7xl mx-auto"></div>
 
       {/* SUPPORTING BAND */}
-      <section>
+      <section className="min-h-screen flex flex-col justify-center">
         <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-20 sm:py-28 w-full">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6">
             <div>
