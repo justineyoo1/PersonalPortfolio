@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import { AppPageFooter } from "@/components/apps/AppPageFooter";
 import { ThemedAppsBottomNav } from "@/components/apps/ThemedAppsBottomNav";
 import { IPhoneFrame } from "@/components/IPhoneFrame";
+import { TikTokRedirect } from "@/components/apps/TikTokRedirect";
+import { appStoreUrl } from "@/lib/appstore";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -27,6 +29,8 @@ export const metadata: Metadata = {
     description:
       "The alarm rings. The mission runs. Only completing the mission silences the alarm.",
   },
+  // Smart App Banner — renders in Safari only, not in in-app webviews.
+  itunes: { appId: "6761065846" },
 };
 
 const BRIK_CSS = `
@@ -238,6 +242,7 @@ export default function BrikLandingPage() {
       className={`${inter.className} brik-root relative z-10 min-h-screen overflow-x-hidden`}
     >
       <style dangerouslySetInnerHTML={{ __html: BRIK_CSS }} />
+      <TikTokRedirect href={appStoreUrl("brik", "tiktok")} />
 
       {/* Tiny back link — no nav bar; hero owns the top of the page. */}
       <a
@@ -286,7 +291,7 @@ export default function BrikLandingPage() {
               id="download"
             >
               <a
-                href="https://apps.apple.com/app/id6761065846?platform=iphone&app=jstnyoo-brik"
+                href={appStoreUrl("brik", "web")}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-3 rounded-2xl bg-black text-white px-5 py-3 border border-white/10 hover:border-white/25 transition-colors"

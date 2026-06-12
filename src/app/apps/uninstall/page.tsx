@@ -4,6 +4,8 @@ import { AppPageFooter } from "@/components/apps/AppPageFooter";
 import { ThemedAppsBottomNav } from "@/components/apps/ThemedAppsBottomNav";
 import { IPhoneFrame } from "@/components/IPhoneFrame";
 import { CountUp } from "@/components/apps/CountUp";
+import { TikTokRedirect } from "@/components/apps/TikTokRedirect";
+import { appStoreUrl } from "@/lib/appstore";
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -28,6 +30,8 @@ export const metadata: Metadata = {
     description:
       "Set a block, lose the cancel button. The only exit is a 10-second hold.",
   },
+  // Smart App Banner — renders in Safari only, not in in-app webviews.
+  itunes: { appId: "6761068093" },
 };
 
 const CSS = `
@@ -139,6 +143,7 @@ export default function UninstallLandingPage() {
       className={`${jetbrainsMono.className} uninstall-root relative z-10 min-h-screen overflow-x-hidden`}
     >
       <style dangerouslySetInnerHTML={{ __html: CSS }} />
+      <TikTokRedirect href={appStoreUrl("uninstall", "tiktok")} />
       <div className="ambient" aria-hidden />
       <div className="grain" aria-hidden />
 
@@ -194,7 +199,7 @@ export default function UninstallLandingPage() {
 
             <div className="mt-9 flex flex-col sm:flex-row sm:items-center gap-5">
               <a
-                href="https://apps.apple.com/app/id6761068093"
+                href={appStoreUrl("uninstall", "web")}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn cursor"
@@ -362,7 +367,7 @@ export default function UninstallLandingPage() {
           </h2>
           <div className="mt-12 flex flex-col items-center gap-5">
             <a
-              href="https://apps.apple.com/app/id6761068093"
+              href={appStoreUrl("uninstall", "web")}
               target="_blank"
               rel="noopener noreferrer"
               className="btn btn-lg cursor"

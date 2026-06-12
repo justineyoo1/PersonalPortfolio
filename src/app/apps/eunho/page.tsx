@@ -6,6 +6,8 @@ import { IPhoneFrame } from "@/components/IPhoneFrame";
 import { ThemeSwatch } from "./ThemeSwatch";
 import { HoldRing } from "./HoldRing";
 import { CountUp } from "@/components/apps/CountUp";
+import { TikTokRedirect } from "@/components/apps/TikTokRedirect";
+import { appStoreUrl } from "@/lib/appstore";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -36,6 +38,8 @@ export const metadata: Metadata = {
     title: "eunho. One habit. Held daily.",
     description: "The single-habit tracker. Hold. Don't tap.",
   },
+  // Smart App Banner — renders in Safari only, not in in-app webviews.
+  itunes: { appId: "6761335497" },
 };
 
 const EUNHO_CSS = `
@@ -268,6 +272,7 @@ export default function EunhoLandingPage() {
       className={`${inter.variable} ${cormorant.variable} eunho-root relative z-10 min-h-screen overflow-x-hidden antialiased`}
     >
       <style dangerouslySetInnerHTML={{ __html: EUNHO_CSS }} />
+      <TikTokRedirect href={appStoreUrl("eunho", "tiktok")} />
 
       {/* Tiny back link — no nav bar; hero owns the top of the page. */}
       <a
@@ -339,7 +344,7 @@ export default function EunhoLandingPage() {
               className="mt-7 flex items-center justify-center md:justify-start gap-3"
             >
               <a
-                href="https://apps.apple.com/app/id6761335497"
+                href={appStoreUrl("eunho", "web")}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group inline-flex items-center gap-3 rounded-full bg-[#F5F5F5] text-[#0A0A0A] px-5 h-12 hover:bg-white hover:shadow-[0_0_24px_-4px_rgba(var(--ring-rgb),0.65)] transition-all"
@@ -507,7 +512,7 @@ export default function EunhoLandingPage() {
           </h2>
           <div className="mt-10 flex flex-col items-center gap-4">
             <a
-              href="https://apps.apple.com/app/id6761335497"
+              href={appStoreUrl("eunho", "web")}
               target="_blank"
               rel="noopener noreferrer"
               className="group inline-flex items-center gap-3 rounded-full bg-[#F5F5F5] text-[#0A0A0A] px-6 py-3.5 hover:bg-white hover:shadow-[0_0_24px_-4px_rgba(var(--ring-rgb),0.65)] transition-all"
