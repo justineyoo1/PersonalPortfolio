@@ -2,13 +2,7 @@ import React from "react";
 import { WindowHeader } from "./WindowHeader";
 import { neetcode } from "@/data/neetcode";
 
-type LeetCodeData = {
-  easySolved: number;
-  mediumSolved: number;
-  hardSolved: number;
-  totalSolved: number;
-  submissionCalendar: Record<string, number>;
-};
+import type { LeetCodeData } from "@/types";
 
 type BaseProps = {
   isDark: boolean;
@@ -175,7 +169,18 @@ const NeetCodeBody = ({
   leetCode: LeetCodeData | null;
   expanded?: boolean;
 }) => {
-  const { solved, total, difficulty } = neetcode;
+  // Prefer live progress (synced server-side from LeetCode AC submissions
+  // intersected with the NeetCode 150 list); fall back to the manual snapshot.
+  const live = leetCode?.neetcode?.live ? leetCode.neetcode : null;
+  const { total, difficulty: snap } = neetcode;
+  const solved = live ? live.solved : neetcode.solved;
+  const difficulty = live
+    ? {
+        easy: { done: live.easy, total: snap.easy.total },
+        medium: { done: live.medium, total: snap.medium.total },
+        hard: { done: live.hard, total: snap.hard.total },
+      }
+    : snap;
   const pct = Math.round((solved / total) * 100);
 
   return (
@@ -232,7 +237,9 @@ const NeetCodeBody = ({
 
       {expanded && (
         <p className={`mt-5 text-[11px] font-mono ${isDark ? "text-gray-600" : "text-[#A1A1A6]"}`}>
-          progress synced from neetcode · activity from leetcode
+          {live
+            ? "progress synced live from leetcode · neetcode 150 roadmap"
+            : "progress synced from neetcode · activity from leetcode"}
         </p>
       )}
     </div>

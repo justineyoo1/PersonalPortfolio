@@ -34,12 +34,22 @@ export type ExperienceViewMode = "list" | "timeline";
 export type ProjectFilter = "all" | "swe" | "ml/data";
 export type ToolboxTab = "skills" | "certs";
 
+export type NeetCodeProgress = {
+  solved: number;
+  easy: number;
+  medium: number;
+  hard: number;
+  live: boolean;
+};
+
 export type LeetCodeData = {
   easySolved: number;
   mediumSolved: number;
   hardSolved: number;
   totalSolved: number;
   submissionCalendar: Record<string, number>;
+  /** Live NeetCode 150 progress (null when LEETCODE_SESSION isn't configured). */
+  neetcode?: NeetCodeProgress | null;
 };
 
 export type PersonalInfo = {

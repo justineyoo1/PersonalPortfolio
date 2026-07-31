@@ -1,6 +1,15 @@
 import { NextResponse } from "next/server";
+import { NEETCODE_150_SLUGS } from "@/data/neetcode150";
 
 export const runtime = "nodejs";
+
+type NeetCodeProgress = {
+  solved: number;
+  easy: number;
+  medium: number;
+  hard: number;
+  live: boolean;
+};
 
 type CachedStats = {
   easySolved: number;
@@ -8,7 +17,79 @@ type CachedStats = {
   mediumSolved: number;
   totalSolved: number;
   submissionCalendar: Record<string, number>;
+  neetcode?: NeetCodeProgress | null;
 };
+
+/**
+ * Compute live NeetCode 150 progress by intersecting the account's accepted
+ * LeetCode problems with the NeetCode 150 slug set. Requires a
+ * LEETCODE_SESSION cookie (solved-status filters are only visible when
+ * authenticated); returns null when it's absent or expired.
+ */
+async function fetchNeetCodeProgress(): Promise<NeetCodeProgress | null> {
+  const session = process.env.LEETCODE_SESSION;
+  if (!session) return null;
+
+  const csrf = process.env.LEETCODE_CSRF || "";
+  const cookie = `LEETCODE_SESSION=${session}${csrf ? `; csrftoken=${csrf}` : ""}`;
+
+  const query = `
+    query solved($skip: Int!, $limit: Int!) {
+      problemsetQuestionList: questionList(
+        categorySlug: ""
+        skip: $skip
+        limit: $limit
+        filters: { status: AC }
+      ) {
+        total: totalNum
+        questions: data {
+          titleSlug
+          difficulty
+        }
+      }
+    }
+  `;
+
+  const counts = { solved: 0, easy: 0, medium: 0, hard: 0 };
+  const limit = 100;
+  let skip = 0;
+  let total = Infinity;
+
+  while (skip < total && skip < 5000) {
+    const resp = await fetch("https://leetcode.com/graphql", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Referer: "https://leetcode.com/problemset/",
+        Cookie: cookie,
+        ...(csrf ? { "x-csrftoken": csrf } : {}),
+      },
+      body: JSON.stringify({ query, variables: { skip, limit } }),
+      signal: AbortSignal.timeout(8000),
+    });
+
+    if (!resp.ok) return null;
+    const data = await resp.json();
+    const list = data?.data?.problemsetQuestionList;
+    if (!list) return null;
+
+    total = Number(list.total ?? 0);
+    const questions: { titleSlug?: string; difficulty?: string }[] =
+      list.questions ?? [];
+    if (questions.length === 0) break;
+
+    for (const q of questions) {
+      if (!q?.titleSlug || !NEETCODE_150_SLUGS.has(q.titleSlug)) continue;
+      counts.solved++;
+      if (q.difficulty === "Easy") counts.easy++;
+      else if (q.difficulty === "Medium") counts.medium++;
+      else if (q.difficulty === "Hard") counts.hard++;
+    }
+    skip += limit;
+  }
+
+  return { ...counts, live: true };
+}
 
 let cachedStats: CachedStats | null = null;
 let lastFetchTime = 0;
@@ -108,6 +189,13 @@ export async function GET() {
       console.warn("Primary LeetCode provider failed, trying GraphQL fallback:", firstError);
       stats = await fetchFromLeetCodeGraphQL(username);
       source = "leetcode-graphql";
+    }
+
+    try {
+      stats.neetcode = await fetchNeetCodeProgress();
+    } catch (neetErr) {
+      console.warn("NeetCode progress sync failed:", neetErr);
+      stats.neetcode = null;
     }
 
     cachedStats = stats;
