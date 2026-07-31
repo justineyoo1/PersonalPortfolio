@@ -18,93 +18,42 @@ type BaseProps = {
 const NEETCODE_URL = neetcode.url;
 const DAY_LETTERS = ["S", "M", "T", "W", "T", "F", "S"];
 
-const DIFF_COLORS = { easy: "#3FB950", medium: "#E3B341", hard: "#F85149" };
-
 /**
- * Progress ring gauge — three arcs (easy / medium / hard) laid end to end over
- * a track, sized against the full 150. Replaces the old generic `</>` tile and
- * mirrors how NeetCode's own sidebar visualizes the roadmap.
+ * NeetCode's own rocket favicon on a rounded tile. The source art is a
+ * transparent 48px PNG (the largest neetcode.io publishes), upscaled to 144
+ * so it stays sharp on retina, and inset so it reads as an app icon.
  */
 const NeetCodeMark = ({
   size = 48,
   solved,
   total,
-  difficulty,
   isDark,
 }: {
   size?: number;
   solved: number;
   total: number;
-  difficulty: { easy: { done: number }; medium: { done: number }; hard: { done: number } };
   isDark: boolean;
-}) => {
-  const stroke = Math.max(4, size * 0.1);
-  const r = (size - stroke) / 2;
-  const c = 2 * Math.PI * r;
-  const seg = (n: number) => (total > 0 ? (n / total) * c : 0);
-
-  // Arcs are stacked with dashoffset so they run consecutively from 12 o'clock.
-  const arcs = [
-    { color: DIFF_COLORS.easy, len: seg(difficulty.easy.done), start: 0 },
-    {
-      color: DIFF_COLORS.medium,
-      len: seg(difficulty.medium.done),
-      start: seg(difficulty.easy.done),
-    },
-    {
-      color: DIFF_COLORS.hard,
-      len: seg(difficulty.hard.done),
-      start: seg(difficulty.easy.done + difficulty.medium.done),
-    },
-  ];
-
-  return (
-    <a
-      href={NEETCODE_URL}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={`Open NeetCode — ${solved} of ${total} solved`}
-      className="shrink-0 relative block transition-transform hover:scale-105"
-      style={{ width: size, height: size }}
-    >
-      <svg width={size} height={size} className="-rotate-90">
-        <circle
-          cx={size / 2}
-          cy={size / 2}
-          r={r}
-          fill="none"
-          strokeWidth={stroke}
-          stroke={isDark ? "rgba(255,255,255,0.09)" : "rgba(0,0,0,0.08)"}
-        />
-        {arcs.map((a, i) =>
-          a.len > 0 ? (
-            <circle
-              key={i}
-              cx={size / 2}
-              cy={size / 2}
-              r={r}
-              fill="none"
-              strokeWidth={stroke}
-              stroke={a.color}
-              strokeLinecap="round"
-              strokeDasharray={`${a.len} ${c - a.len}`}
-              strokeDashoffset={-a.start}
-              style={{ transition: "stroke-dasharray 700ms ease, stroke-dashoffset 700ms ease" }}
-            />
-          ) : null,
-        )}
-      </svg>
-      <span
-        className={`absolute inset-0 flex items-center justify-center font-mono font-bold tabular-nums ${
-          isDark ? "text-white" : "text-[#1D1D1F]"
-        }`}
-        style={{ fontSize: size * 0.3, letterSpacing: "-0.03em" }}
-      >
-        {solved}
-      </span>
-    </a>
-  );
-};
+}) => (
+  <a
+    href={NEETCODE_URL}
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label={`Open NeetCode — ${solved} of ${total} solved`}
+    className={`shrink-0 flex items-center justify-center rounded-2xl transition-transform hover:scale-105 ${
+      isDark ? "bg-white/[0.07] border border-white/10" : "bg-[#F2F2F7] border border-black/5"
+    }`}
+    style={{ width: size, height: size }}
+  >
+    <img
+      src="/img/Logos/neetcode@3x.png"
+      alt=""
+      aria-hidden="true"
+      width={size}
+      height={size}
+      style={{ width: size * 0.68, height: size * 0.68 }}
+    />
+  </a>
+);
 
 /** Current week's daily submission counts (Sun–Sat) from the LeetCode calendar. */
 function useWeek(cal: Record<string, number> | undefined) {
@@ -257,28 +206,19 @@ const NeetCodeBody = ({
     <div className={`w-full ${expanded ? "max-w-[560px]" : "max-w-[320px]"} mx-auto`}>
       {/* header */}
       <div className="flex items-center gap-3.5">
-        <NeetCodeMark
-          size={expanded ? 68 : 46}
-          solved={solved}
-          total={total}
-          difficulty={difficulty}
-          isDark={isDark}
-        />
+        <NeetCodeMark size={expanded ? 60 : 46} solved={solved} total={total} isDark={isDark} />
         <div className="min-w-0 flex-1">
           <div className="flex items-baseline gap-2">
             <span
-              className={`font-bold leading-none ${isDark ? "font-mono text-white" : "text-[#1D1D1F]"} ${
-                expanded ? "text-2xl" : "text-lg"
+              className={`font-mono font-bold leading-none ${isDark ? "text-white" : "text-[#1D1D1F]"} ${
+                expanded ? "text-3xl" : "text-2xl"
               }`}
             >
-              NeetCode 150
+              {solved}
+              <span className={isDark ? "text-gray-500" : "text-[#C7C7CC]"}>/{total}</span>
             </span>
+            <span className={`text-xs ${isDark ? "text-gray-400" : "text-[#86868B]"}`}>NeetCode 150</span>
           </div>
-          {expanded && (
-            <p className={`mt-1.5 text-[11px] ${isDark ? "text-gray-400" : "text-[#86868B]"}`}>
-              {total - solved} left to go
-            </p>
-          )}
           <a
             href={neetcode.listUrl}
             target="_blank"
