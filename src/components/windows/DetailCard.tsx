@@ -90,7 +90,7 @@ export const DetailCard: React.FC<DetailCardProps> = ({
         </ul>
 
         {links.length > 0 && (
-          <div className="mt-6 flex flex-col gap-1">
+          <div className="mt-6 flex flex-wrap gap-2">
             {links.map((link, index) => (
               <a
                 key={link.name}
@@ -98,11 +98,16 @@ export const DetailCard: React.FC<DetailCardProps> = ({
                 target="_blank"
                 rel="noopener noreferrer"
                 className={cn(
-                  "inline-block text-[13px] rounded transition-all duration-150 text-gray-400 hover:text-emerald-300",
-                  index === selectedLinkIndex && "font-bold text-emerald-300",
+                  "inline-flex items-center gap-1.5 text-[12.5px] rounded-full px-3.5 py-1.5 border transition-colors duration-150",
+                  index === selectedLinkIndex
+                    ? "border-emerald-400/40 bg-emerald-400/10 text-emerald-300"
+                    : "border-white/10 bg-white/[0.04] text-gray-300 hover:text-emerald-300 hover:border-emerald-400/30",
                 )}
               >
-                {link.name} {index === selectedLinkIndex ? "❮ " : ""}
+                {link.name}
+                <span aria-hidden className="opacity-60">
+                  ↗
+                </span>
               </a>
             ))}
           </div>

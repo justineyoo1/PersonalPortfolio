@@ -24,7 +24,10 @@ const labelForFilterDark = (filter: ExperienceFilter) =>
   filter === "research" ? "school" : filter;
 
 const expandedShellClasses =
-  "w-full h-full lg:w-full lg:h-full max-w-4xl max-h-[92vh] lg:max-w-none lg:max-h-none rounded-xl overflow-hidden flex flex-col";
+  "w-full h-full max-w-4xl max-h-[92vh] rounded-xl overflow-hidden flex flex-col " +
+  // On desktop the stage stretches its child; opt out so the panel is only as
+  // tall as its content (capped at the stage) instead of a mostly-empty screen.
+  "lg:self-center lg:mx-auto lg:w-full lg:max-w-5xl lg:h-auto lg:max-h-full";
 
 const emptyClasses = (isDark: boolean) =>
   isDark ? "text-gray-400" : "text-gray-500";
