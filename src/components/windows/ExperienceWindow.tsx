@@ -133,114 +133,67 @@ export const ExperienceCollapsed = ({
   );
 };
 
-type EntryProps = {
+/** Compact row for the expanded view's left rail (master–detail layout). */
+const RailRow: React.FC<{
   experience: ExperienceItem;
   isDark: boolean;
-  isHovered: boolean;
-  onMouseEnter: () => void;
-  onMouseLeave: () => void;
+  isActive: boolean;
   onClick: () => void;
-};
-
-/** Rich timeline entry shown on the expanded experience view — logo, role,
-    date, full blurb and a link, with a connecting rail dot. */
-const ExperienceEntry: React.FC<EntryProps> = ({
-  experience,
-  isDark,
-  isHovered,
-  onMouseEnter,
-  onMouseLeave,
-  onClick,
-}) => (
-  <div className="relative pl-8">
-    {/* rail dot */}
+}> = ({ experience, isDark, isActive, onClick }) => (
+  <button
+    type="button"
+    onClick={onClick}
+    aria-current={isActive ? "true" : undefined}
+    className={cn(
+      "w-full text-left flex items-center gap-3 rounded-xl px-3 py-2.5 transition-colors duration-150",
+      isDark
+        ? isActive
+          ? "bg-white/[0.09]"
+          : "hover:bg-white/[0.05]"
+        : isActive
+          ? "bg-[#007AFF]/[0.09]"
+          : "hover:bg-black/[0.035]",
+    )}
+  >
     <span
       className={cn(
-        "absolute left-[9px] top-6 h-2.5 w-2.5 rounded-full ring-4 transition-colors",
-        isDark
-          ? isHovered
-            ? "bg-[#3FB950] ring-[#0B0F14]"
-            : "bg-[#3FB950]/60 ring-[#0B0F14]"
-          : isHovered
-            ? "bg-[#007AFF] ring-white"
-            : "bg-[#C7C7CC] ring-white",
-      )}
-    />
-    <div
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-      onClick={onClick}
-      className={cn(
-        "group mb-3 flex gap-4 rounded-xl p-4 cursor-pointer transition-all duration-200",
-        isDark
-          ? isHovered
-            ? "bg-white/[0.06] border border-white/20"
-            : "bg-white/[0.03] border border-white/10"
-          : isHovered
-            ? "bg-white border border-transparent apple-shadow-hover"
-            : "bg-white border border-[#E5E5EA] apple-shadow",
+        "shrink-0 w-9 h-9 rounded-lg overflow-hidden flex items-center justify-center",
+        isDark ? "bg-white" : "bg-[#F2F2F7]",
       )}
     >
-      <div
+      <img
+        src={experience.image}
+        alt=""
+        aria-hidden="true"
+        className="w-full h-full object-contain p-1"
+        loading="lazy"
+      />
+    </span>
+    <span className="min-w-0 flex-1">
+      <span
         className={cn(
-          "shrink-0 w-11 h-11 rounded-lg overflow-hidden flex items-center justify-center",
-          isDark ? "bg-white" : "bg-[#F2F2F7]",
+          "block text-[13.5px] font-medium leading-tight truncate",
+          isDark
+            ? isActive
+              ? "text-white"
+              : "text-gray-300"
+            : isActive
+              ? "text-[#007AFF]"
+              : "text-[#1D1D1F]",
         )}
       >
-        <img
-          src={experience.image}
-          alt=""
-          className="w-full h-full object-contain p-1.5"
-          loading="lazy"
-        />
-      </div>
-      <div className="flex-1 min-w-0">
-        <div className="flex items-baseline justify-between gap-3">
-          <h3
-            className={cn(
-              "font-semibold text-[14px] sm:text-[15px] leading-tight truncate",
-              isDark ? "text-white" : "text-[#1D1D1F]",
-            )}
-          >
-            {experience.title}
-          </h3>
-          <span
-            className={cn(
-              "shrink-0 text-[11px] font-mono",
-              isDark ? "text-[#3FB950]" : "text-[#0E8B3A]",
-            )}
-          >
-            {experience.date}
-          </span>
-        </div>
-        <p
-          className={cn(
-            "mt-1.5 text-[12.5px] sm:text-[13px] leading-relaxed",
-            isDark ? "text-gray-400" : "text-[#515154]",
-          )}
-        >
-          {experience.description}
-        </p>
-        {experience.links?.[0] && (
-          <a
-            href={experience.links[0].url}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={(e) => e.stopPropagation()}
-            className={cn(
-              "inline-flex items-center gap-1 mt-2.5 text-[12px] font-semibold transition-colors",
-              isDark
-                ? "text-[#60A5FA] hover:text-[#93c5fd]"
-                : "text-[#007AFF] hover:text-[#0066D6]",
-            )}
-          >
-            {experience.links[0].name}
-            <span aria-hidden>↗</span>
-          </a>
+        {experience.compactTitle ?? experience.title}
+      </span>
+      <span
+        className={cn(
+          "block text-[11.5px] mt-0.5 tabular-nums",
+          isDark ? "text-gray-500" : "text-[#86868B]",
         )}
-      </div>
-    </div>
-  </div>
+      >
+        {experience.date}
+      </span>
+    </span>
+  </button>
 );
 
 export const ExperienceExpanded = ({
@@ -264,58 +217,16 @@ export const ExperienceExpanded = ({
   setExperienceViewMode,
   experienceFilterCounts,
 }: SharedProps) => {
-  if (selectExperience !== "") {
-    const data = experiencesData.find((p) => p.title === selectExperience);
-    if (!data) {
-      return <p>Experience not found.</p>;
-    }
-    const bullets = buildBullets(data.description);
-    const isFocusedOnBack =
-      isDark && selectedExperienceLinkIndex === data.links.length;
+  const data = selectExperience
+    ? experiencesData.find((p) => p.title === selectExperience)
+    : undefined;
+  const bullets = data ? buildBullets(data.description) : [];
+  const isFocusedOnBack =
+    isDark && data ? selectedExperienceLinkIndex === data.links.length : false;
 
-    return (
-      <div className={cn(windowThemeClass, expandedShellClasses)}>
-        <WindowHeader
-          title={selectExperience}
-          isDark={isDark}
-          selected={selectedWindow === "experience"}
-          headerClass={headerClass}
-          sticky
-          onClose={() => setExpandWindow("")}
-          onMinimize={() => {
-            setExpandWindow("");
-            setSelectExperience("");
-          }}
-        />
-        <div className="flex-1 overflow-y-auto overscroll-contain scroll-smooth min-h-0">
-          <DetailCard
-            isDark={isDark}
-            image={data.image}
-            windowTitle={data.window}
-            subtitle={data.title}
-            org={data.org}
-            date={data.date}
-            category={
-              data.category === "clubs" ? "school" : data.category ?? undefined
-            }
-            bulletPoints={bullets}
-            links={data.links}
-            selectedLinkIndex={selectedExperienceLinkIndex}
-          />
-        </div>
-        <BackFooter
-          isDark={isDark}
-          label="experiences"
-          isFocused={isFocusedOnBack}
-          onClick={() => {
-            setSelectExperience("");
-            setExpandWindow("");
-          }}
-        />
-      </div>
-    );
-  }
-
+  // Master–detail: the list stays put in a left rail and the detail fills the
+  // right pane, so a short entry no longer leaves a full screen of dead space.
+  // Below `lg` there isn't room for two columns, so the panes swap.
   return (
     <div className={cn(windowThemeClass, expandedShellClasses)}>
       <WindowHeader
@@ -323,51 +234,102 @@ export const ExperienceExpanded = ({
         isDark={isDark}
         selected={selectedWindow === "experience"}
         headerClass={headerClass}
+        sticky
         onClose={() => setExpandWindow("")}
-        onMinimize={() => setExpandWindow("")}
-      />
-      <FilterTabs<ExperienceFilter>
-        filters={EXPERIENCE_FILTERS}
-        active={experienceFilter}
-        counts={experienceFilterCounts}
-        onChange={(filter) => {
-          setExperienceFilter(filter);
-          setExperienceIndex(0);
+        onMinimize={() => {
+          setExpandWindow("");
+          setSelectExperience("");
         }}
-        isDark={isDark}
-        tabClass={tabClass}
-        labelFor={isDark ? labelForFilterDark : labelForFilter}
       />
-      <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain scroll-smooth">
-        <div className="mx-auto w-full max-w-3xl px-5 sm:px-7 pt-5 pb-8">
-          {isDark && (
-            <p className="font-mono text-[12.5px] mb-5">
-              <span className="text-[#3FB950] font-semibold">justin@unc</span>
-              <span className="text-[#768390]"> ~ %</span>
-              <span className="text-[#E6EDF3] font-semibold"> cat experience/*.md</span>
-            </p>
+
+      <div className="flex-1 min-h-0 flex">
+        {/* Left rail: filters + compact list */}
+        <div
+          className={cn(
+            "flex-col min-h-0 w-full lg:w-[320px] lg:shrink-0",
+            data ? "hidden lg:flex" : "flex",
+            isDark ? "lg:border-r lg:border-white/10" : "lg:border-r lg:border-black/[0.07]",
           )}
-          <div className="relative">
-            <div
-              className={cn(
-                "absolute left-[13px] top-3 bottom-3 w-px",
-                isDark ? "bg-white/10" : "bg-[#E5E5EA]",
-              )}
-            />
-            {filteredExperiences.map((experience, index) => (
-              <ExperienceEntry
+        >
+          <FilterTabs<ExperienceFilter>
+            filters={EXPERIENCE_FILTERS}
+            active={experienceFilter}
+            counts={experienceFilterCounts}
+            onChange={(filter) => {
+              setExperienceFilter(filter);
+              setExperienceIndex(0);
+            }}
+            isDark={isDark}
+            tabClass={tabClass}
+            labelFor={isDark ? labelForFilterDark : labelForFilter}
+          />
+          <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain scroll-smooth px-2.5 py-2 space-y-0.5">
+            {filteredExperiences.map((experience) => (
+              <RailRow
                 key={experience.title}
                 experience={experience}
                 isDark={isDark}
-                isHovered={hoveredExperienceIndex === index}
-                onMouseEnter={() => setHoveredExperienceIndex(index)}
-                onMouseLeave={() => setHoveredExperienceIndex(null)}
+                isActive={experience.title === selectExperience}
                 onClick={() => setSelectExperience(experience.title)}
               />
             ))}
+            {filteredExperiences.length === 0 && (
+              <p className={cn("px-2 py-3 text-[13px]", emptyClasses(isDark))}>
+                no experiences in this category
+              </p>
+            )}
           </div>
-          {filteredExperiences.length === 0 && (
-            <p className={emptyClasses(isDark)}>no experiences in this category</p>
+        </div>
+
+        {/* Right pane: detail, or a prompt when nothing is selected */}
+        <div
+          className={cn(
+            "flex-1 min-h-0 flex-col",
+            data ? "flex" : "hidden lg:flex",
+          )}
+        >
+          {data ? (
+            <>
+              <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain scroll-smooth">
+                <DetailCard
+                  isDark={isDark}
+                  image={data.image}
+                  windowTitle={data.window}
+                  subtitle={data.title}
+                  org={data.org}
+                  date={data.date}
+                  category={
+                    data.category === "clubs" ? "school" : data.category ?? undefined
+                  }
+                  bulletPoints={bullets}
+                  links={data.links}
+                  selectedLinkIndex={selectedExperienceLinkIndex}
+                />
+              </div>
+              {/* On wide screens the list is always visible, so "back" is only
+                  meaningful in the stacked layout. */}
+              <div className="lg:hidden">
+                <BackFooter
+                  isDark={isDark}
+                  label="experiences"
+                  isFocused={isFocusedOnBack}
+                  onClick={() => setSelectExperience("")}
+                />
+              </div>
+            </>
+          ) : (
+            <div className="flex-1 flex items-center justify-center px-8">
+              <p
+                className={cn(
+                  "text-[13.5px] text-center",
+                  isDark ? "font-mono text-gray-600" : "text-[#A1A1A6]",
+                )}
+              >
+                {isDark
+                  ? "select a role to read the details"
+                  : "Select a role to read the details"}
+              </p>
+            </div>
           )}
         </div>
       </div>

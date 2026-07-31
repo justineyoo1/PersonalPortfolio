@@ -117,93 +117,70 @@ export const ProjectsCollapsed = ({
   );
 };
 
-type ProjectEntryProps = {
+/** Compact row for the expanded view's left rail (master–detail layout). */
+const ProjectRailRow: React.FC<{
   project: ProjectItem;
   isDark: boolean;
-  isHovered: boolean;
-  onMouseEnter: () => void;
-  onMouseLeave: () => void;
+  isActive: boolean;
   onClick: () => void;
-};
-
-/** Rich project card for the expanded grid — name, year, blurb, tag, repo. */
-const ProjectEntry: React.FC<ProjectEntryProps> = ({
-  project,
-  isDark,
-  isHovered,
-  onMouseEnter,
-  onMouseLeave,
-  onClick,
-}) => (
-  <div
-    onMouseEnter={onMouseEnter}
-    onMouseLeave={onMouseLeave}
+}> = ({ project, isDark, isActive, onClick }) => (
+  <button
+    type="button"
     onClick={onClick}
+    aria-current={isActive ? "true" : undefined}
     className={cn(
-      "group flex flex-col rounded-xl p-4 sm:p-5 cursor-pointer transition-all duration-200",
+      "w-full text-left flex items-center gap-3 rounded-xl px-3 py-2.5 transition-colors duration-150",
       isDark
-        ? isHovered
-          ? "bg-white/[0.06] border border-white/20"
-          : "bg-white/[0.03] border border-white/10"
-        : isHovered
-          ? "bg-white border border-transparent apple-shadow-hover"
-          : "bg-white border border-[#E5E5EA] apple-shadow",
+        ? isActive
+          ? "bg-white/[0.09]"
+          : "hover:bg-white/[0.05]"
+        : isActive
+          ? "bg-[#007AFF]/[0.09]"
+          : "hover:bg-black/[0.035]",
     )}
   >
-    <div className="flex items-baseline justify-between gap-3">
-      <h3
-        className={cn(
-          "font-semibold text-[14.5px] sm:text-[15px] leading-tight",
-          isDark ? "text-white" : "text-[#1D1D1F]",
-        )}
-      >
-        {project.title}
-      </h3>
-      <span
-        className={cn(
-          "shrink-0 text-[11px] font-mono",
-          isDark ? "text-[#3FB950]" : "text-[#0E8B3A]",
-        )}
-      >
-        {project.date}
-      </span>
-    </div>
-    <p
+    <span
       className={cn(
-        "mt-2 text-[12.5px] leading-relaxed flex-1",
-        isDark ? "text-gray-400" : "text-[#515154]",
+        "shrink-0 w-9 h-9 rounded-lg overflow-hidden flex items-center justify-center",
+        isDark ? "bg-white/10" : "bg-[#F2F2F7]",
       )}
     >
-      {project.description}
-    </p>
-    <div className="flex items-center justify-between gap-2 mt-3.5">
+      <img
+        src={project.image}
+        alt=""
+        aria-hidden="true"
+        className="w-full h-full object-cover"
+        loading="lazy"
+        onError={(e) => {
+          e.currentTarget.style.display = "none";
+        }}
+      />
+    </span>
+    <span className="min-w-0 flex-1">
       <span
         className={cn(
-          "text-[10px] font-mono px-1.5 py-0.5 rounded",
-          isDark ? "bg-white/[0.06] text-gray-400" : "bg-[#F2F2F7] text-[#86868B]",
+          "block text-[13.5px] font-medium leading-tight truncate",
+          isDark
+            ? isActive
+              ? "text-white"
+              : "text-gray-300"
+            : isActive
+              ? "text-[#007AFF]"
+              : "text-[#1D1D1F]",
         )}
       >
-        {project.category}
+        {project.compactTitle ?? project.title}
       </span>
-      {project.links?.[0] && (
-        <a
-          href={project.links[0].url}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={(e) => e.stopPropagation()}
-          className={cn(
-            "inline-flex items-center gap-1 text-[12px] font-semibold transition-colors",
-            isDark
-              ? "text-[#60A5FA] hover:text-[#93c5fd]"
-              : "text-[#007AFF] hover:text-[#0066D6]",
-          )}
-        >
-          {project.links[0].name}
-          <span aria-hidden>↗</span>
-        </a>
-      )}
-    </div>
-  </div>
+      <span
+        className={cn(
+          "block text-[11.5px] mt-0.5",
+          isDark ? "text-gray-500" : "text-[#86868B]",
+        )}
+      >
+        {project.category ?? project.date}
+      </span>
+    </span>
+  </button>
 );
 
 export const ProjectsExpanded = ({
@@ -225,56 +202,12 @@ export const ProjectsExpanded = ({
   setExpandWindow,
   projectFilterCounts,
 }: SharedProps) => {
-  if (selectProject !== "") {
-    const data = projectsData.find((p) => p.title === selectProject);
+  const data = selectProject
+    ? projectsData.find((p) => p.title === selectProject)
+    : undefined;
 
-    return (
-      <div className={cn(windowThemeClass, expandedShellClasses)}>
-        <WindowHeader
-          title={data?.window ?? "project"}
-          isDark={isDark}
-          selected={selectedWindow === "projects"}
-          headerClass={headerClass}
-          sticky
-          onClose={() => setExpandWindow("")}
-          onMinimize={() => {
-            setExpandWindow("");
-            setSelectProject("");
-          }}
-          onMaximize={() => setExpandWindow("projects")}
-        />
-        <div className="flex-1 overflow-y-auto overscroll-contain scroll-smooth min-h-0">
-          {data ? (
-            <DetailCard
-              isDark={isDark}
-              image={data.image}
-              windowTitle={data.window}
-              subtitle={data.title}
-              date={data.date}
-              category={data.category ?? undefined}
-              bulletPoints={buildBullets(data.description)}
-              links={data.links}
-              selectedLinkIndex={selectedLinkIndex}
-            />
-          ) : (
-            <p className="m-4">Project not found.</p>
-          )}
-        </div>
-        {data && (
-          <BackFooter
-            isDark={isDark}
-            label="projects"
-            isFocused={selectedLinkIndex === data.links.length}
-            onClick={() => {
-              setSelectProject("");
-              setExpandWindow("");
-            }}
-          />
-        )}
-      </div>
-    );
-  }
-
+  // Master-detail: list stays in a left rail, detail fills the right pane.
+  // Below `lg` there isn't room for two columns, so the panes swap.
   return (
     <div className={cn(windowThemeClass, expandedShellClasses)}>
       <WindowHeader
@@ -282,46 +215,97 @@ export const ProjectsExpanded = ({
         isDark={isDark}
         selected={selectedWindow === "projects"}
         headerClass={headerClass}
+        sticky
         onClose={() => setExpandWindow("")}
-        onMinimize={() => setExpandWindow("")}
-        onMaximize={() => setExpandWindow("projects")}
-      />
-      <FilterTabs<ProjectFilter>
-        filters={PROJECT_FILTERS}
-        active={projectFilter}
-        counts={projectFilterCounts}
-        onChange={(filter) => {
-          setProjectFilter(filter);
-          setProjectIndex(0);
+        onMinimize={() => {
+          setExpandWindow("");
+          setSelectProject("");
         }}
-        isDark={isDark}
-        tabClass={tabClass}
-        labelFor={isDark ? (f) => f : labelForFilter}
       />
-      <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain scroll-smooth">
-        <div className="mx-auto w-full max-w-4xl px-5 sm:px-7 pt-5 pb-8">
-          {isDark && (
-            <p className="font-mono text-[12.5px] mb-5">
-              <span className="text-[#3FB950] font-semibold">justin@unc</span>
-              <span className="text-[#768390]"> ~ %</span>
-              <span className="text-[#E6EDF3] font-semibold"> ls ~/projects</span>
-            </p>
+
+      <div className="flex-1 min-h-0 flex">
+        <div
+          className={cn(
+            "flex-col min-h-0 w-full lg:w-[320px] lg:shrink-0",
+            data ? "hidden lg:flex" : "flex",
+            isDark
+              ? "lg:border-r lg:border-white/10"
+              : "lg:border-r lg:border-black/[0.07]",
           )}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {filteredProjects.map((project, index) => (
-              <ProjectEntry
+        >
+          <FilterTabs<ProjectFilter>
+            filters={PROJECT_FILTERS}
+            active={projectFilter}
+            counts={projectFilterCounts}
+            onChange={(filter) => {
+              setProjectFilter(filter);
+              setProjectIndex(0);
+            }}
+            isDark={isDark}
+            tabClass={tabClass}
+            labelFor={isDark ? (f) => f : labelForFilter}
+          />
+          <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain scroll-smooth px-2.5 py-2 space-y-0.5">
+            {filteredProjects.map((project) => (
+              <ProjectRailRow
                 key={project.title}
                 project={project}
                 isDark={isDark}
-                isHovered={hoveredProjectIndex === index}
-                onMouseEnter={() => setHoveredProjectIndex(index)}
-                onMouseLeave={() => setHoveredProjectIndex(null)}
+                isActive={project.title === selectProject}
                 onClick={() => setSelectProject(project.title)}
               />
             ))}
+            {filteredProjects.length === 0 && (
+              <p className={cn("px-2 py-3 text-[13px]", emptyClasses(isDark))}>
+                no projects in this category
+              </p>
+            )}
           </div>
-          {filteredProjects.length === 0 && (
-            <p className={emptyClasses(isDark)}>no projects in this category</p>
+        </div>
+
+        <div
+          className={cn(
+            "flex-1 min-h-0 flex-col",
+            data ? "flex" : "hidden lg:flex",
+          )}
+        >
+          {data ? (
+            <>
+              <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain scroll-smooth">
+                <DetailCard
+                  isDark={isDark}
+                  image={data.image}
+                  windowTitle={data.window}
+                  subtitle={data.title}
+                  date={data.date}
+                  category={data.category ?? undefined}
+                  bulletPoints={buildBullets(data.description)}
+                  links={data.links}
+                  selectedLinkIndex={selectedLinkIndex}
+                />
+              </div>
+              <div className="lg:hidden">
+                <BackFooter
+                  isDark={isDark}
+                  label="projects"
+                  isFocused={selectedLinkIndex === data.links.length}
+                  onClick={() => setSelectProject("")}
+                />
+              </div>
+            </>
+          ) : (
+            <div className="flex-1 flex items-center justify-center px-8">
+              <p
+                className={cn(
+                  "text-[13.5px] text-center",
+                  isDark ? "font-mono text-gray-600" : "text-[#A1A1A6]",
+                )}
+              >
+                {isDark
+                  ? "select a project to read the details"
+                  : "Select a project to read the details"}
+              </p>
+            </div>
           )}
         </div>
       </div>
