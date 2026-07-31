@@ -6,12 +6,12 @@
 export const neetcode = {
   url: "https://neetcode.io",
   listUrl: "https://neetcode.io/practice?tab=neetcode150",
-  syncedAt: "2026-05-30",
-  solved: 16,
+  syncedAt: "2026-07-31",
+  solved: 35,
   total: 150,
   difficulty: {
-    easy: { done: 7, total: 28 },
-    medium: { done: 9, total: 101 },
-    hard: { done: 0, total: 21 },
+    easy: { done: 10, total: 28 },
+    medium: { done: 23, total: 101 },
+    hard: { done: 2, total: 21 },
   },
 } as const;
