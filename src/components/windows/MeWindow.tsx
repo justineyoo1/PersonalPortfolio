@@ -87,7 +87,7 @@ export const MeCollapsed = ({
           <div
             className={`${isDark ? "text-gray-200" : "text-gray-600"} space-y-1.5 text-xs lg:text-sm leading-snug`}
           >
-            <p className={`truncate ${isDark ? "" : "text-[#1D1D1F] font-bold text-sm"}`}>Software Engineer • ML/AI</p>
+            <p className={isDark ? "" : "text-[#1D1D1F] font-bold text-sm"}>Software Engineer • ML/AI</p>
             <p className={`truncate ${isDark ? "" : "text-[#515154]"}`}>CS + Stats @ UNC</p>
             <p className={`truncate ${isDark ? "" : "text-[#515154]"}`}>{personalInfo.location}</p>
             <p className={`truncate ${isDark ? "" : "text-[#86868B] text-[11px]"}`}>Time: {time?.toLocaleTimeString() ?? ""}</p>

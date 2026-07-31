@@ -299,7 +299,9 @@ export const BentoGrid: React.FC<BentoGridProps> = ({
             if (e.target === e.currentTarget) requestClose("");
           }}
           className={cn(
-            "expanded-stage z-30 lg:absolute lg:inset-0 fixed inset-0 lg:h-full h-screen max-h-screen flex items-center justify-center lg:items-stretch lg:justify-stretch p-3 sm:p-5 lg:p-6 2xl:p-8",
+            // pb clears the floating dock, which otherwise sits on top of the
+            // panel's "back" footer on phones.
+            "expanded-stage z-30 lg:absolute lg:inset-0 fixed inset-0 lg:h-full h-screen max-h-screen flex items-center justify-center lg:items-stretch lg:justify-stretch p-3 sm:p-5 pb-24 sm:pb-28 lg:p-6 2xl:p-8",
             closing && "is-closing",
           )}
         >

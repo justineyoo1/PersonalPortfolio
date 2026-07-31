@@ -38,7 +38,9 @@ export const AppsCollapsed = ({
         onMaximize={() => window.open("/apps", "_blank")}
       />
 
-      <div className={`grid grid-cols-2 lg:grid-cols-4 ${isDark ? "gap-3 p-4" : "gap-1.5 px-3 pt-2 pb-1"}`}>
+      {/* One column on phones: two columns squeezed names and taglines down to
+          a few characters plus an ellipsis. */}
+      <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 ${isDark ? "gap-3 p-4" : "gap-1.5 px-3 pt-2 pb-1"}`}>
         {apps.map((app) => {
           const iconSrc = isDark ? app.icon : app.iconLight ?? app.icon;
           return (
