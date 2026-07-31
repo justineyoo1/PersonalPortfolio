@@ -170,7 +170,7 @@ export default function BordLandingPage() {
 
             <div className="mt-5 flex flex-wrap items-center justify-center md:justify-start gap-3">
               <a
-                href="https://web-zeta-pink-31.vercel.app"
+                href="https://bordmoney.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-2xl bg-[#5DE5B5] text-[#040907] px-5 py-3 font-extrabold tracking-tight hover:brightness-110 transition"

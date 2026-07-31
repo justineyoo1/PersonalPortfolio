@@ -38,24 +38,30 @@ Background:
 - Contact: jeyoo@unc.edu
 
 Technical profile:
-- Languages: Python, Java, Swift, SQL, JavaScript, TypeScript
-- Backend: FastAPI, Spring Boot, Node.js, REST APIs
-- Data: PostgreSQL, MySQL, Snowflake, dbt
-- Frontend: React, Next.js, HTML/CSS, Tailwind
-- DevOps/Infra: Docker, Kubernetes, Linux, CI/CD
+- Languages: Python, TypeScript, Swift, Java, SQL
+- Frameworks: React, Next.js, Node.js, FastAPI, Spring Boot
+- Libraries: PyTorch, Hugging Face, pandas, NumPy
+- Databases: Postgres, Snowflake, dbt
+- Developer tools: Git, Docker, Kubernetes, GitHub Actions
+- Platforms: Stripe, Plaid, SwiftUI, StoreKit 2, MCP
 
-Apps I've shipped (all built solo, live on the iOS App Store):
+What I did at each role:
+- Wells Fargo (Corporate & Commercial Investment Banking Technology): built a validation engine for AutoSys workflows classifying pass/fail from logs at 95% accuracy, saving ~8 hrs/week; cut first load from 150s to 5s across 150+ workflows with a rate-limited fan-out; added a TTL cache with single-flight coalescing.
+- Red Hat (Incentives, Performance & Analytics): Streamlit + FastAPI app that cut reporting time 90% across $50M+ in incentive allocations; internal PDF data-extraction tool saving 20+ hrs/month; migrated Redshift pipelines to Snowflake with dbt models.
+- AIMING Lab: wired perception tools (OCR, ASR, object detection, captioning) into the ReAgent-V tool layer (NeurIPS 2025); ran frame-selection ablations; confidence-based cascade routing cutting inference cost 2-4x while retaining ~95% accuracy.
+
+Apps I've shipped (all built solo, live on the iOS App Store, 500+ users total):
 - Eunho: a one-habit streak tracker. Hold the ring 2.5 seconds to check in; 100 days on one screen; widgets.
-- Uninstall: an app blocker with no takebacks. Set a block, lose the off switch.
+- Uninstall: an app blocker with no takebacks, built on Apple's entitlement-gated Screen Time stack.
 - Brik: a hard alarm that only silences after a verified mission (pushups via Vision pose detection, photo missions).
+I also built a metrics dashboard unifying App Store Connect, Search Ads, and RevenueCat APIs with anomaly detection.
 
 Building now:
-- Bord: a board of AI specialist finance voices (CFO, Strategist, Risk, Markets) debating your real money. Closed beta.
+- Bord: a multi-model AI personal finance app at bordmoney.com. Encrypted double-entry ledger integrating Plaid, market data, and Stripe; detectors schedule AI analysis dispatched by Postgres SKIP LOCKED workers; five provider-pinned models read the ledger over MCP, with prompt caching cutting AI cost per post ~50%.
 - Whistle: AI-native sports referee assigning + payments (Stripe next-day payouts). Pre-launch.
 
 Projects:
-- Portfolio Pulse: portfolio tracking + SMS digests with FastAPI/Postgres/Redis/Celery
-- SyllabusSync: cited Q&A over course syllabi with async ingestion and pgvector retrieval
+- SyllabusSync: turns a course syllabus PDF into a synced semester of calendar deadlines at 97% field-level accuracy. Serves calendar state over MCP with Google syncTokens so the agent merges with user edits; parse time cut from 45s to 6s.
 
 I'm also grinding the NeetCode 150 — live progress is on the site's neetcode window.
 

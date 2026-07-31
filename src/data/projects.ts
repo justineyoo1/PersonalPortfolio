@@ -24,7 +24,7 @@ export const projectsData: ProjectItem[] = [
     category: "swe",
     date: "2025",
     description:
-      "Built a multi-course syllabus Q&A app that returns cited answers from uploaded PDFs by class. Implemented async ingestion pipelines (extract, chunk, embed) with Celery workers and job tracking. Added pgvector retrieval with metadata filters to improve relevance for policy, date, and grading questions, then containerized the stack with Docker and structured logging.",
+      "Syllabus-to-calendar sync engine built with TypeScript, Next.js, Postgres, MCP, the Google Calendar API, and Claude. Turns a course syllabus PDF into a synced semester of calendar deadlines at 97% field-level accuracy. Serves calendar state over MCP with Google syncTokens, so the agent merges with user edits instead of overwriting them. Cut parse time from 45s to 6s with page-level concurrency, and content hashes make re-syncs idempotent with zero duplicates.",
     image: "/Projects/syllabus-sync.png",
     links: [
       {

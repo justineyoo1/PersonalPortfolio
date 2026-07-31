@@ -11,6 +11,8 @@ export type ExperienceItem = {
   window: string;
   category?: ExperienceCategory | string;
   date: string;
+  /** Team and location, shown as metadata (e.g. "Analytics · Raleigh, NC"). */
+  org?: string;
   description: string;
   image: string;
   links: LinkItem[];

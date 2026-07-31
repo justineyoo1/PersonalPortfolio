@@ -19,32 +19,27 @@ export const skillsCoursesCerts: SkillsCoursesCerts = {
   skills: [
     {
       group: "Languages",
-      items: ["Python", "Java", "SQL", "JavaScript", "TypeScript"],
+      items: ["Python", "TypeScript", "Swift", "Java", "SQL"],
     },
     {
-      group: "Data",
-      items: [
-        "PostgreSQL",
-        "MySQL",
-        "Jupyter",
-        "Snowflake",
-        "dbt",
-        "Pandas",
-        "Scikit-learn",
-        "Matplotlib",
-      ],
+      group: "Frameworks",
+      items: ["React", "Next.js", "Node.js", "FastAPI", "Spring Boot"],
     },
     {
-      group: "Frontend",
-      items: ["HTML", "CSS", "Flask", "Tailwind CSS", "React.js"],
+      group: "Libraries",
+      items: ["PyTorch", "Hugging Face", "pandas", "NumPy"],
     },
     {
-      group: "Testing & Devops",
-      items: ["Docker", "Kubernetes", "Linux", "CI/CD"],
+      group: "Databases",
+      items: ["Postgres", "Snowflake", "dbt"],
     },
     {
-      group: "Backend & APIs",
-      items: ["Spring Boot", "REST APIs", "Node.js"],
+      group: "Developer Tools",
+      items: ["Git", "Docker", "Kubernetes", "GitHub Actions"],
+    },
+    {
+      group: "Platforms",
+      items: ["Stripe", "Plaid", "SwiftUI", "StoreKit 2", "MCP"],
     },
   ],
   courses: [
@@ -52,7 +47,7 @@ export const skillsCoursesCerts: SkillsCoursesCerts = {
     "COMP 211 - Systems Fundamentals",
     "COMP 301 - Foundations of Programming",
     "COMP 311 - Computer Organization",
-    "MATH 381 - Discrete Mathe",
+    "MATH 381 - Discrete Mathematics",
     "COMP 455 - Models of Languages and Computation",
     "COMP 550 - Algorithms and Analysis",
     "COMP 560 - Artificial Intelligence",

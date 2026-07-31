@@ -293,6 +293,7 @@ export const ExperienceExpanded = ({
             image={data.image}
             windowTitle={data.window}
             subtitle={data.title}
+            org={data.org}
             date={data.date}
             category={
               data.category === "clubs" ? "school" : data.category ?? undefined
