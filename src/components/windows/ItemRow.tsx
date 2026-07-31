@@ -95,7 +95,9 @@ export const ItemRow: React.FC<ItemRowProps> = ({
             : `/${String(index + 1).padStart(2, "0")}`}
         </span>
       )}
-      {label}
+      {/* Needs its own block box: as a bare flex child the text clips hard
+          instead of showing an ellipsis. */}
+      <span className="min-w-0 flex-1 truncate">{label}</span>
     </div>
   );
 };

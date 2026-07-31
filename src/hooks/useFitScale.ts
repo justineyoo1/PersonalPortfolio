@@ -1,4 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+
+// Measure before the browser paints so the desktop never shows one frame at
+// full size (overflowing the viewport, with the dock overlapping the apps
+// window) before snapping to the fitted scale. useLayoutEffect can't run
+// during SSR, so fall back to useEffect there.
+const useIsomorphicLayoutEffect =
+  typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 /**
  * Scales an element down so it fits the viewport height without page scroll.
@@ -15,7 +22,7 @@ export function useFitScale(active: boolean) {
   const [scale, setScale] = useState(1);
   const [naturalH, setNaturalH] = useState(0);
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     let debounce = 0;
 
     const compute = () => {

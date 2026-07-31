@@ -39,7 +39,7 @@ export const experiencesData: ExperienceItem[] = [
   },
   {
     title: "Full Stack Developer @ App Team Carolina",
-    compactTitle: "Full Stack @ App Team Carolina",
+    compactTitle: "Full Stack @ App Team",
     window: "App Team Carolina",
     category: "clubs",
     date: "Jan 2026 - Present",
@@ -51,7 +51,7 @@ export const experiencesData: ExperienceItem[] = [
   },
   {
     title: "Full Stack Developer @ UNC CS + Social Good",
-    compactTitle: "Full Stack @ UNC CS+Social Good",
+    compactTitle: "Full Stack @ CS+Social",
     window: "UNC CS + Social Good",
     category: "clubs",
     date: "Aug 2024 - May 2025",
